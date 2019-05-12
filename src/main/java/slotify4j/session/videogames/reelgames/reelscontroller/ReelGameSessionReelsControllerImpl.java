@@ -1,5 +1,7 @@
 package slotify4j.session.videogames.reelgames.reelscontroller;
 
+import java.util.Map;
+
 public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsController {
     public static Object[][] transposeMatrix(Object[][] source) {
         Object[][] tmp = new Object[source[0].length][source.length];
@@ -9,6 +11,18 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
             }
         }
         return tmp;
+    }
+
+    public static String[] createItemsSequence(String[] availableItems) {
+        return null;
+    }
+
+    public static String[] createItemsSequence(String[] availableItems, Map<String, Integer> countsOfItems) {
+        return null;
+    }
+
+    public static String[] createItemsSequence(String[] availableItems, int countOfItems) {
+        return null;
     }
 
     private final int reelsNumber;
