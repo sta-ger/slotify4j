@@ -17,12 +17,15 @@ public interface WinCalculatorConfig {
     void setScattersData(ReelGameSessionScatterData[] scattersData);
 
     int getReelsNumber();
-    int setReelsItemsNumber();
+    void setReelsNumber(int reelsNumber);
+
+    int getReelsItemsNumber();
+    void setReelsItemsNumber(int reelsItemsNumber);
 
     ReelGameSessionLinesDirectionData getLinesDirections();
     void setLinesDirections(ReelGameSessionLinesDirectionData linesDirections);
 
-    ReelGameSessionWildsMultipliersData getWildsMultipliers();
-    void getWildsMultipliers(ReelGameSessionWildsMultipliersData wildsMultipliers);
+    ReelGameSessionWildsMultipliersData setWildsMultipliers();
+    void setWildsMultipliers(ReelGameSessionWildsMultipliersData wildsMultipliers);
 
 }

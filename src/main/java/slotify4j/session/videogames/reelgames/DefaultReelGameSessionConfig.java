@@ -40,7 +40,7 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
     private String[] availableItems;
     private String wildItemId;
     private String[][] reelsItemsSequences;
-    private final ReelGameSessionPaytableData paytable;
+    private ReelGameSessionPaytableData paytable;
     private ReelGameSessionScatterData[] scatters;
     private ReelGameSessionLinesDirectionData linesDirections;
     private ReelGameSessionWildsMultipliersData wildsMultipliers;
@@ -59,42 +59,32 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
 
     @Override
     public ReelGameSessionPaytableData getPaytable() {
-        return null;
+        return paytable;
     }
 
     @Override
     public void setPaytable(ReelGameSessionPaytableData paytable) {
-
+        this.paytable = paytable;
     }
 
     @Override
     public String getWildItemId() {
-        return null;
+        return wildItemId;
     }
 
     @Override
     public void setWildItemId(String wildItemId) {
-
+        this.wildItemId = wildItemId;
     }
 
     @Override
     public ReelGameSessionScatterData[] getScattersData() {
-        return new ReelGameSessionScatterData[0];
+        return scatters;
     }
 
     @Override
     public void setScattersData(ReelGameSessionScatterData[] scattersData) {
-
-    }
-
-    @Override
-    public int getReelsNumber() {
-        return reelsNumber;
-    }
-
-    @Override
-    public int setReelsItemsNumber() {
-        return 0;
+        this.scatters = scattersData;
     }
 
     @Override
@@ -104,22 +94,17 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
 
     @Override
     public void setLinesDirections(ReelGameSessionLinesDirectionData linesDirections) {
-
+        this.linesDirections = linesDirections;
     }
 
     @Override
-    public ReelGameSessionWildsMultipliersData getWildsMultipliers() {
-        return null;
+    public ReelGameSessionWildsMultipliersData setWildsMultipliers() {
+        return wildsMultipliers;
     }
 
     @Override
-    public void getWildsMultipliers(ReelGameSessionWildsMultipliersData wildsMultipliers) {
-
-    }
-
-    @Override
-    public void setReelsNumber(int reelsNumber) {
-        this.reelsNumber = reelsNumber;
+    public void setWildsMultipliers(ReelGameSessionWildsMultipliersData wildsMultipliers) {
+        this.wildsMultipliers = wildsMultipliers;
     }
 
     @Override
@@ -130,6 +115,18 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
     @Override
     public void setReelsItemsNumber(int reelsItemsNumber) {
         this.reelsItemsNumber = reelsItemsNumber;
+        linesDirections = new ReelGameSessionLinesDirectionDataImpl(ReelGameSessionLinesDirectionDataImpl.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber));
+    }
+
+    @Override
+    public int getReelsNumber() {
+        return reelsNumber;
+    }
+
+    @Override
+    public void setReelsNumber(int reelsItemsNumber) {
+        this.reelsNumber = reelsItemsNumber;
+        linesDirections = new ReelGameSessionLinesDirectionDataImpl(ReelGameSessionLinesDirectionDataImpl.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber));
     }
 
     @Override
@@ -140,6 +137,8 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
     @Override
     public void setAvailableItems(String[] availableItems) {
         this.availableItems = availableItems;
+        paytable = new ReelGameSessionPaytableDataImpl(ReelGameSessionPaytableDataImpl.createDefaultPaytableMap(getAvailableBets(), availableItems, reelsNumber, wildItemId));
+        reelsItemsSequences = createReelsItemsSequences(reelsNumber, availableItems);
     }
 
     @Override
@@ -154,12 +153,12 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
 
     @Override
     public boolean isItemWild(String itemId) {
-        return false;
+        return itemId.equals(wildItemId);
     }
 
     @Override
     public boolean isItemScatter(String itemId) {
-        return false;
+        return Stream.of(scatters).anyMatch(s -> s.getItemId().equals(itemId));
     }
 
 }
