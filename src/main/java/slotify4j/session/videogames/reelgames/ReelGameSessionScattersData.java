@@ -1,11 +1,9 @@
 package slotify4j.session.videogames.reelgames;
 
-import org.apache.commons.math3.util.Pair;
-
 public interface ReelGameSessionScattersData {
 
-    String[] getScattersItemsIds();
+    String getItemId();
 
-    Pair<String, Integer> getMinimumItemsNumForScatterWin();
+    int getMinimumItemsNumForScatterWin();
 
 }

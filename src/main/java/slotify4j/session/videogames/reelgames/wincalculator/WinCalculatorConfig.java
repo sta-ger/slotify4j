@@ -13,8 +13,8 @@ public interface WinCalculatorConfig {
     String getWildItemId();
     void setWildItemId(String wildItemId);
 
-    ReelGameSessionScattersData getScattersData();
-    void setScattersData(ReelGameSessionScattersData scattersData);
+    ReelGameSessionScattersData[] getScattersData();
+    void setScattersData(ReelGameSessionScattersData[] scattersData);
 
     int getReelsNumber();
     int setReelsItemsNumber();

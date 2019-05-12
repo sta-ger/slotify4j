@@ -1,23 +1,21 @@
 package slotify4j.session.videogames.reelgames;
 
-import org.apache.commons.math3.util.Pair;
-
 public class ReelGameSessionScattersDataImpl implements ReelGameSessionScattersData {
-    private final String[] scattersItemsIds;
-    private final Pair<String, Integer> minimumItemsNumForScatterWin;
+    private final String itemId;
+    private final int minimumItemsNumForScatterWin;
 
-    public ReelGameSessionScattersDataImpl(String[] scattersItemsIds, Pair<String, Integer> minimumItemsNumForScatterWin) {
-        this.scattersItemsIds = scattersItemsIds;
+    public ReelGameSessionScattersDataImpl(String itemId, int minimumItemsNumForScatterWin) {
+        this.itemId = itemId;
         this.minimumItemsNumForScatterWin = minimumItemsNumForScatterWin;
     }
 
     @Override
-    public String[] getScattersItemsIds() {
-        return scattersItemsIds;
+    public String getItemId() {
+        return itemId;
     }
 
     @Override
-    public Pair<String, Integer> getMinimumItemsNumForScatterWin() {
+    public int getMinimumItemsNumForScatterWin() {
         return minimumItemsNumForScatterWin;
     }
 }
