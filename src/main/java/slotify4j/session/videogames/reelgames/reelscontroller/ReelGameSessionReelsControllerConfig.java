@@ -1,6 +1,6 @@
 package slotify4j.session.videogames.reelgames.reelscontroller;
 
-public interface ReelsControllerConfig {
+public interface ReelGameSessionReelsControllerConfig {
 
     int getReelsNumber();
     void setReelsNumber(int reelsNumber);

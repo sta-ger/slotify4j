@@ -73,22 +73,22 @@ public class DefaultGameSessionTest {
 
     @Test
     public void testCreateNewSession() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        testDefaultSessionHasProperInitialValues(DefaultGameSession.class.getConstructor(GameSessionConfig.class), DefaultGameSessionConfig.class.getConstructor());
+        testDefaultSessionHasProperInitialValues(GameSessionImpl.class.getConstructor(GameSessionConfig.class), DefaultGameSessionConfig.class.getConstructor());
     }
 
     @Test
     public void testCreateNewSessionWithCustomConfig() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        testDefaultSessionHasProperInitialValuesWithCustomConfig(DefaultGameSession.class.getConstructor(GameSessionConfig.class), DefaultGameSessionConfig.class.getConstructor());
+        testDefaultSessionHasProperInitialValuesWithCustomConfig(GameSessionImpl.class.getConstructor(GameSessionConfig.class), DefaultGameSessionConfig.class.getConstructor());
     }
 
     @Test
     public void testCreateNewSessionWithWrongBet() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        testDefaultSessionWithWrongInitialBet(DefaultGameSession.class.getConstructor(GameSessionConfig.class), DefaultGameSessionConfig.class.getConstructor());
+        testDefaultSessionWithWrongInitialBet(GameSessionImpl.class.getConstructor(GameSessionConfig.class), DefaultGameSessionConfig.class.getConstructor());
     }
 
     @Test
     public void testPlayWhileEnoughCredits() {
-        testDefaultSessionPlaysWhileEnoughCredits(new DefaultGameSession(new DefaultGameSessionConfig()));
+        testDefaultSessionPlaysWhileEnoughCredits(new GameSessionImpl(new DefaultGameSessionConfig()));
     }
 
 }

@@ -3,12 +3,12 @@ package slotify4j.session;
 import java.util.Arrays;
 import java.util.stream.LongStream;
 
-public class DefaultGameSession implements GameSession {
+public class GameSessionImpl implements GameSession {
     private GameSessionConfig config;
     private long bet;
     private long credits;
 
-    public DefaultGameSession(GameSessionConfig config) {
+    public GameSessionImpl(GameSessionConfig config) {
         this.config = config;
         bet = isBetAvailable(config.getBet()) ? config.getBet() : config.getAvailableBets()[0];
         credits = config.getCreditsAmount();

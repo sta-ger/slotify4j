@@ -5,7 +5,7 @@ import slotify4j.session.videogames.reelgames.ReelGameSessionPaytableData;
 import slotify4j.session.videogames.reelgames.ReelGameSessionScatterData;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWildsMultipliersData;
 
-public interface WinCalculatorConfig {
+public interface ReelGameSessionWinCalculatorConfig {
 
     ReelGameSessionPaytableData getPaytable();
     void setPaytable(ReelGameSessionPaytableData paytable);

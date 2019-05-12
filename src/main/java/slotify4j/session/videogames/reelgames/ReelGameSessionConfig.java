@@ -1,10 +1,10 @@
 package slotify4j.session.videogames.reelgames;
 
 import slotify4j.session.GameSessionConfig;
-import slotify4j.session.videogames.reelgames.reelscontroller.ReelsControllerConfig;
-import slotify4j.session.videogames.reelgames.wincalculator.WinCalculatorConfig;
+import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerConfig;
+import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorConfig;
 
-public interface ReelGameSessionConfig extends GameSessionConfig, ReelsControllerConfig, WinCalculatorConfig {
+public interface ReelGameSessionConfig extends GameSessionConfig, ReelGameSessionReelsControllerConfig, ReelGameSessionWinCalculatorConfig {
 
     boolean isItemWild(String itemId);
 
