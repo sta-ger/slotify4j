@@ -2,7 +2,22 @@ package slotify4j.session.videogames.reelgames;
 
 import slotify4j.session.DefaultGameSessionConfig;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.stream.Stream;
+
 public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig implements ReelGameSessionConfig {
+
+    public static String[][] createReelsItemsSequences(int reelsNumber, String[] availableItems) {
+        String[][] r = new String[reelsNumber][availableItems.length * availableItems.length];
+        for (int i = 0; i < reelsNumber; i++) {
+            String[] seq = Stream.of(availableItems).reduce("", (a, b) -> a.concat(String.join(",", availableItems) + ",")).split(",");
+            Collections.shuffle(Arrays.asList(seq));
+            r[i] = seq;
+        }
+        return r;
+    }
+
     public static final String[] DEFAULT_AVAILABLE_ITEMS = new String[] {
             "A",
             "K",
@@ -13,6 +28,7 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
             "W",
             "S"
     };
+
     public static final int DEFAULT_REELS_NUMBER = 5;
     public static final int DEFAULT_REELS_ITEMS_NUMBER = 3;
     public static final String DEFAULT_WILD_ITEM_ID = "W";
@@ -38,6 +54,7 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
         scatters = new ReelGameSessionScatterData[]{new ReelGameSessionScattersDataImpl(DEFAULT_SCATTER_ITEM_ID, DEFAULT_MINIMUM_ITEMS_NUM_FOR_SCATTER_WIN)};
         linesDirections = new ReelGameSessionLinesDirectionDataImpl(ReelGameSessionLinesDirectionDataImpl.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber));
         wildsMultipliers = new ReelGameSessionWildsMultipliersDataPowerOfTwo();
+        reelsItemsSequences = createReelsItemsSequences(reelsNumber, availableItems);
     }
 
     @Override

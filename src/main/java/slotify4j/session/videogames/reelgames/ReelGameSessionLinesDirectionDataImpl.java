@@ -8,7 +8,7 @@ public class ReelGameSessionLinesDirectionDataImpl implements ReelGameSessionLin
     public static Map<Integer, int[]> createDefaultLinesDirectionsMap(int reelsNumber, int reelsItemsNumber) {
         HashMap<Integer, int[]> r = new HashMap<>();
         for (int i = 0; i < reelsItemsNumber; i++) {
-            r.put(i, new int[reelsNumber])
+            r.put(i, new int[reelsNumber]);
             for (int j = 0; j < reelsNumber; j++) {
                 r.get(i)[j] = j;
             }
