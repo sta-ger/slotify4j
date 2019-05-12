@@ -1,6 +1,6 @@
 package slotify4j.session.videogames.reelgames;
 
-public interface ReelGameSessionScattersData {
+public interface ReelGameSessionScatterData {
 
     String getItemId();
 

@@ -2,7 +2,7 @@ package slotify4j.session.videogames.reelgames.wincalculator;
 
 import slotify4j.session.videogames.reelgames.ReelGameSessionLinesDirectionData;
 import slotify4j.session.videogames.reelgames.ReelGameSessionPaytableData;
-import slotify4j.session.videogames.reelgames.ReelGameSessionScattersData;
+import slotify4j.session.videogames.reelgames.ReelGameSessionScatterData;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWildsMultipliersData;
 
 public interface WinCalculatorConfig {
@@ -13,8 +13,8 @@ public interface WinCalculatorConfig {
     String getWildItemId();
     void setWildItemId(String wildItemId);
 
-    ReelGameSessionScattersData[] getScattersData();
-    void setScattersData(ReelGameSessionScattersData[] scattersData);
+    ReelGameSessionScatterData[] getScattersData();
+    void setScattersData(ReelGameSessionScatterData[] scattersData);
 
     int getReelsNumber();
     int setReelsItemsNumber();

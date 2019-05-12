@@ -1,6 +1,6 @@
 package slotify4j.session.videogames.reelgames;
 
-public class ReelGameSessionWildsMultipliersDataImpl implements ReelGameSessionWildsMultipliersData {
+public class ReelGameSessionWildsMultipliersDataPowerOfTwo implements ReelGameSessionWildsMultipliersData {
 
     @Override
     public int getMultiplierValueForWildsNum(int wildNum) {

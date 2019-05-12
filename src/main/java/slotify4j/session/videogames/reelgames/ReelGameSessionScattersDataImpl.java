@@ -1,6 +1,6 @@
 package slotify4j.session.videogames.reelgames;
 
-public class ReelGameSessionScattersDataImpl implements ReelGameSessionScattersData {
+public class ReelGameSessionScattersDataImpl implements ReelGameSessionScatterData {
     private final String itemId;
     private final int minimumItemsNumForScatterWin;
 

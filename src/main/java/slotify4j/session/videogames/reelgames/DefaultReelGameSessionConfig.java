@@ -1,32 +1,103 @@
 package slotify4j.session.videogames.reelgames;
 
-import slotify4j.session.videogames.reelgames.reelscontroller.ReelsControllerConfig;
+import slotify4j.session.DefaultGameSessionConfig;
 
-import java.util.HashMap;
-import java.util.Map;
+public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig implements ReelGameSessionConfig {
+    public static final String[] DEFAULT_AVAILABLE_ITEMS = new String[] {
+            "A",
+            "K",
+            "Q",
+            "J",
+            "10",
+            "9",
+            "W",
+            "S"
+    };
+    public static final int DEFAULT_REELS_NUMBER = 5;
+    public static final int DEFAULT_REELS_ITEMS_NUMBER = 3;
+    public static final String DEFAULT_WILD_ITEM_ID = "W";
+    public static final String DEFAULT_SCATTER_ITEM_ID = "S";
+    public static final int DEFAULT_MINIMUM_ITEMS_NUM_FOR_SCATTER_WIN = 3;
 
-public class DefaultReelGameSessionConfig implements ReelGameSessionConfig {
     private int reelsNumber;
     private int reelsItemsNumber;
     private String[] availableItems;
-    private String[][] reelsItemsSequences;
-
     private String wildItemId;
+    private String[][] reelsItemsSequences;
+    private final ReelGameSessionPaytableData paytable;
+    private ReelGameSessionScatterData[] scatters;
+    private ReelGameSessionLinesDirectionData linesDirections;
+    private ReelGameSessionWildsMultipliersData wildsMultipliers;
 
     public DefaultReelGameSessionConfig() {
-        fillDefaultReelsParameters(this);
-        fillDefaultItemsParameters(this);
+        reelsNumber = DEFAULT_REELS_NUMBER;
+        reelsItemsNumber = DEFAULT_REELS_ITEMS_NUMBER;
+        availableItems = DEFAULT_AVAILABLE_ITEMS;
+        wildItemId = DEFAULT_WILD_ITEM_ID;
+        paytable = new ReelGameSessionPaytableDataImpl(ReelGameSessionPaytableDataImpl.createDefaultPaytableMap(getAvailableBets(), availableItems, reelsNumber, wildItemId));
+        scatters = new ReelGameSessionScatterData[]{new ReelGameSessionScattersDataImpl(DEFAULT_SCATTER_ITEM_ID, DEFAULT_MINIMUM_ITEMS_NUM_FOR_SCATTER_WIN)};
+        linesDirections = new ReelGameSessionLinesDirectionDataImpl(ReelGameSessionLinesDirectionDataImpl.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber));
+        wildsMultipliers = new ReelGameSessionWildsMultipliersDataPowerOfTwo();
     }
 
-    public DefaultReelGameSessionConfig(int reelsNumber, int reelsItemsNumber) {
-        this.reelsNumber = reelsNumber;
-        this.reelsItemsNumber = reelsItemsNumber;
-        fillDefaultItemsParameters(this);
+    @Override
+    public ReelGameSessionPaytableData getPaytable() {
+        return null;
+    }
+
+    @Override
+    public void setPaytable(ReelGameSessionPaytableData paytable) {
+
+    }
+
+    @Override
+    public String getWildItemId() {
+        return null;
+    }
+
+    @Override
+    public void setWildItemId(String wildItemId) {
+
+    }
+
+    @Override
+    public ReelGameSessionScatterData[] getScattersData() {
+        return new ReelGameSessionScatterData[0];
+    }
+
+    @Override
+    public void setScattersData(ReelGameSessionScatterData[] scattersData) {
+
     }
 
     @Override
     public int getReelsNumber() {
         return reelsNumber;
+    }
+
+    @Override
+    public int setReelsItemsNumber() {
+        return 0;
+    }
+
+    @Override
+    public ReelGameSessionLinesDirectionData getLinesDirections() {
+        return null;
+    }
+
+    @Override
+    public void setLinesDirections(ReelGameSessionLinesDirectionData linesDirections) {
+
+    }
+
+    @Override
+    public ReelGameSessionWildsMultipliersData getWildsMultipliers() {
+        return null;
+    }
+
+    @Override
+    public void getWildsMultipliers(ReelGameSessionWildsMultipliersData wildsMultipliers) {
+
     }
 
     @Override
@@ -74,39 +145,4 @@ public class DefaultReelGameSessionConfig implements ReelGameSessionConfig {
         return false;
     }
 
-    public static void fillDefaultReelsParameters(ReelsControllerConfig config) {
-        config.setReelsNumber(5);
-        config.setReelsItemsNumber(3);
-    }
-
-    public static void fillDefaultItemsParameters(ReelGameSessionConfig config) {
-        config.setAvailableItems(new String[]{
-                "A",
-                "K",
-                "Q",
-                "J",
-                "10",
-                "9",
-                "W",
-                "S"
-        });
-    }
-
-    public static Map<Long, Map<String, Map<Integer, Long>>> createDefaultPaytableMap(long[] availableBets, String[] availableItems, int reelsNumber, String wildItemId) {
-        HashMap<Long, Map<String, Map<Integer, Long>>> r = new HashMap<>();
-        for (int i = 0; i < availableBets.length; i++) {
-            long bet = availableBets[i];
-            r.put(bet, new HashMap<>());
-            for (int j = 0; j < availableItems.length; j++) {
-                String itemId = availableItems[j];
-                if (!itemId.equals(wildItemId)) {
-                    r.get(bet).put(itemId, new HashMap<>());
-                    for (int k = 3; k <= reelsNumber; k++) {
-                        r.get(bet).get(itemId).put(k, (k - 2) * bet);
-                    }
-                }
-            }
-        }
-        return r;
-    }
 }
