@@ -30,8 +30,7 @@ public class ReelGameSessionPaytableDataImpl implements ReelGameSessionPaytableD
     }
 
     @Override
-    public long getWinningAmountForItem(String itemId, int numberOfItems) {
-        return 0;
+    public long getWinningAmountForItem(String itemId, int numberOfItems, long bet) {
+        return paytableMap.get(bet).get(itemId).get(numberOfItems);
     }
-
 }
