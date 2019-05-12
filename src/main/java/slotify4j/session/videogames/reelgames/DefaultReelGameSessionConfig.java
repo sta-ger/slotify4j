@@ -89,7 +89,7 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
 
     @Override
     public ReelGameSessionLinesDirectionData getLinesDirections() {
-        return null;
+        return linesDirections;
     }
 
     @Override
@@ -98,7 +98,7 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
     }
 
     @Override
-    public ReelGameSessionWildsMultipliersData setWildsMultipliers() {
+    public ReelGameSessionWildsMultipliersData getWildsMultipliers() {
         return wildsMultipliers;
     }
 

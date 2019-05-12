@@ -25,7 +25,7 @@ public interface ReelGameSessionWinCalculatorConfig {
     ReelGameSessionLinesDirectionData getLinesDirections();
     void setLinesDirections(ReelGameSessionLinesDirectionData linesDirections);
 
-    ReelGameSessionWildsMultipliersData setWildsMultipliers();
+    ReelGameSessionWildsMultipliersData getWildsMultipliers();
     void setWildsMultipliers(ReelGameSessionWildsMultipliersData wildsMultipliers);
 
 }

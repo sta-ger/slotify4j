@@ -10,7 +10,7 @@ public class ReelGameSessionLinesDirectionDataImpl implements ReelGameSessionLin
         for (int i = 0; i < reelsItemsNumber; i++) {
             r.put(i, new int[reelsNumber]);
             for (int j = 0; j < reelsNumber; j++) {
-                r.get(i)[j] = j;
+                r.get(i)[j] = i;
             }
         }
         return r;
