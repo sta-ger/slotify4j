@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -55,8 +56,7 @@ public class ReelGameSessionReelsControllerImplTest {
             put("9", 60);
         }};
 
-
-        assertEquals(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems, counts).length, counts.values().stream().reduce((Integer s, Integer item) -> s + item));
+        assertEquals(Optional.of(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems, counts).length), counts.values().stream().reduce((Integer s, Integer item) -> s + item);
         assertEquals(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems, 10).length, 10 * availableItems.length);
     }
 

@@ -14,14 +14,14 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
     }
 
     public static String[] createItemsSequence(String[] availableItems) {
-        return null;
+        return createItemsSequence(availableItems, null);
     }
 
     public static String[] createItemsSequence(String[] availableItems, Map<String, Integer> countsOfItems) {
         ArrayList<String> rv;
         rv = new ArrayList<>();
         Arrays.stream(availableItems).forEach((itemId) -> {
-            int countIoItems = countsOfItems.getOrDefault(itemId, 1);
+            int countIoItems = countsOfItems != null && countsOfItems.containsKey(itemId) ? countsOfItems.get(itemId) : 1;
             for (int i = 0; i < countIoItems; i++) {
                 rv.add(itemId);
             }
@@ -31,7 +31,15 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
     }
 
     public static String[] createItemsSequence(String[] availableItems, int countOfItems) {
-        return null;
+        ArrayList<String> rv;
+        rv = new ArrayList<>();
+        Arrays.stream(availableItems).forEach((itemId) -> {
+            for (int i = 0; i < countOfItems; i++) {
+                rv.add(itemId);
+            }
+        });
+        Collections.shuffle(rv);
+        return rv.toArray(new String[0]);
     }
 
     private final int reelsNumber;
