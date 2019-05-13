@@ -1,6 +1,6 @@
 package slotify4j.session.videogames.reelgames.reelscontroller;
 
-import java.util.Map;
+import java.util.*;
 
 public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsController {
     public static Object[][] transposeMatrix(Object[][] source) {
@@ -18,7 +18,16 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
     }
 
     public static String[] createItemsSequence(String[] availableItems, Map<String, Integer> countsOfItems) {
-        return null;
+        ArrayList<String> rv;
+        rv = new ArrayList<>();
+        Arrays.stream(availableItems).forEach((itemId) -> {
+            int countIoItems = countsOfItems.getOrDefault(itemId, 1);
+            for (int i = 0; i < countIoItems; i++) {
+                rv.add(itemId);
+            }
+        });
+        Collections.shuffle(rv);
+        return rv.toArray(new String[0]);
     }
 
     public static String[] createItemsSequence(String[] availableItems, int countOfItems) {
