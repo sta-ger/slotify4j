@@ -20,7 +20,7 @@ public class ReelGameSessionWinCalculatorImplTest {
         lines.forEach((lineId, line) -> {
             long lineWin = config.getPaytable().getWinningAmountForItem(line.getItemId(), line.getItemsPositions().length, bet);
             long wildMlt = config.getWildsMultipliers().getMultiplierValueForWildsNum(line.getWildItemsPositions().length);
-            assertEquals(line.getWinningAmount(),  lineWin * wildMlt);
+            assertEquals(line.getWinningAmount(), lineWin * wildMlt);
         });
     }
 
@@ -30,17 +30,19 @@ public class ReelGameSessionWinCalculatorImplTest {
 
     private void testWildItemsPositions(ReelGameSessionWinningLineModel line, int expectedItemsPositionsLength) {
         assertEquals(line.getWildItemsPositions().length, expectedItemsPositionsLength);
-    };
+    }
+
+    ;
 
     @Test
-    private void testCreateLinesPatterns() {
-        /*let patterns = ReelGameSessionWinCalculator.createLinesPatterns(5);
-        expect(patterns).toEqual([
-            [1, 1, 1, 1, 1],
-            [1, 1, 1, 1, 0],
-            [1, 1, 1, 0, 0],
-            [1, 1, 0, 0, 0]
-        ]);*/
+    public void testCreateLinesPatterns() {
+        int[][] patterns = ReelGameSessionWinCalculatorImpl.createLinesPatterns(5);
+        assertArrayEquals(patterns, new int[][] {
+                {1, 1, 1, 1, 1},
+                {1, 1, 1, 1, 0},
+                {1, 1, 1, 0, 0},
+                {1, 1, 0, 0, 0},
+        });
     }
 
 }
