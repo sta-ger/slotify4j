@@ -3,7 +3,7 @@ package slotify4j.session.videogames.reelgames.wincalculator;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWinningLineModel;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWinningScatterModel;
 
-import java.util.Map;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalculator {
@@ -25,6 +25,16 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
                 .filter(i -> pattern[i] == 1)
                 .mapToObj(i -> items[i])
                 .toArray(String[]::new);
+    }
+
+    public static boolean isMatchPattern(String[] items, int[] pattern) {
+        return isMatchPattern(items, pattern, null);
+    }
+
+    public static boolean isMatchPattern(String[] items, int[] pattern, String wildItemId) {
+        List<String> list = Arrays.asList(getItemsMatchingPattern(items, pattern));
+        HashSet<String> unique = new HashSet<>(list);
+        return unique.size() == 1 || (unique.size() == 2 && unique.contains(wildItemId));
     }
 
     public ReelGameSessionWinCalculatorImpl(ReelGameSessionWinCalculatorConfig conf) {
