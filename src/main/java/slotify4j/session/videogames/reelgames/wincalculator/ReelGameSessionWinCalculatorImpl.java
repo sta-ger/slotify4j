@@ -3,10 +3,8 @@ package slotify4j.session.videogames.reelgames.wincalculator;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWinningLineModel;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWinningScatterModel;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalculator {
 
@@ -23,13 +21,10 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
     }
 
     public static String[] getItemsMatchingPattern(String[] items, int[] pattern) {
-        ArrayList<String> list = new ArrayList<>();
-        IntStream.range(0, pattern.length).forEach((i) -> {
-            if (pattern[i] == 1) {
-                list.add(items[i]);
-            }
-        });
-        return (String[]) list.toArray();
+        return IntStream.range(0, items.length)
+                .filter(i -> pattern[i] == 1)
+                .mapToObj(i -> items[i])
+                .toArray(String[]::new);
     }
 
     public ReelGameSessionWinCalculatorImpl(ReelGameSessionWinCalculatorConfig conf) {
