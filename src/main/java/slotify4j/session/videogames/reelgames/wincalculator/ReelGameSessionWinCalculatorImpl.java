@@ -71,6 +71,12 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
         return r;
     }
 
+    public static int[] getWildItemsPositions(String[] items, int[] pattern, String wildItemId) {
+        return IntStream.range(0, items.length)
+                .filter(i -> items[i].equals(wildItemId) && pattern[i] == 1)
+                .toArray();
+    }
+
 
     @Override
     public void setGameState(long bet, String[][] items) {

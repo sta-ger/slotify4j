@@ -33,7 +33,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void testCreateLinesPatterns() {
+    public void createLinesPatternsTest() {
         int[][] patterns = ReelGameSessionWinCalculatorImpl.createLinesPatterns(5);
         assertArrayEquals(patterns, new int[][]{
                 {1, 1, 1, 1, 1},
@@ -44,7 +44,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void testGetItemsMatchingPattern() {
+    public void getItemsMatchingPatternTest() {
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getItemsMatchingPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 1, 0, 0}), new String[]{"A", "A", "A"});
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getItemsMatchingPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{0, 1, 1, 1, 0}), new String[]{"A", "A", "K"});
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getItemsMatchingPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{0, 0, 1, 1, 1}), new String[]{"A", "K", "Q"});
@@ -52,7 +52,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void testIsItemsArrayMatchPattern() {
+    public void isMatchPatternTest() {
         assertTrue(ReelGameSessionWinCalculatorImpl.isMatchPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 0, 0, 0}));
         assertTrue(ReelGameSessionWinCalculatorImpl.isMatchPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 1, 0, 0}));
         assertFalse(ReelGameSessionWinCalculatorImpl.isMatchPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 1, 1, 0}));
@@ -74,7 +74,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void testGetWinningItemId() {
+    public void getWinningItemIdTest() {
         assertEquals(ReelGameSessionWinCalculatorImpl.getWinningItemId(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 1, 0, 0}), "A");
         assertEquals(ReelGameSessionWinCalculatorImpl.getWinningItemId(new String[]{"A", "W", "A", "K", "Q",}, new int[]{1, 1, 1, 0, 0}, "W"), "A");
         assertEquals(ReelGameSessionWinCalculatorImpl.getWinningItemId(new String[]{"A", "W", "W", "K", "Q",}, new int[]{1, 1, 1, 0, 0}, "W"), "A");
@@ -84,7 +84,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void testGetMatchingPattern() {
+    public void getMatchingPatternTest() {
         int[][] patterns = ReelGameSessionWinCalculatorImpl.createLinesPatterns(5);
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getMatchingPattern(new String[]{"A", "A", "K", "Q", "J",}, patterns), new int[]{1, 1, 0, 0, 0});
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getMatchingPattern(new String[]{"A", "A", "A", "K", "Q",}, patterns), new int[]{1, 1, 1, 0, 0});
@@ -93,6 +93,20 @@ public class ReelGameSessionWinCalculatorImplTest {
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getMatchingPattern(new String[]{"A", "W", "A", "W", "A",}, patterns, "W"), new int[]{1, 1, 1, 1, 1});
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getMatchingPattern(new String[]{"W", "W", "A", "W", "K",}, patterns, "W"), new int[]{1, 1, 1, 1, 0});
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getMatchingPattern(new String[]{"A", "W", "A", "W", "K",}, patterns, "W"), new int[]{1, 1, 1, 1, 0});
+    }
+
+    @Test
+    public void getWildItemsPositionsTest() {
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"A", "W", "K", "Q", "J",}, new int[]{1, 1, 0, 0, 0}, "W"), new int[]{1});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"W", "A", "K", "Q", "J",}, new int[]{1, 1, 0, 0, 0}, "W"), new int[]{0});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"A", "W", "W", "Q", "J",}, new int[]{1, 1, 1, 0, 0}, "W"), new int[]{1, 2});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"A", "W", "W", "W", "J",}, new int[]{1, 1, 1, 1, 0}, "W"), new int[]{1, 2, 3});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"A", "W", "W", "W", "W",}, new int[]{1, 1, 1, 1, 1}, "W"), new int[]{1, 2, 3, 4});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"W", "W", "K", "Q", "J",}, new int[]{1, 1, 1, 0, 0}, "W"), new int[]{0, 1});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"W", "W", "W", "K", "Q",}, new int[]{1, 1, 1, 1, 0}, "W"), new int[]{0, 1, 2});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"W", "W", "W", "W", "K",}, new int[]{1, 1, 1, 1, 1}, "W"), new int[]{0, 1, 2, 3});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"W", "W", "K", "W", "K",}, new int[]{1, 1, 1, 1, 1}, "W"), new int[]{0, 1, 3});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"K", "W", "K", "W", "K",}, new int[]{1, 1, 1, 1, 1}, "W"), new int[]{1, 3});
     }
 
 }
