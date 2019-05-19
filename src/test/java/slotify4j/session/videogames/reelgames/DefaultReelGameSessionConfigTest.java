@@ -37,6 +37,7 @@ public class DefaultReelGameSessionConfigTest {
         assertArrayEquals(conf.getLinesDirections().getVerticalItemsPositionsForLineId(0), new int[]{0, 0, 0, 0, 0});
         assertArrayEquals(conf.getLinesDirections().getVerticalItemsPositionsForLineId(1), new int[]{1, 1, 1, 1, 1});
         assertArrayEquals(conf.getLinesDirections().getVerticalItemsPositionsForLineId(2), new int[]{2, 2, 2, 2, 2});
+        assertArrayEquals(conf.getLinesDirections().getLinesIds(), new int[]{0, 1, 2});
 
         assertEquals(conf.getReelsItemsSequences().length, conf.getReelsNumber());
         Stream.of(conf.getReelsItemsSequences()).forEach(seq -> {

@@ -1,13 +1,13 @@
 package slotify4j.session.videogames.reelgames.wincalculator;
 
 import org.junit.Test;
-import slotify4j.session.videogames.reelgames.DefaultReelGameSessionConfig;
-import slotify4j.session.videogames.reelgames.ReelGameSessionConfig;
-import slotify4j.session.videogames.reelgames.ReelGameSessionWinningLineModel;
-import slotify4j.session.videogames.reelgames.ReelGameSessionWinningScatterModel;
+import slotify4j.session.videogames.reelgames.*;
+import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsController;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 
@@ -122,6 +122,53 @@ public class ReelGameSessionWinCalculatorImplTest {
                 {2, 2},
                 {4, 1},
         });
+    }
+
+    @Test
+    public void getWinningLinesIdsTest() {
+        ReelGameSessionLinesDirectionDataImpl directions = new ReelGameSessionLinesDirectionDataImpl(
+                new HashMap<>() {{
+                    put(0, new int[]{1, 1, 1});
+                    put(1, new int[]{0, 0, 0});
+                    put(2, new int[]{2, 2, 2});
+                    put(3, new int[]{0, 1, 2});
+                    put(4, new int[]{2, 1, 0});
+                }}
+        );
+
+        int[][] patterns = ReelGameSessionWinCalculatorImpl.createLinesPatterns(3);
+
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWinningLinesIds(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A"},
+                {"K", "Q", "J"},
+                {"K", "Q", "J"},
+        }), directions, patterns), new int[]{1});
+
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWinningLinesIds(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A"},
+                {"K", "Q", "J"},
+                {"A", "A", "A"},
+        }), directions, patterns), new int[]{1, 2});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWinningLinesIds(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"K", "Q", "J"},
+                {"A", "A", "A"},
+                {"K", "Q", "J"},
+        }), directions, patterns), new int[]{0});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWinningLinesIds(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A"},
+                {"A", "A", "A"},
+                {"K", "Q", "J"},
+        }), directions, patterns), new int[]{0, 1, 3});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWinningLinesIds(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"K", "Q", "J"},
+                {"A", "A", "A"},
+                {"A", "A", "A"},
+        }), directions, patterns), new int[]{0, 2, 4});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWinningLinesIds(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A"},
+                {"A", "A", "A"},
+                {"A", "A", "A"},
+        }), directions, patterns), new int[]{0, 1, 2, 3, 4});
     }
 
 }

@@ -4,4 +4,6 @@ public interface ReelGameSessionLinesDirectionData {
 
     int[] getVerticalItemsPositionsForLineId(int lineId);
 
+    int[] getLinesIds();
+
 }

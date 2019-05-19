@@ -1,5 +1,6 @@
 package slotify4j.session.videogames.reelgames.wincalculator;
 
+import slotify4j.session.videogames.reelgames.ReelGameSessionLinesDirectionData;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWinningLineModel;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWinningScatterModel;
 
@@ -18,6 +19,12 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
             r[i] = arr;
         }
         return r;
+    }
+
+    public static String[] getItemsForDirection(String[][] items, int[] direction) {
+        return IntStream.range(0, direction.length)
+                .mapToObj((col) -> items[col][direction[col]])
+                .toArray(String[]::new);
     }
 
     public static String[] getItemsMatchingPattern(String[] items, int[] pattern) {
@@ -62,13 +69,13 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
 
     public static int[] getMatchingPattern(String[] items, int[][] patterns, String wildItemId) {
         int[] r = new int[0];
-        for (int i = 0; i < patterns.length; i++) {
-            if (isMatchPattern(items, patterns[i], wildItemId)) {
-                r = patterns[i];
+        for (int[] pattern : patterns) {
+            if (isMatchPattern(items, pattern, wildItemId)) {
+                r = pattern;
                 break;
             }
         }
-        return r;
+        return r.length > 0 ? r : null;
     }
 
     public static int[] getWildItemsPositions(String[] items, int[] pattern, String wildItemId) {
@@ -89,6 +96,17 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
         return r.toArray(new int[r.size()][]);
     }
 
+    public static int[] getWinningLinesIds(String[][] items, ReelGameSessionLinesDirectionData linesDirections, int[][] patterns) {
+        return getWinningLinesIds(items, linesDirections, patterns, null);
+    }
+
+    public static int[] getWinningLinesIds(String[][] items, ReelGameSessionLinesDirectionData linesDirections, int[][] patterns, String wildItemId) {
+        int[] lines = linesDirections.getLinesIds();
+        return IntStream.of(lines).filter((lineId) -> {
+            String[] itemsLine = ReelGameSessionWinCalculatorImpl.getItemsForDirection(items, linesDirections.getVerticalItemsPositionsForLineId(lineId));
+            return ReelGameSessionWinCalculatorImpl.getMatchingPattern(itemsLine, patterns, wildItemId) != null;
+        }).toArray();
+    }
 
     @Override
     public void setGameState(long bet, String[][] items) {
