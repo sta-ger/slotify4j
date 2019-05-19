@@ -56,6 +56,21 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
 
     }
 
+    public static int[] getMatchingPattern(String[] items, int[][] patterns) {
+        return getMatchingPattern(items, patterns, null);
+    }
+
+    public static int[] getMatchingPattern(String[] items, int[][] patterns, String wildItemId) {
+        int[] r = new int[0];
+        for (int i = 0; i < patterns.length; i++) {
+            if (isMatchPattern(items, patterns[i], wildItemId)) {
+                r = patterns[i];
+                break;
+            }
+        }
+        return r;
+    }
+
 
     @Override
     public void setGameState(long bet, String[][] items) {
