@@ -1,22 +1,22 @@
 package slotify4j.session.videogames.reelgames;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class DefaultReelGameSessionConfigTest {
+class DefaultReelGameSessionConfigTest {
 
     private void testPaytableItem(ReelGameSessionPaytableData paytable, String itemId, int num, long bet, long expected) {
         assertEquals(paytable.getWinningAmountForItem(itemId, num, bet), expected);
     }
 
     @Test
-    public void testCreateDefaultConfig() {
+    void testCreateDefaultConfig() {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         assertEquals(conf.getWildItemId(), "W");
 
@@ -68,14 +68,14 @@ public class DefaultReelGameSessionConfigTest {
     }
 
     @Test
-    public void testIsItemWild() {
+    void testIsItemWild() {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         assertTrue(conf.isItemWild("W"));
         assertFalse(conf.isItemWild("A"));
     }
 
     @Test
-    public void testIsItemScatter() {
+    void testIsItemScatter() {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         assertTrue(conf.isItemScatter("S"));
         assertFalse(conf.isItemScatter("A"));

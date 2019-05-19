@@ -1,13 +1,13 @@
 package slotify4j.session;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class DefaultGameSessionTest {
+class DefaultGameSessionTest {
 
     public static void testDefaultSessionHasProperInitialValues(Constructor<? extends GameSession> sessionConstructor, Constructor<? extends GameSessionConfig> configConstructor) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         GameSessionConfig config = configConstructor.newInstance();
@@ -72,22 +72,22 @@ public class DefaultGameSessionTest {
     }
 
     @Test
-    public void testCreateNewSession() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
+    void testCreateNewSession() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
         testDefaultSessionHasProperInitialValues(GameSessionImpl.class.getConstructor(GameSessionConfig.class), DefaultGameSessionConfig.class.getConstructor());
     }
 
     @Test
-    public void testCreateNewSessionWithCustomConfig() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
+    void testCreateNewSessionWithCustomConfig() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
         testDefaultSessionHasProperInitialValuesWithCustomConfig(GameSessionImpl.class.getConstructor(GameSessionConfig.class), DefaultGameSessionConfig.class.getConstructor());
     }
 
     @Test
-    public void testCreateNewSessionWithWrongBet() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
+    void testCreateNewSessionWithWrongBet() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
         testDefaultSessionWithWrongInitialBet(GameSessionImpl.class.getConstructor(GameSessionConfig.class), DefaultGameSessionConfig.class.getConstructor());
     }
 
     @Test
-    public void testPlayWhileEnoughCredits() {
+    void testPlayWhileEnoughCredits() {
         testDefaultSessionPlaysWhileEnoughCredits(new GameSessionImpl(new DefaultGameSessionConfig()));
     }
 

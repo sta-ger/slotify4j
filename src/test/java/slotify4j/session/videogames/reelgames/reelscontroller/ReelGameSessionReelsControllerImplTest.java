@@ -1,15 +1,13 @@
 package slotify4j.session.videogames.reelgames.reelscontroller;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-
-public class ReelGameSessionReelsControllerImplTest {
+import static org.junit.jupiter.api.Assertions.*;
+class ReelGameSessionReelsControllerImplTest {
     private String[] availableItems = new String[]{
             "A",
             "K",
@@ -20,7 +18,7 @@ public class ReelGameSessionReelsControllerImplTest {
     };
 
     @Test
-    public void transposeMatrixTest() {
+    void transposeMatrixTest() {
         assertArrayEquals(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
                 {"1", "2", "3", "4"},
                 {"5", "6", "7", "8"},
@@ -33,12 +31,12 @@ public class ReelGameSessionReelsControllerImplTest {
     }
 
     @Test
-    public void testCreateShuffledSequenceOfSpecifiedItems() {
+    void testCreateShuffledSequenceOfSpecifiedItems() {
         assertEquals(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems).length, availableItems.length);
     }
 
     @Test
-    public void testCreateShuffledSequenceOfSpecifiedItemsAndCountsOfItems() {
+    void testCreateShuffledSequenceOfSpecifiedItemsAndCountsOfItems() {
         assertEquals(Objects.requireNonNull(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems, new HashMap<>() {{
             put("A", 2);
         }})).length, availableItems.length + 1);

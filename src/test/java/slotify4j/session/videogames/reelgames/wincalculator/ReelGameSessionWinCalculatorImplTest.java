@@ -1,17 +1,15 @@
 package slotify4j.session.videogames.reelgames.wincalculator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import slotify4j.session.videogames.reelgames.*;
-import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsController;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Stream;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ReelGameSessionWinCalculatorImplTest {
+class ReelGameSessionWinCalculatorImplTest {
     private ReelGameSessionConfig config = new DefaultReelGameSessionConfig();
     private ReelGameSessionWinCalculator winningCalculator = new ReelGameSessionWinCalculatorImpl(config);
     private Map<String, ReelGameSessionWinningLineModel> lines;
@@ -34,7 +32,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void createLinesPatternsTest() {
+    void createLinesPatternsTest() {
         int[][] patterns = ReelGameSessionWinCalculatorImpl.createLinesPatterns(5);
         assertArrayEquals(patterns, new int[][]{
                 {1, 1, 1, 1, 1},
@@ -45,7 +43,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void getItemsMatchingPatternTest() {
+    void getItemsMatchingPatternTest() {
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getItemsMatchingPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 1, 0, 0}), new String[]{"A", "A", "A"});
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getItemsMatchingPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{0, 1, 1, 1, 0}), new String[]{"A", "A", "K"});
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getItemsMatchingPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{0, 0, 1, 1, 1}), new String[]{"A", "K", "Q"});
@@ -53,7 +51,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void isMatchPatternTest() {
+    void isMatchPatternTest() {
         assertTrue(ReelGameSessionWinCalculatorImpl.isMatchPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 0, 0, 0}));
         assertTrue(ReelGameSessionWinCalculatorImpl.isMatchPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 1, 0, 0}));
         assertFalse(ReelGameSessionWinCalculatorImpl.isMatchPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 1, 1, 0}));
@@ -75,7 +73,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void getWinningItemIdTest() {
+    void getWinningItemIdTest() {
         assertEquals(ReelGameSessionWinCalculatorImpl.getWinningItemId(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 1, 0, 0}), "A");
         assertEquals(ReelGameSessionWinCalculatorImpl.getWinningItemId(new String[]{"A", "W", "A", "K", "Q",}, new int[]{1, 1, 1, 0, 0}, "W"), "A");
         assertEquals(ReelGameSessionWinCalculatorImpl.getWinningItemId(new String[]{"A", "W", "W", "K", "Q",}, new int[]{1, 1, 1, 0, 0}, "W"), "A");
@@ -85,7 +83,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void getMatchingPatternTest() {
+    void getMatchingPatternTest() {
         int[][] patterns = ReelGameSessionWinCalculatorImpl.createLinesPatterns(5);
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getMatchingPattern(new String[]{"A", "A", "K", "Q", "J",}, patterns), new int[]{1, 1, 0, 0, 0});
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getMatchingPattern(new String[]{"A", "A", "A", "K", "Q",}, patterns), new int[]{1, 1, 1, 0, 0});
@@ -97,7 +95,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void getWildItemsPositionsTest() {
+    void getWildItemsPositionsTest() {
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"A", "W", "K", "Q", "J",}, new int[]{1, 1, 0, 0, 0}, "W"), new int[]{1});
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"W", "A", "K", "Q", "J",}, new int[]{1, 1, 0, 0, 0}, "W"), new int[]{0});
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"A", "W", "W", "Q", "J",}, new int[]{1, 1, 1, 0, 0}, "W"), new int[]{1, 2});
@@ -111,7 +109,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void getScatterItemsPositionsTest() {
+    void getScatterItemsPositionsTest() {
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getScatterItemsPositions(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
                 {"A", "K", "Q", "J", "10"},
                 {"S", "S", "Q", "J", "S"},
@@ -125,7 +123,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void getItemsForDirectionTest() {
+    void getItemsForDirectionTest() {
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getItemsForDirection(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
                 {"A", "A", "A", "K", "Q"},
                 {"A", "K", "Q", "J", "10"},
@@ -154,7 +152,7 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void getWinningLinesIdsTest() {
+    void getWinningLinesIdsTest() {
         ReelGameSessionLinesDirectionDataImpl directions = new ReelGameSessionLinesDirectionDataImpl(
                 new HashMap<>() {{
                     put(0, new int[]{1, 1, 1});
