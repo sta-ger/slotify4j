@@ -77,6 +77,18 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
                 .toArray();
     }
 
+    public static int[][] getScatterItemsPositions(String[][] items, String scatterItemId) {
+        ArrayList<int[]> r = new ArrayList<>();
+        for (int i = 0; i < items.length; i++) {
+            for (int j = 0; j < items[i].length; j++) {
+                if (items[i][j].equals(scatterItemId)) {
+                    r.add(new int[]{i, j});
+                }
+            }
+        }
+        return r.toArray(new int[r.size()][]);
+    }
+
 
     @Override
     public void setGameState(long bet, String[][] items) {

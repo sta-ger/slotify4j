@@ -3,8 +3,9 @@ package slotify4j.session.videogames.reelgames.reelscontroller;
 import java.util.*;
 
 public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsController {
-    public static Object[][] transposeMatrix(Object[][] source) {
-        Object[][] tmp = new Object[source[0].length][source.length];
+
+    public static String[][] transposeItemsMatrix(String[][] source) {
+        String[][] tmp = new String[source[0].length][source.length];
         for (int i = 0; i < source.length; i++) {
             for (int j = 0; j < source[0].length; j++) {
                 tmp[j][i] = source[i][j];

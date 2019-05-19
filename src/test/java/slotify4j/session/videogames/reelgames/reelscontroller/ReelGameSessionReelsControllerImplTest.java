@@ -21,14 +21,14 @@ public class ReelGameSessionReelsControllerImplTest {
 
     @Test
     public void transposeMatrixTest() {
-        assertArrayEquals(ReelGameSessionReelsControllerImpl.transposeMatrix(new Integer[][]{
-                new Integer[]{1, 2, 3, 4},
-                new Integer[]{5, 6, 7, 8},
-        }), new Integer[][]{
-                new Integer[]{1, 5},
-                new Integer[]{2, 6},
-                new Integer[]{3, 7},
-                new Integer[]{4, 8},
+        assertArrayEquals(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"1", "2", "3", "4"},
+                {"5", "6", "7", "8"},
+        }), new String[][]{
+                {"1", "5"},
+                {"2", "6"},
+                {"3", "7"},
+                {"4", "8"},
         });
     }
 

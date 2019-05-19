@@ -5,6 +5,7 @@ import slotify4j.session.videogames.reelgames.DefaultReelGameSessionConfig;
 import slotify4j.session.videogames.reelgames.ReelGameSessionConfig;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWinningLineModel;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWinningScatterModel;
+import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
 
 import java.util.Map;
 
@@ -107,6 +108,20 @@ public class ReelGameSessionWinCalculatorImplTest {
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"W", "W", "W", "W", "K",}, new int[]{1, 1, 1, 1, 1}, "W"), new int[]{0, 1, 2, 3});
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"W", "W", "K", "W", "K",}, new int[]{1, 1, 1, 1, 1}, "W"), new int[]{0, 1, 3});
         assertArrayEquals(ReelGameSessionWinCalculatorImpl.getWildItemsPositions(new String[]{"K", "W", "K", "W", "K",}, new int[]{1, 1, 1, 1, 1}, "W"), new int[]{1, 3});
+    }
+
+    @Test
+    public void getScatterItemsPositionsTest() {
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getScatterItemsPositions(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "K", "Q", "J", "10"},
+                {"S", "S", "Q", "J", "S"},
+                {"A", "K", "S", "J", "10"},
+        }), "S"), new int[][]{
+                {0, 1},
+                {1, 1},
+                {2, 2},
+                {4, 1},
+        });
     }
 
 }
