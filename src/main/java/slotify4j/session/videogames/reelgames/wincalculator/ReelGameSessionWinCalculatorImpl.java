@@ -32,9 +32,24 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
     }
 
     public static boolean isMatchPattern(String[] items, int[] pattern, String wildItemId) {
-        List<String> list = Arrays.asList(getItemsMatchingPattern(items, pattern));
-        HashSet<String> unique = new HashSet<>(list);
+        List<String> itemsByPattern = Arrays.asList(getItemsMatchingPattern(items, pattern));
+        HashSet<String> unique = new HashSet<>(itemsByPattern);
         return unique.size() == 1 || (unique.size() == 2 && unique.contains(wildItemId));
+    }
+
+    public static String getWinningItemId(String[] items, int[] pattern) {
+        return getWinningItemId(items, pattern, null);
+    }
+
+    public static String getWinningItemId(String[] items, int[] pattern, String wildItemId) {
+        List<String> itemsByPattern = Arrays.asList(getItemsMatchingPattern(items, pattern));
+        HashSet<String> unique = new HashSet<>(itemsByPattern);
+        return unique.stream().reduce((prev, cur) -> {
+            if (!cur.equals(wildItemId)) {
+                prev = cur;
+            }
+            return prev;
+        }).orElse(null);
     }
 
     public ReelGameSessionWinCalculatorImpl(ReelGameSessionWinCalculatorConfig conf) {
