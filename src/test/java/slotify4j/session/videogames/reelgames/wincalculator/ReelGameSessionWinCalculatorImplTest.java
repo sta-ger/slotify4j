@@ -125,6 +125,35 @@ public class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
+    public void getItemsForDirectionTest() {
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getItemsForDirection(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A", "K", "Q"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }), new int[]{0, 0, 0, 0, 0}), new String[]{"A", "A", "A", "K", "Q"});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getItemsForDirection(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A", "K", "Q"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }), new int[]{1, 1, 1, 1, 1}), new String[]{"A", "K", "Q", "J", "10"});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getItemsForDirection(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A", "K", "Q"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }), new int[]{2, 2, 2, 2, 2}), new String[]{"K", "Q", "J", "10", "9"});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getItemsForDirection(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A", "K", "Q"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }), new int[]{0, 1, 2, 1, 0}), new String[]{"A", "K", "J", "J", "Q"});
+        assertArrayEquals(ReelGameSessionWinCalculatorImpl.getItemsForDirection(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A", "K", "Q"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }), new int[]{2, 0, 1, 2, 0}), new String[]{"K", "A", "Q", "10", "Q"});
+    }
+
+    @Test
     public void getWinningLinesIdsTest() {
         ReelGameSessionLinesDirectionDataImpl directions = new ReelGameSessionLinesDirectionDataImpl(
                 new HashMap<>() {{
