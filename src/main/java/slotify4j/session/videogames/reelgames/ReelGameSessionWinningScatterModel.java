@@ -4,7 +4,7 @@ public interface ReelGameSessionWinningScatterModel {
 
     String getItemId();
 
-    ReelGameSessionWinningScatterPosition getItemsPositions();
+    int[][] getItemsPositions();
 
     long getWinningAmount();
 

@@ -2,11 +2,11 @@ package slotify4j.session.videogames.reelgames;
 
 public interface ReelGameSessionWinningLineModel {
 
-    ReelGameSessionLinesDirectionData getDirection();
+    int[] getDirection();
 
     String getItemId();
 
-    String getLineId();
+    int getLineId();
 
     int[] getItemsPositions();
 

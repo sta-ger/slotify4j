@@ -9,7 +9,7 @@ public interface ReelGameSessionWinCalculator {
 
     void setGameState(long bet, String[][] items) throws Exception;
 
-    Map<String, ReelGameSessionWinningLineModel> getWinningLines();
+    Map<Integer, ReelGameSessionWinningLineModel> getWinningLines();
 
     Map<String, ReelGameSessionWinningScatterModel> getWinningScatters();
 

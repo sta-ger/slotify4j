@@ -1,21 +1,21 @@
 package slotify4j.session.videogames.reelgames.wincalculator;
 
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.CollectionUtils;
 import slotify4j.session.videogames.reelgames.*;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReelGameSessionWinCalculatorImplTest {
     private ReelGameSessionConfig config = new DefaultReelGameSessionConfig();
     private ReelGameSessionWinCalculator winningCalculator = new ReelGameSessionWinCalculatorImpl(config);
-    private Map<String, ReelGameSessionWinningLineModel> lines;
+    private Map<Integer, ReelGameSessionWinningLineModel> lines;
     private Map<String, ReelGameSessionWinningScatterModel> scatters;
 
-    private void testWinning(long bet, Map<String, ReelGameSessionWinningLineModel> lines) {
+    private void testWinning(long bet, Map<Integer, ReelGameSessionWinningLineModel> lines) {
         lines.forEach((lineId, line) -> {
             long lineWin = config.getPaytable().getWinningAmountForItem(line.getItemId(), line.getItemsPositions().length, bet);
             long wildMlt = config.getWildsMultipliers().getMultiplierValueForWildsNum(line.getWildItemsPositions().length);
@@ -210,6 +210,47 @@ class ReelGameSessionWinCalculatorImplTest {
                 {"A", "A", "A", "A", "A"},
                 {"A", "A", "A", "A", "A"},
         })));
+    }
+
+    @Test
+    void calculateWinningLinesAfterUpdateStateTest() throws Exception {
+        Arrays.stream(config.getAvailableBets()).forEach(bet -> {
+            Arrays.stream(config.getAvailableItems()).forEach(item -> {
+                if (!config.isItemWild(item) && !config.isItemScatter(item)) {
+                    try {
+                        winningCalculator.setGameState(bet, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                                {item, item, item, item, item},
+                                {item, item, item, item, item},
+                                {item, item, item, item, item},
+                        }));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    lines = winningCalculator.getWinningLines();
+                    assertEquals(lines.keySet().size(), 3);
+                    assertTrue(lines.keySet().contains(0));
+                    assertTrue(lines.keySet().contains(1));
+                    assertTrue(lines.keySet().contains(2));
+                    testWinning(bet, lines);
+                    testItemsPositions(lines.get(0), 5);
+                    testItemsPositions(lines.get(1), 5);
+                    testItemsPositions(lines.get(2), 5);
+                }
+            });
+        });
+
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A", "K", "Q"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }));
+        lines = winningCalculator.getWinningLines();
+        assertEquals(lines.keySet().size(), 1);
+        assertTrue(lines.keySet().contains(0));
+        assertFalse(lines.keySet().contains(1));
+        assertFalse(lines.keySet().contains(2));
+        testWinning(1, lines);
+        testItemsPositions(lines.get(0), 3);
     }
 
 }

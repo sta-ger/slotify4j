@@ -7,13 +7,6 @@ import java.util.stream.IntStream;
 
 public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalculator {
 
-    private final ReelGameSessionLinesDirectionData linesDirections;
-    private final int reelsItemsNumber;
-    private final int reelsNumber;
-    private final int[][] linesPatterns;
-    private final String wildItemId;
-    private final ReelGameSessionWildsMultipliersData wildsMultipliers;
-
     public static int[][] createLinesPatterns(int reelsNumber) {
         int[][] r = new int[reelsNumber - 1][];
         for (int i = 0; i < reelsNumber - 1; i++) {
@@ -104,16 +97,26 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
     public static int[] getWinningLinesIds(String[][] items, ReelGameSessionLinesDirectionData linesDirections, int[][] patterns, String wildItemId) {
         int[] lines = linesDirections.getLinesIds();
         return IntStream.of(lines).filter((lineId) -> {
-            String[] itemsLine = ReelGameSessionWinCalculatorImpl.getItemsForDirection(items, linesDirections.getVerticalItemsPositionsForLineId(lineId));
-            return ReelGameSessionWinCalculatorImpl.getMatchingPattern(itemsLine, patterns, wildItemId) != null;
+            String[] itemsLine = getItemsForDirection(items, linesDirections.getVerticalItemsPositionsForLineId(lineId));
+            return getMatchingPattern(itemsLine, patterns, wildItemId) != null;
         }).toArray();
     }
 
     private final ReelGameSessionWinCalculatorConfig config;
     private final ReelGameSessionPaytableData paytable;
+    private final ReelGameSessionLinesDirectionData linesDirections;
+    private final int reelsItemsNumber;
+    private final int reelsNumber;
+    private final int[][] linesPatterns;
+    private final String wildItemId;
+    private final ReelGameSessionWildsMultipliersData wildsMultipliers;
+    private final ReelGameSessionScatterData[] scatters;
+
     private String[][] items;
-    private ArrayList<ReelGameSessionWinningLineModel> winningLines;
+    private Map<Integer, ReelGameSessionWinningLineModel> winningLines;
     private long linesWinning;
+    private int scattersWinning;
+    private Map<String, ReelGameSessionWinningScatterModel> winningScatters;
 
     public ReelGameSessionWinCalculatorImpl(ReelGameSessionWinCalculatorConfig conf) {
         config = conf;
@@ -123,7 +126,8 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
         wildsMultipliers = conf.getWildsMultipliers();
         paytable = conf.getPaytable();
         linesDirections = conf.getLinesDirections();
-        linesPatterns = ReelGameSessionWinCalculatorImpl.createLinesPatterns(reelsNumber);
+        linesPatterns = createLinesPatterns(reelsNumber);
+        scatters = conf.getScattersData();
     }
 
     @Override
@@ -137,48 +141,65 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
     }
 
     private void calculateWinning(long bet) {
-        int lineId;
         ReelGameSessionWinningLineModel line;
-        winningLines = new ArrayList<ReelGameSessionWinningLineModel>();
+        winningLines = new HashMap<>();
         linesWinning = 0;
-        int[] winningLinesIds = ReelGameSessionWinCalculatorImpl.getWinningLinesIds(items, linesDirections, linesPatterns, wildItemId);
-        for (lineId : winningLinesIds) {
+        int[] winningLinesIds = getWinningLinesIds(items, linesDirections, linesPatterns, wildItemId);
+        for (int lineId : winningLinesIds) {
             line = this.generateWinningLine(bet, lineId);
-            if (line.winningAmount > 0) {
-                this._winningLines[lineId] = line;
-                this._linesWinning += line.winningAmount;
+            if (line.getWinningAmount() > 0) {
+                this.winningLines.put(line.getLineId(), line);
+                this.linesWinning += line.getWinningAmount();
             }
         }
-        this._scattersWinning = 0;
-        this._winningScatters = this.generateWinningScatters(bet);
-        Object.keys(this._winningScatters).forEach((scatterId) => {
-                this._scattersWinning += this._winningScatters[scatterId].winningAmount;
-        });
+        this.scattersWinning = 0;
+        this.winningScatters = this.generateWinningScatters(bet);
+        winningScatters.forEach((scatterId, scatter) -> this.scattersWinning += scatter.getWinningAmount());
     }
 
     private ReelGameSessionWinningLineModel generateWinningLine(long bet, int lineId) {
-        ReelGameSessionWinningLineModel line;
-        int[] direction;
-        String[] itemsLine;
-        int[] pattern;
-        direction = linesDirections.getVerticalItemsPositionsForLineId(lineId);
-        itemsLine = ReelGameSessionWinCalculatorImpl.getItemsForDirection(items, direction);
-        pattern = ReelGameSessionWinCalculatorImpl.getMatchingPattern(itemsLine, linesPatterns, wildItemId);
-        line = new ReelGameSessionWinningLineModelImpl(0, direction, lineId, pattern, ReelGameSessionWinCalculatorImpl.getWildItemsPositions(itemsLine, pattern, wildItemId), ReelGameSessionWinCalculatorImpl.getWinningItemId(itemsLine, pattern, wildItemId));
-        return line;
+        int[] direction = linesDirections.getVerticalItemsPositionsForLineId(lineId);
+        String[] itemsLine = getItemsForDirection(items, direction);
+        int[] pattern = getMatchingPattern(itemsLine, linesPatterns, wildItemId);
+        assert pattern != null;
+        int[] itemsPositions = IntStream.range(0, pattern.length).filter(i -> pattern[i] == 1).toArray();
+        String itemId = getWinningItemId(itemsLine, pattern, wildItemId);
+        int[] wildItemsPositions = getWildItemsPositions(itemsLine, pattern, wildItemId);
+        long winAmount = getLineWinningAmount(bet, itemId, itemsPositions.length, wildItemsPositions.length);
+        return new ReelGameSessionWinningLineModelImpl(winAmount, direction, lineId, itemsPositions, wildItemsPositions, itemId);
     }
 
-    private long getLineWinningAmount(long bet, ReelGameSessionWinningLineModel line) {
-        long rv;
-        if (paytable.getWinningAmountForItem(line.getItemId(), line.getItemsPositions().length, bet) != 0) {
-            rv = paytable.getWinningAmountForItem(line.getItemId(), line.getItemsPositions().length, bet) * wildsMultipliers.getMultiplierValueForWildsNum(line.getWildItemsPositions().length);
+    private long getLineWinningAmount(long bet, String itemId, int numOfWinningItems, int numOfWilds) {
+        long rv = 0;
+        if (paytable.getWinningAmountForItem(itemId, numOfWinningItems, bet) != 0) {
+            rv = paytable.getWinningAmountForItem(itemId, numOfWinningItems, bet) * wildsMultipliers.getMultiplierValueForWildsNum(numOfWilds);
         }
         return rv;
     }
 
+    private Map<String, ReelGameSessionWinningScatterModel> generateWinningScatters(long bet) {
+        Map<String, ReelGameSessionWinningScatterModel> rv = new HashMap<>();
+        if (this.scatters != null) {
+            for (ReelGameSessionScatterData scatter : scatters) {
+                String curScatterItemId = scatter.getItemId();
+                int curScatterMinItemsForWin = scatter.getMinimumItemsNumForScatterWin();
+                int[][] curScatterItemsPositions = getScatterItemsPositions(curScatterItemId);
+                long winningAmount = getLineWinningAmount(bet, curScatterItemId, curScatterItemsPositions.length, 0);
+                if (curScatterItemsPositions.length >= curScatterMinItemsForWin) {
+                    rv.put(curScatterItemId, new ReelGameSessionWinningScatterModelImpl(curScatterItemId, curScatterItemsPositions, winningAmount));
+                }
+            }
+        }
+        return rv;
+    }
+
+    private int[][] getScatterItemsPositions(String itemId) {
+        return ReelGameSessionWinCalculatorImpl.getScatterItemsPositions(this.items, itemId);
+    }
+
     @Override
-    public Map<String, ReelGameSessionWinningLineModel> getWinningLines() {
-        return null;
+    public Map<Integer, ReelGameSessionWinningLineModel> getWinningLines() {
+        return winningLines;
     }
 
     @Override
