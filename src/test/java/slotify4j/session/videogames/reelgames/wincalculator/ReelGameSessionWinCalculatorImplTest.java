@@ -198,4 +198,18 @@ class ReelGameSessionWinCalculatorImplTest {
         }), directions, patterns), new int[]{0, 1, 2, 3, 4});
     }
 
+    @Test
+    void setGameStateTest() {
+        assertDoesNotThrow(() -> winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A", "A", "A"},
+                {"A", "A", "A", "A", "A"},
+                {"A", "A", "A", "A", "A"},
+        })));
+        assertThrows(Exception.class, () -> winningCalculator.setGameState(0, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A", "A", "A"},
+                {"A", "A", "A", "A", "A"},
+                {"A", "A", "A", "A", "A"},
+        })));
+    }
+
 }

@@ -1,6 +1,7 @@
 package slotify4j.session.videogames.reelgames;
 
 public class ReelGameSessionWinningLineModelImpl implements ReelGameSessionWinningLineModel {
+
     @Override
     public ReelGameSessionLinesDirectionData getDirection() {
         return null;

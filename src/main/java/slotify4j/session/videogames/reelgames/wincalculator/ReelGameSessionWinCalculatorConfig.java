@@ -7,6 +7,8 @@ import slotify4j.session.videogames.reelgames.ReelGameSessionWildsMultipliersDat
 
 public interface ReelGameSessionWinCalculatorConfig {
 
+    long[] getAvailableBets();
+
     ReelGameSessionPaytableData getPaytable();
     void setPaytable(ReelGameSessionPaytableData paytable);
 

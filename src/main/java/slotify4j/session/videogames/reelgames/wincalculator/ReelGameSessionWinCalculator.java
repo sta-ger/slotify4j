@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface ReelGameSessionWinCalculator {
 
-    void setGameState(long bet, String[][] items);
+    void setGameState(long bet, String[][] items) throws Exception;
 
     Map<String, ReelGameSessionWinningLineModel> getWinningLines();
 
