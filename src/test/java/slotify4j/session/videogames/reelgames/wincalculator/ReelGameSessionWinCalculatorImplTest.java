@@ -253,4 +253,99 @@ class ReelGameSessionWinCalculatorImplTest {
         testItemsPositions(lines.get(0), 3);
     }
 
+    @Test
+    void calculateWinningLinesWithWildsAfterUpdateStateTest() throws Exception {
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "W", "A", "K", "Q"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }));
+        lines = winningCalculator.getWinningLines();
+        assertEquals(lines.keySet().size(), 1);
+        assertTrue(lines.keySet().contains(0));
+        assertFalse(lines.keySet().contains(1));
+        assertFalse(lines.keySet().contains(2));
+        testWinning(1, lines);
+        testWildItemsPositions(lines.get(0), 1);
+        testItemsPositions(lines.get(0), 3);
+
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "W", "W", "K", "Q"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }));
+        lines = winningCalculator.getWinningLines();
+        assertEquals(lines.keySet().size(), 1);
+        assertTrue(lines.keySet().contains(0));
+        assertFalse(lines.keySet().contains(1));
+        assertFalse(lines.keySet().contains(2));
+        testWinning(1, lines);
+        testWildItemsPositions(lines.get(0), 2);
+        testItemsPositions(lines.get(0), 3);
+
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "W", "W", "W", "Q"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }));
+        lines = winningCalculator.getWinningLines();
+        assertEquals(lines.keySet().size(), 1);
+        assertTrue(lines.keySet().contains(0));
+        assertFalse(lines.keySet().contains(1));
+        assertFalse(lines.keySet().contains(2));
+        testWinning(1, lines);
+        testWildItemsPositions(lines.get(0), 3);
+        testItemsPositions(lines.get(0), 4);
+
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "W", "W", "W", "W"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }));
+        lines = winningCalculator.getWinningLines();
+        assertEquals(lines.keySet().size(), 1);
+        assertTrue(lines.keySet().contains(0));
+        assertFalse(lines.keySet().contains(1));
+        assertFalse(lines.keySet().contains(2));
+        testWinning(1, lines);
+        testWildItemsPositions(lines.get(0), 4);
+        testItemsPositions(lines.get(0), 5);
+
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"W", "W", "W", "W", "A"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }));
+        lines = winningCalculator.getWinningLines();
+        assertEquals(lines.keySet().size(), 1);
+        assertTrue(lines.keySet().contains(0));
+        assertFalse(lines.keySet().contains(1));
+        assertFalse(lines.keySet().contains(2));
+        testWinning(1, lines);
+        testWildItemsPositions(lines.get(0), 4);
+        testItemsPositions(lines.get(0), 5);
+
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"W", "W", "A", "W", "W"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }));
+        lines = winningCalculator.getWinningLines();
+        assertEquals(lines.keySet().size(), 1);
+        assertTrue(lines.keySet().contains(0));
+        assertFalse(lines.keySet().contains(1));
+        assertFalse(lines.keySet().contains(2));
+        testWinning(1, lines);
+        testWildItemsPositions(lines.get(0), 4);
+        testItemsPositions(lines.get(0), 5);
+
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"W", "W", "W", "W", "W"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }));
+        lines = winningCalculator.getWinningLines();
+        assertEquals(lines.keySet().size(), 0);
+    }
+
 }
