@@ -204,7 +204,7 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
 
     @Override
     public Map<String, ReelGameSessionWinningScatterModel> getWinningScatters() {
-        return null;
+        return winningScatters;
     }
 
     @Override

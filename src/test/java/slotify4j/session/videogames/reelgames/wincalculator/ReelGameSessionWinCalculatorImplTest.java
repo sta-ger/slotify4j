@@ -348,4 +348,32 @@ class ReelGameSessionWinCalculatorImplTest {
         assertEquals(lines.keySet().size(), 0);
     }
 
+    @Test
+    void calculateWinningScattersAfterUpdateStateTest() throws Exception {
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "S", "A", "K", "Q"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }));
+        scatters = winningCalculator.getWinningScatters();
+        assertEquals(scatters.size(), 0);
+
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "S", "A", "K", "Q"},
+                {"A", "K", "S", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }));
+        scatters = winningCalculator.getWinningScatters();
+        assertEquals(scatters.size(), 0);
+
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "S", "A", "K", "Q"},
+                {"A", "K", "S", "J", "10"},
+                {"K", "Q", "J", "10", "S"},
+        }));
+        scatters = winningCalculator.getWinningScatters();
+        assertEquals(scatters.size(), 1);
+        assertEquals(scatters.get("S").getWinningAmount(), config.getPaytable().getWinningAmountForItem(scatters.get("S").getItemId(), scatters.get("S").getItemsPositions().length, 1));
+    }
+
 }
