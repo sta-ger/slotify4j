@@ -209,16 +209,16 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
 
     @Override
     public long getWinningAmount() {
-        return 0;
+        return getLinesWinning() + getScattersWinning();
     }
 
     @Override
     public long getLinesWinning() {
-        return 0;
+        return linesWinning;
     }
 
     @Override
     public long getScattersWinning() {
-        return 0;
+        return scattersWinning;
     }
 }

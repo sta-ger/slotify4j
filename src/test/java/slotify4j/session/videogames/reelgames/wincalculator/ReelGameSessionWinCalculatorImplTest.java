@@ -376,4 +376,34 @@ class ReelGameSessionWinCalculatorImplTest {
         assertEquals(scatters.get("S").getWinningAmount(), config.getPaytable().getWinningAmountForItem(scatters.get("S").getItemId(), scatters.get("S").getItemsPositions().length, 1));
     }
 
+    @Test
+    void calculateAllLinesWinAmountAfterUpdateStateTest() throws Exception {
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A", "A", "A"},
+                {"A", "A", "A", "K", "Q"},
+                {"A", "A", "K", "Q", "J"},
+        }));
+        assertTrue(winningCalculator.getLinesWinning() > 0);
+    }
+
+    @Test
+    void calculateAllScattersWinAmountAfterUpdateStateTest() throws Exception {
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A", "A", "A"},
+                {"A", "A", "A", "S", "S"},
+                {"A", "A", "K", "Q", "S"},
+        }));
+        assertTrue(winningCalculator.getScattersWinning() > 0);
+    }
+
+    @Test
+    void calculateTotalWinAmountAfterUpdateStateTest() throws Exception {
+        winningCalculator.setGameState(1, ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A", "A", "A"},
+                {"A", "A", "A", "S", "S"},
+                {"A", "A", "K", "Q", "S"},
+        }));
+        assertTrue(winningCalculator.getWinningAmount() > 0);
+    }
+
 }
