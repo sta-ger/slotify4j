@@ -1,7 +1,7 @@
 package slotify4j.session.videogames.reelgames;
 
-import slotify4j.session.GameSessionConfig;
-import slotify4j.session.GameSessionImpl;
+import org.junit.jupiter.api.Test;
+import slotify4j.session.GameSessionImplTest;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsController;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculator;
@@ -35,10 +35,10 @@ public class ReelGameSessionImplTest {
     }
 
     public static void testPlayUntilWin(Constructor<? extends ReelGameSession> sessionConstructor, Constructor<? extends ReelGameSessionConfig> configConstructor) throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        long lastBet;
-        long lastCredits;
-        boolean wasLinesWin;
-        boolean wasScattersWin;
+        long lastBet = 0;
+        long lastCredits = 0;
+        boolean wasLinesWin = false;
+        boolean wasScattersWin = false;
 
         ReelGameSessionConfig config = configConstructor.newInstance();
         config.setCreditsAmount(10000000);
@@ -52,7 +52,7 @@ public class ReelGameSessionImplTest {
                 lastCredits = session.getCreditsAmount();
                 lastBet = session.getBet();
                 session.play();
-                if (session.getWinningAmount() === 0) {
+                if (session.getWinningAmount() == 0) {
                     assertEquals(session.getCreditsAmount(), lastCredits - lastBet);
                 }
             }
@@ -64,6 +64,23 @@ public class ReelGameSessionImplTest {
                 i = 0;
             }
         }
-    };
+    }
+
+    @Test
+    void passBaseTests() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        GameSessionImplTest.testDefaultSessionHasProperInitialValues(sessionClass, configClass);
+        GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sessionClass, configClass);
+        GameSessionImplTest.testDefaultSessionWithWrongInitialBet(sessionClass, configClass);
+    }
+
+    @Test
+    void testCreateNewSession() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        testDefaultReelGameSessionHasProperInitialValues(sessionClass, configClass);
+    }
+
+    @Test
+    void testPlaySeveralTimesUntilAnyWinning() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        testPlayUntilWin(sessionClass, configClass);
+    }
 
 }
