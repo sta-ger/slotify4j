@@ -47,7 +47,7 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
     private final int reelsItemsNumber;
     private final String[][] reelsSequences;
 
-    ReelGameSessionReelsControllerImpl(ReelGameSessionReelsControllerConfig config) {
+    public ReelGameSessionReelsControllerImpl(ReelGameSessionReelsControllerConfig config) {
         reelsNumber = config.getReelsNumber();
         reelsItemsNumber = config.getReelsItemsNumber();
         reelsSequences = config.getReelsItemsSequences();
