@@ -1,93 +1,107 @@
 package slotify4j.session.videogames.reelgames;
 
+import slotify4j.session.GameSessionImpl;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsController;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculator;
 
 import java.util.Map;
 
 public class ReelGameSessionImpl implements ReelGameSession {
+    private final GameSessionImpl adaptee;
+    private final ReelGameSessionConfig config;
+    private final ReelGameSessionReelsController reelsController;
+    private final ReelGameSessionWinCalculator winningCalculator;
+    private long winningAmount = 0;
+    private String[][] reelsItems;
 
     public ReelGameSessionImpl(ReelGameSessionConfig config, ReelGameSessionReelsController reelsController, ReelGameSessionWinCalculator winningCalculator) {
-
+        this.config = config;
+        this.reelsController = reelsController;
+        this.winningCalculator = winningCalculator;
+        adaptee = new GameSessionImpl(config);
     }
 
     @Override
     public ReelGameSessionPaytableData getPaytable() {
-        return null;
+        return this.config.getPaytable();
     }
 
     @Override
     public String[][] getReelsItems() {
-        return new String[0][];
+        return reelsItems;
     }
 
     @Override
     public Map<Integer, ReelGameSessionWinningLineModel> getWinningLines() {
-        return null;
+        return winningCalculator.getWinningLines();
     }
 
     @Override
     public Map<String, ReelGameSessionWinningScatterModel> getWinningScatters() {
-        return null;
+        return winningCalculator.getWinningScatters();
     }
 
     @Override
     public String[][] getReelsItemsSequences() {
-        return new String[0][];
+        return config.getReelsItemsSequences();
     }
 
     @Override
     public int getReelsItemsNumber() {
-        return 0;
+        return config.getReelsItemsNumber();
     }
 
     @Override
     public int getReelsNumber() {
-        return 0;
+        return config.getReelsNumber();
     }
 
     @Override
     public long getCreditsAmount() {
-        return 0;
+        return adaptee.getCreditsAmount();
     }
 
     @Override
     public void setCreditsAmount(long creditsAmount) {
-
+        adaptee.setCreditsAmount(creditsAmount);
     }
 
     @Override
     public long getWinningAmount() {
-        return 0;
+        return winningAmount;
     }
 
     @Override
     public long[] getAvailableBets() {
-        return new long[0];
+        return config.getAvailableBets();
     }
 
     @Override
     public boolean isBetAvailable(long bet) {
-        return false;
+        return adaptee.isBetAvailable(bet);
     }
 
     @Override
     public long getBet() {
-        return 0;
+        return adaptee.getBet();
     }
 
     @Override
     public void setBet(long bet) {
-
+        adaptee.setBet(bet);
     }
 
     @Override
     public boolean canPlayNextGame() {
-        return false;
+        return adaptee.canPlayNextGame();
     }
 
     @Override
-    public void play() {
-
+    public void play() throws Exception {
+        adaptee.play();
+        reelsItems = reelsController.getRandomItemsCombination();
+        winningCalculator.setGameState(this.getBet(), reelsItems);
+        winningAmount = winningCalculator.getWinningAmount();
+        this.setCreditsAmount(this.getCreditsAmount() + winningAmount);
     }
 }

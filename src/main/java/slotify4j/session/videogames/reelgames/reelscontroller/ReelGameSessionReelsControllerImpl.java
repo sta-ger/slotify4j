@@ -54,8 +54,8 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
     }
 
     @Override
-    public String[] getRandomItemsCombination() {
-        return new String[0];
+    public String[][] getRandomItemsCombination() {
+        return new String[0][0];
     }
 
     @Override

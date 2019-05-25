@@ -34,7 +34,7 @@ public class ReelGameSessionImplTest {
         assertNull(session.getWinningScatters());
     }
 
-    public static void testPlayUntilWin(Constructor<? extends ReelGameSession> sessionConstructor, Constructor<? extends ReelGameSessionConfig> configConstructor) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static void testPlayUntilWin(Constructor<? extends ReelGameSession> sessionConstructor, Constructor<? extends ReelGameSessionConfig> configConstructor) throws Exception {
         long lastBet = 0;
         long lastCredits = 0;
         boolean wasLinesWin = false;
@@ -79,7 +79,7 @@ public class ReelGameSessionImplTest {
     }
 
     @Test
-    void testPlaySeveralTimesUntilAnyWinning() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+    void testPlaySeveralTimesUntilAnyWinning() throws Exception {
         testPlayUntilWin(sessionClass, configClass);
     }
 
