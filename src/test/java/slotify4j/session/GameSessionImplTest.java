@@ -9,19 +9,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GameSessionImplTest {
 
-    public static void testDefaultSessionHasProperInitialValues(Constructor<? extends GameSession> sessionConstructor, Constructor<? extends GameSessionConfig> configConstructor) throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        GameSessionConfig config = configConstructor.newInstance();
-        GameSession session = sessionConstructor.newInstance(config);
+    public static void testDefaultSessionHasProperInitialValues(GameSession session, GameSessionConfig config) {
         assertEquals(session.getAvailableBets(), config.getAvailableBets());
         assertEquals(session.getBet(), config.getAvailableBets()[0]);
         assertEquals(session.getCreditsAmount(), 1000);
     }
 
-    public static void testDefaultSessionHasProperInitialValuesWithCustomConfig(Constructor<? extends GameSession> sessionConstructor, Constructor<? extends GameSessionConfig> configConstructor) throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        GameSessionConfig config = configConstructor.newInstance();
+    public static void testDefaultSessionHasProperInitialValuesWithCustomConfig(GameSession session, GameSessionConfig config) {
         config.setAvailableBets(new long[]{10, 20, 30});
         config.setCreditsAmount(5000);
-        GameSession session = sessionConstructor.newInstance(config);
         assertFalse(session.isBetAvailable(1));
         assertTrue(session.isBetAvailable(10));
         assertEquals(session.getAvailableBets(), config.getAvailableBets());
@@ -29,11 +25,9 @@ public class GameSessionImplTest {
         assertEquals(session.getCreditsAmount(), 5000);
     }
 
-    public static void testDefaultSessionWithWrongInitialBet(Constructor<? extends GameSession> sessionConstructor, Constructor<? extends GameSessionConfig> configConstructor) throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        GameSessionConfig config = configConstructor.newInstance();
+    public static void testDefaultSessionWithWrongInitialBet(GameSession session, GameSessionConfig config) {
         config.setAvailableBets(new long[]{10, 20, 30});
         config.setBet(1);
-        GameSession session = sessionConstructor.newInstance(config);
         assertEquals(session.getBet(), config.getAvailableBets()[0]);
     }
 
@@ -72,23 +66,31 @@ public class GameSessionImplTest {
     }
 
     @Test
-    void testCreateNewSession() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        testDefaultSessionHasProperInitialValues(GameSessionImpl.class.getConstructor(GameSessionConfig.class), DefaultGameSessionConfig.class.getConstructor());
+    void testCreateNewSession() {
+        DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
+        GameSessionImpl sess = new GameSessionImpl(conf);
+        testDefaultSessionHasProperInitialValues(sess, conf);
     }
 
     @Test
-    void testCreateNewSessionWithCustomConfig() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        testDefaultSessionHasProperInitialValuesWithCustomConfig(GameSessionImpl.class.getConstructor(GameSessionConfig.class), DefaultGameSessionConfig.class.getConstructor());
+    void testCreateNewSessionWithCustomConfig() {
+        DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
+        GameSessionImpl sess = new GameSessionImpl(conf);
+        testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf);
     }
 
     @Test
-    void testCreateNewSessionWithWrongBet() throws NoSuchMethodException, IllegalAccessException, InstantiationException, InvocationTargetException {
-        testDefaultSessionWithWrongInitialBet(GameSessionImpl.class.getConstructor(GameSessionConfig.class), DefaultGameSessionConfig.class.getConstructor());
+    void testCreateNewSessionWithWrongBet() {
+        DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
+        GameSessionImpl sess = new GameSessionImpl(conf);
+        testDefaultSessionWithWrongInitialBet(sess, conf);
     }
 
     @Test
     void testPlayWhileEnoughCredits() throws Exception {
-        testDefaultSessionPlaysWhileEnoughCredits(new GameSessionImpl(new DefaultGameSessionConfig()));
+        DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
+        GameSessionImpl sess = new GameSessionImpl(conf);
+        testDefaultSessionPlaysWhileEnoughCredits(sess);
     }
 
 }
