@@ -15,19 +15,28 @@ public class GameSessionImplTest {
         assertEquals(session.getCreditsAmount(), 1000);
     }
 
+    public static GameSessionConfig createCustomConfigForTestProperInitialValues() {
+        DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
+        conf.setAvailableBets(new long[]{10, 20, 30});
+        conf.setCreditsAmount(5000);
+        return conf;
+    }
+
     public static void testDefaultSessionHasProperInitialValuesWithCustomConfig(GameSession session, GameSessionConfig config) {
-        config.setAvailableBets(new long[]{10, 20, 30});
-        config.setCreditsAmount(5000);
         assertFalse(session.isBetAvailable(1));
         assertTrue(session.isBetAvailable(10));
         assertEquals(session.getAvailableBets(), config.getAvailableBets());
         assertEquals(session.getBet(), config.getAvailableBets()[0]);
-        assertEquals(session.getCreditsAmount(), 5000);
+        assertEquals(session.getCreditsAmount(), config.getCreditsAmount());
+    }
+
+    public static GameSessionConfig createCustomConfigForWrongBetTest() {
+        DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
+        conf.setAvailableBets(new long[]{10, 20, 30});
+        return conf;
     }
 
     public static void testDefaultSessionWithWrongInitialBet(GameSession session, GameSessionConfig config) {
-        config.setAvailableBets(new long[]{10, 20, 30});
-        config.setBet(1);
         assertEquals(session.getBet(), config.getAvailableBets()[0]);
     }
 
@@ -74,16 +83,16 @@ public class GameSessionImplTest {
 
     @Test
     void testCreateNewSessionWithCustomConfig() {
-        DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
+        GameSessionConfig conf = createCustomConfigForTestProperInitialValues();
         GameSessionImpl sess = new GameSessionImpl(conf);
         testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf);
     }
 
     @Test
     void testCreateNewSessionWithWrongBet() {
-        DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
+        GameSessionConfig conf = createCustomConfigForWrongBetTest();
         GameSessionImpl sess = new GameSessionImpl(conf);
-        testDefaultSessionWithWrongInitialBet(sess, conf);
+        testDefaultSessionWithWrongInitialBet(sess, createCustomConfigForTestProperInitialValues());
     }
 
     @Test
