@@ -1,6 +1,8 @@
 package slotify4j.session.videogames.reelgames;
 
 import org.junit.jupiter.api.Test;
+import slotify4j.session.GameSession;
+import slotify4j.session.GameSessionConfig;
 import slotify4j.session.GameSessionImplTest;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsController;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
@@ -68,14 +70,19 @@ public class ReelGameSessionImplTest {
 
     @Test
     void passBaseTests() {
-        /*GameSessionImplTest.testDefaultSessionHasProperInitialValues(sessionClass, configClass);
-        GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sessionClass, configClass);
+        /*ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
+        ReelGameSessionReelsControllerImpl sess = new ReelGameSessionReelsControllerImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        GameSessionImplTest.testDefaultSessionHasProperInitialValues(((GameSession) sess), conf);*/
+
+        /*GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sessionClass, configClass);
         GameSessionImplTest.testDefaultSessionWithWrongInitialBet(sessionClass, configClass);*/
     }
 
     @Test
     void testCreateNewSession() {
-        /*testDefaultReelGameSessionHasProperInitialValues(sessionClass, configClass);*/
+        /*ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
+        ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        testDefaultReelGameSessionHasProperInitialValues(sess, conf);*/
     }
 
     @Test
