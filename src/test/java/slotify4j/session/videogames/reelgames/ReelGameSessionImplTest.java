@@ -1,31 +1,15 @@
 package slotify4j.session.videogames.reelgames;
 
 import org.junit.jupiter.api.Test;
-import slotify4j.session.GameSession;
-import slotify4j.session.GameSessionConfig;
 import slotify4j.session.GameSessionImplTest;
-import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsController;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
-import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculator;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
-
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ReelGameSessionImplTest {
-    private final Constructor<ReelGameSessionImpl> sessionClass;
-    private final Constructor<DefaultReelGameSessionConfig> configClass;
 
-    public ReelGameSessionImplTest() throws NoSuchMethodException {
-        sessionClass = ReelGameSessionImpl.class.getConstructor(ReelGameSessionConfig.class, ReelGameSessionReelsController.class, ReelGameSessionWinCalculator.class);
-        configClass = DefaultReelGameSessionConfig.class.getConstructor();
-    }
-
-    public static void testDefaultReelGameSessionHasProperInitialValues(Constructor<? extends ReelGameSession> sessionConstructor, Constructor<? extends ReelGameSessionConfig> configConstructor) throws IllegalAccessException, InvocationTargetException, InstantiationException {
-        ReelGameSessionConfig config = configConstructor.newInstance();
-        ReelGameSession session = sessionConstructor.newInstance(config, new ReelGameSessionReelsControllerImpl(config), new ReelGameSessionWinCalculatorImpl(config));
+    public static void testDefaultReelGameSessionHasProperInitialValues(ReelGameSession session, ReelGameSessionConfig config) {
         assertEquals(session.getWinningAmount(), 0);
         assertEquals(session.getPaytable(), config.getPaytable());
         assertEquals(session.getReelsItemsSequences().length, config.getReelsItemsSequences().length);
@@ -36,15 +20,11 @@ public class ReelGameSessionImplTest {
         assertNull(session.getWinningScatters());
     }
 
-    public static void testPlayUntilWin(Constructor<? extends ReelGameSession> sessionConstructor, Constructor<? extends ReelGameSessionConfig> configConstructor) throws Exception {
+    public static void testPlayUntilWin(ReelGameSession session, ReelGameSessionConfig config) throws Exception {
         long lastBet = 0;
         long lastCredits = 0;
         boolean wasLinesWin = false;
         boolean wasScattersWin = false;
-
-        ReelGameSessionConfig config = configConstructor.newInstance();
-        config.setCreditsAmount(10000000);
-        ReelGameSession session = sessionConstructor.newInstance(config, new ReelGameSessionReelsControllerImpl(config), new ReelGameSessionWinCalculatorImpl(config));
 
         int timesToPlay = 1000;
         for (int i = 0; i < timesToPlay; i++) {
@@ -70,24 +50,24 @@ public class ReelGameSessionImplTest {
 
     @Test
     void passBaseTests() {
-        /*ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
-        ReelGameSessionReelsControllerImpl sess = new ReelGameSessionReelsControllerImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-        GameSessionImplTest.testDefaultSessionHasProperInitialValues(((GameSession) sess), conf);*/
-
-        /*GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sessionClass, configClass);
-        GameSessionImplTest.testDefaultSessionWithWrongInitialBet(sessionClass, configClass);*/
+        ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
+        ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf);
     }
 
     @Test
     void testCreateNewSession() {
-        /*ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
+        ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-        testDefaultReelGameSessionHasProperInitialValues(sess, conf);*/
+        testDefaultReelGameSessionHasProperInitialValues(sess, conf);
     }
 
-    @Test
+    /*@Test
     void testPlaySeveralTimesUntilAnyWinning() throws Exception {
-        testPlayUntilWin(sessionClass, configClass);
-    }
+        ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
+        conf.setCreditsAmount(10000000);
+        ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        testPlayUntilWin(sess, conf);
+    }*/
 
 }
