@@ -62,6 +62,12 @@ public class ReelGameSessionImplTest {
         conf.setCreditsAmount(baseConf.getCreditsAmount());
         sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf);
+
+        baseConf = GameSessionImplTest.createCustomConfigForWrongBetTest();
+        conf = new DefaultReelGameSessionConfig();
+        conf.setAvailableBets(baseConf.getAvailableBets());
+        sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        GameSessionImplTest.testDefaultSessionWithWrongInitialBet(sess, conf);
     }
 
     @Test
