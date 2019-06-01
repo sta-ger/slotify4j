@@ -2,7 +2,6 @@ package slotify4j.session.videogames.reelgames;
 
 import org.junit.jupiter.api.Test;
 import slotify4j.session.GameSessionConfig;
-import slotify4j.session.GameSessionImpl;
 import slotify4j.session.GameSessionImplTest;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
@@ -77,12 +76,12 @@ public class ReelGameSessionImplTest {
         testDefaultReelGameSessionHasProperInitialValues(sess, conf);
     }
 
-    /*@Test
+    @Test
     void testPlaySeveralTimesUntilAnyWinning() throws Exception {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         conf.setCreditsAmount(10000000);
         ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         testPlayUntilWin(sess, conf);
-    }*/
+    }
 
 }
