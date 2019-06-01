@@ -64,12 +64,27 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
 
     @Override
     public String[] getRandomReelItems(int reelId) {
-        return new String[0];
+        String[] rv = new String[reelsItemsNumber];
+        String[] sequence = reelsSequences[reelId];
+        int placeOnSequence = (int) Math.floor(Math.random() * sequence.length);
+        int j = 0;
+        for (int i = placeOnSequence; i < placeOnSequence + reelsItemsNumber; i++) {
+            String item;
+            if (i > sequence.length - 1) {
+                item = sequence[i - sequence.length];
+            } else {
+                item = sequence[i];
+            }
+            rv[j] = item;
+            j++;
+        }
+        return rv;
     }
 
     @Override
     public String getRandomItem(int reelId) {
-        return null;
+        String[] sequence = reelsSequences[reelId];
+        return sequence[(int) Math.floor(Math.random() * sequence.length)];
     }
 
 }
