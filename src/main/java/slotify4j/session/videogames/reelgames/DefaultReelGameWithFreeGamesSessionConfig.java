@@ -1,10 +1,28 @@
 package slotify4j.session.videogames.reelgames;
 
-public class DefaultReelGameWithFreeGamesSessionConfig implements ReelGameWithFreeGamesSessionConfig {
+import java.util.HashMap;
+import java.util.Map;
+
+public class DefaultReelGameWithFreeGamesSessionConfig extends DefaultReelGameSessionConfig implements ReelGameWithFreeGamesSessionConfig {
+    public static int DEFAULT_FREE_GAMES_FOR_SCATTERS_NUM = 10;
+
+    public static Map<String, Map<Integer, Integer>> createDefaultFreeGamesForScattersMap() {
+        Map<String, Map<Integer, Integer>> rv = new HashMap<>();
+        Map<Integer, Integer> entry = new HashMap<>();
+        entry.put(3, DEFAULT_FREE_GAMES_FOR_SCATTERS_NUM);
+        rv.put(DefaultReelGameSessionConfig.DEFAULT_SCATTER_ITEM_ID, entry);
+        return rv;
+    }
+
+    private Map<String, Map<Integer, Integer>> freeGamesForScattersMap;
+
+    public DefaultReelGameWithFreeGamesSessionConfig() {
+        this.freeGamesForScattersMap = createDefaultFreeGamesForScattersMap();
+    }
 
     @Override
     public int getFreeGamesForScatters(String itemId, int numberOfItems) {
-        return itemId.equals("S") ? 10 : 0;
+        return freeGamesForScattersMap.getOrDefault(itemId, new HashMap<>()).getOrDefault(numberOfItems, 0);
     }
 
 }
