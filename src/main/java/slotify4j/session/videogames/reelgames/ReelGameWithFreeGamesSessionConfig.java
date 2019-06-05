@@ -4,4 +4,6 @@ public interface ReelGameWithFreeGamesSessionConfig extends ReelGameSessionConfi
 
     int getFreeGamesForScatters(String itemId, int numberOfItems);
 
+    void setFreeGamesForScatters(String itemId, int numberOfItems, int freeGamesNum);
+
 }

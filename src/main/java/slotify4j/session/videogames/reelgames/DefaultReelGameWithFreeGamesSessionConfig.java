@@ -25,4 +25,12 @@ public class DefaultReelGameWithFreeGamesSessionConfig extends DefaultReelGameSe
         return freeGamesForScattersMap.getOrDefault(itemId, new HashMap<>()).getOrDefault(numberOfItems, 0);
     }
 
+    @Override
+    public void setFreeGamesForScatters(String itemId, int numberOfItems, int freeGamesNum) {
+        if (!freeGamesForScattersMap.containsKey(itemId)) {
+            freeGamesForScattersMap.put(itemId, new HashMap<>());
+        }
+        freeGamesForScattersMap.get(itemId).put(numberOfItems, freeGamesNum);
+    }
+
 }
