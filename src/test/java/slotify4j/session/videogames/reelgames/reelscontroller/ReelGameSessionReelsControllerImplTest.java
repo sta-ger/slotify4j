@@ -175,7 +175,7 @@ class ReelGameSessionReelsControllerImplTest {
                         //and is not equal to symbol "A" removed from third reel's sequence
                         assertNotEquals(item, "A");
                     }
-                };
+                });
             }
         }
     }
