@@ -43,6 +43,18 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
         return rv.toArray(new String[0]);
     }
 
+    public static String[][] createItemsSequences(int reelsNumber, String[] availableItems) {
+        return new String[0][];
+    }
+
+    public static String[][] createItemsSequences(int reelsNumber, String[] availableItems, HashMap<Integer, HashMap<String, Integer>> itemsNumbersForReels) {
+        return new String[0][];
+    }
+
+    public static String[][] createItemsSequences(int reelsNumber, String[] availableItems, int numberOfEachItemOnEachReel) {
+        return new String[0][];
+    }
+
     private final int reelsNumber;
     private final int reelsItemsNumber;
     private final String[][] reelsSequences;

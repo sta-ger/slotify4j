@@ -26,7 +26,6 @@ public class ReelGameWithFreeGamesSessionImplTest {
         }
         assertEquals(session.getFreeGameNum(), 0);
         assertEquals(session.getFreeGameSum(), 0);
-    };
-
+    }
 
 }
