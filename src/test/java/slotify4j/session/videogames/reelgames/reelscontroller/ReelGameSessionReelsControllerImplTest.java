@@ -1,6 +1,8 @@
 package slotify4j.session.videogames.reelgames.reelscontroller;
 
 import org.junit.jupiter.api.Test;
+import slotify4j.session.videogames.reelgames.DefaultReelGameSessionConfig;
+import slotify4j.session.videogames.reelgames.ReelGameSessionConfig;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,7 +13,9 @@ import java.util.stream.IntStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReelGameSessionReelsControllerImplTest {
-    private String[] availableItems = new String[]{
+    private final ReelGameSessionReelsControllerImpl reelsController;
+
+    private final String[] availableItems = new String[]{
             "A",
             "K",
             "Q",
@@ -19,6 +23,20 @@ class ReelGameSessionReelsControllerImplTest {
             "10",
             "9",
     };
+
+    private final int reelsNumber = 5;
+    private final int reelsItemsNumber = 3;
+
+    public ReelGameSessionReelsControllerImplTest() {
+        String[][] sequences = ReelGameSessionReelsControllerImpl.createItemsSequences(5, availableItems, 10);
+        sequences[2] = Arrays.stream(sequences[2]).filter(item -> !item.equals("A")).toArray(String[]::new);
+        DefaultReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
+        conf.setReelsNumber(reelsNumber);
+        conf.setReelsItemsNumber(reelsItemsNumber);
+        conf.setAvailableItems(availableItems);
+        conf.setReelsItemsSequences(sequences);
+        reelsController = new ReelGameSessionReelsControllerImpl(conf);
+    }
 
     @Test
     void transposeMatrixTest() {
@@ -124,6 +142,63 @@ class ReelGameSessionReelsControllerImplTest {
             String[] curItems = itemsForNumberOfNumbers[i];
             assertEquals(curItems.length, availableItems.length * 10);
         });
+    }
+
+    @Test
+    void getRandomItemTest() {
+        for (int i = 0; i < reelsNumber; i++) {
+            //For each reel
+            for (int j = 0; j < 1000; j++) {
+                //Check is returned item one of available items
+                String item = reelsController.getRandomItem(i);
+                assertTrue(Arrays.asList(availableItems).contains(item));
+                if (i == 2) {
+                    //and is not equal to symbol "A" removed from third reel's sequence
+                    assertNotEquals(item, "A");
+                }
+            }
+        }
+    }
+
+    @Test
+    void getRandomReelItemsTest() {
+        for (int i = 0; i < reelsNumber; i++) {
+            //For each reel
+            for (int j = 0; j < 1000; j++) {
+                String[] items = reelsController.getRandomReelItems(i);
+                assertEquals(items.length, reelsItemsNumber);
+                int finalI = i;
+                Arrays.stream(items).forEach(item -> {
+                    //Check is returned item one of available items
+                    assertTrue(Arrays.asList(availableItems).contains(item));
+                    if (finalI == 2) {
+                        //and is not equal to symbol "A" removed from third reel's sequence
+                        assertNotEquals(item, "A");
+                    }
+                };
+            }
+        }
+    }
+
+    @Test
+    void getRandomItemsCombinationTest() {
+        String[][] items = reelsController.getRandomItemsCombination();
+        assertEquals(items.length, reelsNumber);
+        for (int i = 0; i < reelsNumber; i++) {
+            //For each reel
+            for (int j = 0; j < 1000; j++) {
+                assertEquals(items[i].length, reelsItemsNumber);
+                int finalI = i;
+                Arrays.stream(items[i]).forEach(item -> {
+                    //Check is returned item one of available items
+                    assertTrue(Arrays.asList(availableItems).contains(item));
+                    if (finalI == 2) {
+                        //and is not equal to symbol "A" removed from third reel's sequence
+                        assertNotEquals(item, "A");
+                    }
+                });
+            }
+        }
     }
 
 }
