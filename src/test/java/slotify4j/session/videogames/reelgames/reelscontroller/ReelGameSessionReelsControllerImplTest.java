@@ -2,7 +2,6 @@ package slotify4j.session.videogames.reelgames.reelscontroller;
 
 import org.junit.jupiter.api.Test;
 import slotify4j.session.videogames.reelgames.DefaultReelGameSessionConfig;
-import slotify4j.session.videogames.reelgames.ReelGameSessionConfig;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -57,7 +56,7 @@ class ReelGameSessionReelsControllerImplTest {
     }
 
     @Test
-    void testCreateShuffledSequenceOfSpecifiedItemsAndCountsOfItems() {
+    void testCreateShuffledSequenceOfSpecifiedItemsAndNumbersOfItems() {
         assertEquals(Objects.requireNonNull(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems, new HashMap<>() {{
             put("A", 2);
         }})).length, availableItems.length + 1);
@@ -66,7 +65,7 @@ class ReelGameSessionReelsControllerImplTest {
             put("A", 0);
         }})).length, availableItems.length - 1);
 
-        HashMap<String, Integer> counts = new HashMap<>() {{
+        HashMap<String, Integer> numbersOfItems = new HashMap<>() {{
             put("A", 10);
             put("K", 20);
             put("Q", 30);
@@ -75,7 +74,7 @@ class ReelGameSessionReelsControllerImplTest {
             put("9", 60);
         }};
 
-        assertEquals(Optional.of(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems, counts).length), counts.values().stream().reduce((Integer s, Integer item) -> s + item));
+        assertEquals(Optional.of(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems, numbersOfItems).length), numbersOfItems.values().stream().reduce((Integer s, Integer item) -> s + item));
         assertEquals(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems, 10).length, 10 * availableItems.length);
     }
 
@@ -87,7 +86,7 @@ class ReelGameSessionReelsControllerImplTest {
     }
 
     @Test
-    void testCcreateShuffledSequencesForSpecifiedNumberOfReelsAndCountsOfItems() {
+    void testCcreateShuffledSequencesForSpecifiedNumberOfReelsAndNumbersOfItems() {
         String[][] items = ReelGameSessionReelsControllerImpl.createItemsSequences(5, availableItems, new HashMap<>() {{
             put(0, new HashMap<>() {{
                 put("A", 0);

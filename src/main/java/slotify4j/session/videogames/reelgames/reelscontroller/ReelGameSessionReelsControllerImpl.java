@@ -18,12 +18,12 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
         return createItemsSequence(availableItems, null);
     }
 
-    public static String[] createItemsSequence(String[] availableItems, Map<String, Integer> countsOfItems) {
+    public static String[] createItemsSequence(String[] availableItems, Map<String, Integer> numberOfEachItem) {
         ArrayList<String> rv;
         rv = new ArrayList<>();
         Arrays.stream(availableItems).forEach((itemId) -> {
-            int countIoItems = countsOfItems != null && countsOfItems.containsKey(itemId) ? countsOfItems.get(itemId) : 1;
-            for (int i = 0; i < countIoItems; i++) {
+            int numberOfItem = numberOfEachItem != null && numberOfEachItem.containsKey(itemId) ? numberOfEachItem.get(itemId) : 1;
+            for (int i = 0; i < numberOfItem; i++) {
                 rv.add(itemId);
             }
         });
@@ -31,11 +31,11 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
         return rv.toArray(new String[0]);
     }
 
-    public static String[] createItemsSequence(String[] availableItems, int countOfItems) {
+    public static String[] createItemsSequence(String[] availableItems, int numberOfItems) {
         ArrayList<String> rv;
         rv = new ArrayList<>();
         Arrays.stream(availableItems).forEach((itemId) -> {
-            for (int i = 0; i < countOfItems; i++) {
+            for (int i = 0; i < numberOfItems; i++) {
                 rv.add(itemId);
             }
         });
@@ -44,15 +44,7 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
     }
 
     public static String[][] createItemsSequences(int reelsNumber, String[] availableItems) {
-        String[][] rv;
-        int i;
-        int reelId;
-        rv = new String[reelsNumber][];
-        for (i = 0; i < reelsNumber; i++) {
-            reelId = i;
-            rv[reelId] = createItemsSequence(availableItems);
-        }
-        return rv;
+        return createItemsSequences(reelsNumber, availableItems, 1);
     }
 
     public static String[][] createItemsSequences(int reelsNumber, String[] availableItems, HashMap<Integer, HashMap<String, Integer>> itemsNumbersForReels) {
@@ -60,7 +52,15 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
     }
 
     public static String[][] createItemsSequences(int reelsNumber, String[] availableItems, int numberOfEachItemOnEachReel) {
-        return new String[0][];
+        String[][] rv;
+        int i;
+        int reelId;
+        rv = new String[reelsNumber][];
+        for (i = 0; i < reelsNumber; i++) {
+            reelId = i;
+            rv[reelId] = createItemsSequence(availableItems, numberOfEachItemOnEachReel);
+        }
+        return rv;
     }
 
     private final int reelsNumber;
