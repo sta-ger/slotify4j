@@ -42,7 +42,7 @@ public class ReelGameWithFreeGamesSessionImplTest {
             put(4, new HashMap<>(){{
                 put("S", 0);
             }});
-        }});
+        }}));
         return conf;
     }
 
