@@ -7,11 +7,9 @@ public class ReelGameSessionPaytableDataImpl implements ReelGameSessionPaytableD
 
     public static Map<Long, Map<String, Map<Integer, Long>>> createDefaultPaytableMap(long[] availableBets, String[] availableItems, int reelsNumber, String wildItemId) {
         HashMap<Long, Map<String, Map<Integer, Long>>> r = new HashMap<>();
-        for (int i = 0; i < availableBets.length; i++) {
-            long bet = availableBets[i];
+        for (long bet : availableBets) {
             r.put(bet, new HashMap<>());
-            for (int j = 0; j < availableItems.length; j++) {
-                String itemId = availableItems[j];
+            for (String itemId : availableItems) {
                 if (!itemId.equals(wildItemId)) {
                     r.get(bet).put(itemId, new HashMap<>());
                     for (int k = 3; k <= reelsNumber; k++) {
@@ -23,7 +21,7 @@ public class ReelGameSessionPaytableDataImpl implements ReelGameSessionPaytableD
         return r;
     }
 
-    private Map<Long, Map<String, Map<Integer, Long>>> paytableMap;
+    private final Map<Long, Map<String, Map<Integer, Long>>> paytableMap;
 
     public ReelGameSessionPaytableDataImpl(Map<Long, Map<String, Map<Integer, Long>>> paytableMap) {
         this.paytableMap = paytableMap;

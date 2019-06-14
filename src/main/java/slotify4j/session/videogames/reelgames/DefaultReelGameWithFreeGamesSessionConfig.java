@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DefaultReelGameWithFreeGamesSessionConfig extends DefaultReelGameSessionConfig implements ReelGameWithFreeGamesSessionConfig {
-    public static int DEFAULT_FREE_GAMES_FOR_SCATTERS_NUM = 10;
+    public static final int DEFAULT_FREE_GAMES_FOR_SCATTERS_NUM = 10;
 
     public static Map<String, Map<Integer, Integer>> createDefaultFreeGamesForScattersMap() {
         Map<String, Map<Integer, Integer>> rv = new HashMap<>();
@@ -14,7 +14,7 @@ public class DefaultReelGameWithFreeGamesSessionConfig extends DefaultReelGameSe
         return rv;
     }
 
-    private Map<String, Map<Integer, Integer>> freeGamesForScattersMap;
+    private final Map<String, Map<Integer, Integer>> freeGamesForScattersMap;
 
     public DefaultReelGameWithFreeGamesSessionConfig() {
         this.freeGamesForScattersMap = createDefaultFreeGamesForScattersMap();

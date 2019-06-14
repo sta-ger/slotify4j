@@ -105,8 +105,6 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
     private final ReelGameSessionWinCalculatorConfig config;
     private final ReelGameSessionPaytableData paytable;
     private final ReelGameSessionLinesDirectionData linesDirections;
-    private final int reelsItemsNumber;
-    private final int reelsNumber;
     private final int[][] linesPatterns;
     private final String wildItemId;
     private final ReelGameSessionWildsMultipliersData wildsMultipliers;
@@ -120,13 +118,11 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
 
     public ReelGameSessionWinCalculatorImpl(ReelGameSessionWinCalculatorConfig conf) {
         config = conf;
-        reelsItemsNumber = conf.getReelsItemsNumber();
-        reelsNumber = conf.getReelsNumber();
         wildItemId = conf.getWildItemId();
         wildsMultipliers = conf.getWildsMultipliers();
         paytable = conf.getPaytable();
         linesDirections = conf.getLinesDirections();
-        linesPatterns = createLinesPatterns(reelsNumber);
+        linesPatterns = createLinesPatterns(conf.getReelsNumber());
         scatters = conf.getScattersData();
     }
 

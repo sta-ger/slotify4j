@@ -17,7 +17,7 @@ public class ReelGameSessionLinesDirectionDataImpl implements ReelGameSessionLin
         return r;
     }
 
-    private Map<Integer, int[]> linesDirectionsMap;
+    private final Map<Integer, int[]> linesDirectionsMap;
 
     public ReelGameSessionLinesDirectionDataImpl(Map<Integer, int[]> linesDirectionsMap) {
         this.linesDirectionsMap = linesDirectionsMap;

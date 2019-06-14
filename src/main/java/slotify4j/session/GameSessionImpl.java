@@ -1,10 +1,9 @@
 package slotify4j.session;
 
-import java.util.Arrays;
 import java.util.stream.LongStream;
 
 public class GameSessionImpl implements GameSession {
-    private GameSessionConfig config;
+    private final GameSessionConfig config;
     private long bet;
     private long credits;
 
