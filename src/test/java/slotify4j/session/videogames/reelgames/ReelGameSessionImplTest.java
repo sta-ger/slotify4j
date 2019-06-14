@@ -8,7 +8,7 @@ import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCa
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ReelGameSessionImplTest {
+class ReelGameSessionImplTest {
 
     public static void testDefaultReelGameSessionHasProperInitialValues(ReelGameSession session, ReelGameSessionConfig config) {
         assertEquals(session.getWinningAmount(), 0);

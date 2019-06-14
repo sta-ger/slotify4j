@@ -74,7 +74,7 @@ class ReelGameSessionReelsControllerImplTest {
             put("9", 60);
         }};
 
-        assertEquals(Optional.of(ReelGameSessionReelsController.createItemsSequence(availableItems, numbersOfItems).length), numbersOfItems.values().stream().reduce((Integer s, Integer item) -> s + item));
+        assertEquals(Optional.of(ReelGameSessionReelsController.createItemsSequence(availableItems, numbersOfItems).length), numbersOfItems.values().stream().reduce(Integer::sum));
         assertEquals(ReelGameSessionReelsController.createItemsSequence(availableItems, 10).length, 10 * availableItems.length);
     }
 

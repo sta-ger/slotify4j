@@ -11,8 +11,8 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ReelGameSessionWinCalculatorImplTest {
-    private ReelGameSessionConfig config = new DefaultReelGameSessionConfig();
-    private ReelGameSessionWinCalculator winningCalculator = new ReelGameSessionWinCalculatorImpl(config);
+    private final ReelGameSessionConfig config = new DefaultReelGameSessionConfig();
+    private final ReelGameSessionWinCalculator winningCalculator = new ReelGameSessionWinCalculatorImpl(config);
     private Map<Integer, ReelGameSessionWinningLineModel> lines;
 
     private void testWinning(long bet, Map<Integer, ReelGameSessionWinningLineModel> lines) {
