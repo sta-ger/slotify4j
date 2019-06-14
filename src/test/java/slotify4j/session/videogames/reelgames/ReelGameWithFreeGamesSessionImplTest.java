@@ -1,5 +1,6 @@
 package slotify4j.session.videogames.reelgames;
 
+import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsController;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
@@ -35,7 +36,7 @@ public class ReelGameWithFreeGamesSessionImplTest {
 
     public static ReelGameWithFreeGamesSessionConfig createConfigForTestPlayFreeGames() {
         DefaultReelGameWithFreeGamesSessionConfig conf = new DefaultReelGameWithFreeGamesSessionConfig();
-        conf.setReelsItemsSequences(ReelGameSessionReelsControllerImpl.createItemsSequences(conf.getReelsNumber(), conf.getAvailableItems(), new HashMap<>(){{
+        conf.setReelsItemsSequences(ReelGameSessionReelsController.createItemsSequences(conf.getReelsNumber(), conf.getAvailableItems(), new HashMap<>(){{
             put(0, new HashMap<>(){{
                 put("S", 0);
             }});

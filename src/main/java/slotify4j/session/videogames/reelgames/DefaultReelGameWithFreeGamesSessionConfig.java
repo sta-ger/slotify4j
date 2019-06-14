@@ -4,20 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DefaultReelGameWithFreeGamesSessionConfig extends DefaultReelGameSessionConfig implements ReelGameWithFreeGamesSessionConfig {
-    public static final int DEFAULT_FREE_GAMES_FOR_SCATTERS_NUM = 10;
-
-    public static Map<String, Map<Integer, Integer>> createDefaultFreeGamesForScattersMap() {
-        Map<String, Map<Integer, Integer>> rv = new HashMap<>();
-        Map<Integer, Integer> entry = new HashMap<>();
-        entry.put(DefaultReelGameSessionConfig.DEFAULT_MINIMUM_ITEMS_NUM_FOR_SCATTER_WIN, DEFAULT_FREE_GAMES_FOR_SCATTERS_NUM);
-        rv.put(DefaultReelGameSessionConfig.DEFAULT_SCATTER_ITEM_ID, entry);
-        return rv;
-    }
-
     private final Map<String, Map<Integer, Integer>> freeGamesForScattersMap;
 
     public DefaultReelGameWithFreeGamesSessionConfig() {
-        this.freeGamesForScattersMap = createDefaultFreeGamesForScattersMap();
+        this.freeGamesForScattersMap = ReelGameWithFreeGamesSessionConfig.createDefaultFreeGamesForScattersMap();
     }
 
     @Override

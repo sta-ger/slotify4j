@@ -26,8 +26,8 @@ class ReelGameSessionReelsControllerImplTest {
     private final int reelsNumber = 5;
     private final int reelsItemsNumber = 3;
 
-    public ReelGameSessionReelsControllerImplTest() {
-        String[][] sequences = ReelGameSessionReelsControllerImpl.createItemsSequences(5, availableItems, 10);
+    ReelGameSessionReelsControllerImplTest() {
+        String[][] sequences = ReelGameSessionReelsController.createItemsSequences(5, availableItems, 10);
         sequences[2] = Arrays.stream(sequences[2]).filter(item -> !item.equals("A")).toArray(String[]::new);
         DefaultReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         conf.setReelsNumber(reelsNumber);
@@ -39,7 +39,7 @@ class ReelGameSessionReelsControllerImplTest {
 
     @Test
     void transposeMatrixTest() {
-        assertArrayEquals(ReelGameSessionReelsControllerImpl.transposeItemsMatrix(new String[][]{
+        assertArrayEquals(ReelGameSessionReelsController.transposeItemsMatrix(new String[][]{
                 {"1", "2", "3", "4"},
                 {"5", "6", "7", "8"},
         }), new String[][]{
@@ -52,16 +52,16 @@ class ReelGameSessionReelsControllerImplTest {
 
     @Test
     void testCreateShuffledSequenceOfSpecifiedItems() {
-        assertEquals(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems).length, availableItems.length);
+        assertEquals(ReelGameSessionReelsController.createItemsSequence(availableItems).length, availableItems.length);
     }
 
     @Test
     void testCreateShuffledSequenceOfSpecifiedItemsAndNumbersOfItems() {
-        assertEquals(Objects.requireNonNull(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems, new HashMap<>() {{
+        assertEquals(Objects.requireNonNull(ReelGameSessionReelsController.createItemsSequence(availableItems, new HashMap<>() {{
             put("A", 2);
         }})).length, availableItems.length + 1);
 
-        assertEquals(Objects.requireNonNull(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems, new HashMap<>() {{
+        assertEquals(Objects.requireNonNull(ReelGameSessionReelsController.createItemsSequence(availableItems, new HashMap<>() {{
             put("A", 0);
         }})).length, availableItems.length - 1);
 
@@ -74,20 +74,20 @@ class ReelGameSessionReelsControllerImplTest {
             put("9", 60);
         }};
 
-        assertEquals(Optional.of(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems, numbersOfItems).length), numbersOfItems.values().stream().reduce((Integer s, Integer item) -> s + item));
-        assertEquals(ReelGameSessionReelsControllerImpl.createItemsSequence(availableItems, 10).length, 10 * availableItems.length);
+        assertEquals(Optional.of(ReelGameSessionReelsController.createItemsSequence(availableItems, numbersOfItems).length), numbersOfItems.values().stream().reduce((Integer s, Integer item) -> s + item));
+        assertEquals(ReelGameSessionReelsController.createItemsSequence(availableItems, 10).length, 10 * availableItems.length);
     }
 
     @Test
     void testCreateShuffledSequencesForSpecifiedNumberOfReels() {
-        assertEquals(ReelGameSessionReelsControllerImpl.createItemsSequences(5, availableItems).length, 5);
-        assertEquals(ReelGameSessionReelsControllerImpl.createItemsSequences(3, availableItems).length, 3);
-        Arrays.stream(ReelGameSessionReelsControllerImpl.createItemsSequences(3, availableItems)).forEach(curItems -> assertEquals(curItems.length, availableItems.length));
+        assertEquals(ReelGameSessionReelsController.createItemsSequences(5, availableItems).length, 5);
+        assertEquals(ReelGameSessionReelsController.createItemsSequences(3, availableItems).length, 3);
+        Arrays.stream(ReelGameSessionReelsController.createItemsSequences(3, availableItems)).forEach(curItems -> assertEquals(curItems.length, availableItems.length));
     }
 
     @Test
     void testCcreateShuffledSequencesForSpecifiedNumberOfReelsAndNumbersOfItems() {
-        String[][] items = ReelGameSessionReelsControllerImpl.createItemsSequences(5, availableItems, new HashMap<>() {{
+        String[][] items = ReelGameSessionReelsController.createItemsSequences(5, availableItems, new HashMap<>() {{
             put(0, new HashMap<>() {{
                 put("A", 0);
             }});
@@ -130,13 +130,13 @@ class ReelGameSessionReelsControllerImplTest {
             sequenceMap.put("9", 60);
         });
 
-        String[][] itemsForMapOfNumbers = ReelGameSessionReelsControllerImpl.createItemsSequences(5, availableItems, itemsNumbersMap);
+        String[][] itemsForMapOfNumbers = ReelGameSessionReelsController.createItemsSequences(5, availableItems, itemsNumbersMap);
         IntStream.range(0, items.length).forEach((i) -> {
             String[] curItems = itemsForMapOfNumbers[i];
             assertEquals(Optional.of(curItems.length), itemsNumbersMap.get(i).values().stream().reduce((sum, num) -> sum += num));
         });
 
-        String[][] itemsForNumberOfNumbers = ReelGameSessionReelsControllerImpl.createItemsSequences(5, availableItems, 10);
+        String[][] itemsForNumberOfNumbers = ReelGameSessionReelsController.createItemsSequences(5, availableItems, 10);
         IntStream.range(0, items.length).forEach((i) -> {
             String[] curItems = itemsForNumberOfNumbers[i];
             assertEquals(curItems.length, availableItems.length * 10);

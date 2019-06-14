@@ -2,39 +2,9 @@ package slotify4j.session.videogames.reelgames;
 
 import slotify4j.session.DefaultGameSessionConfig;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.stream.Stream;
 
 public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig implements ReelGameSessionConfig {
-
-    public static String[][] createReelsItemsSequences(int reelsNumber, String[] availableItems) {
-        String[][] r = new String[reelsNumber][availableItems.length * availableItems.length];
-        for (int i = 0; i < reelsNumber; i++) {
-            String[] seq = Stream.of(availableItems).reduce("", (a, b) -> a.concat(String.join(",", availableItems) + ",")).split(",");
-            Collections.shuffle(Arrays.asList(seq));
-            r[i] = seq;
-        }
-        return r;
-    }
-
-    public static final String[] DEFAULT_AVAILABLE_ITEMS = new String[] {
-            "A",
-            "K",
-            "Q",
-            "J",
-            "10",
-            "9",
-            "W",
-            "S"
-    };
-
-    public static final int DEFAULT_REELS_NUMBER = 5;
-    public static final int DEFAULT_REELS_ITEMS_NUMBER = 3;
-    public static final String DEFAULT_WILD_ITEM_ID = "W";
-    public static final String DEFAULT_SCATTER_ITEM_ID = "S";
-    public static final int DEFAULT_MINIMUM_ITEMS_NUM_FOR_SCATTER_WIN = 3;
-
     private int reelsNumber;
     private int reelsItemsNumber;
     private String[] availableItems;
@@ -50,11 +20,11 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
         reelsItemsNumber = DEFAULT_REELS_ITEMS_NUMBER;
         availableItems = DEFAULT_AVAILABLE_ITEMS;
         wildItemId = DEFAULT_WILD_ITEM_ID;
-        paytable = new ReelGameSessionPaytableDataImpl(ReelGameSessionPaytableDataImpl.createDefaultPaytableMap(getAvailableBets(), availableItems, reelsNumber, wildItemId));
+        paytable = new ReelGameSessionPaytableDataImpl(ReelGameSessionPaytableData.createDefaultPaytableMap(getAvailableBets(), availableItems, reelsNumber, wildItemId));
         scatters = new ReelGameSessionScatterData[]{new ReelGameSessionScattersDataImpl(DEFAULT_SCATTER_ITEM_ID, DEFAULT_MINIMUM_ITEMS_NUM_FOR_SCATTER_WIN)};
-        linesDirections = new ReelGameSessionLinesDirectionDataImpl(ReelGameSessionLinesDirectionDataImpl.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber));
+        linesDirections = new ReelGameSessionLinesDirectionDataImpl(ReelGameSessionLinesDirectionData.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber));
         wildsMultipliers = new ReelGameSessionWildsMultipliersDataPowerOfTwo();
-        reelsItemsSequences = createReelsItemsSequences(reelsNumber, availableItems);
+        reelsItemsSequences = ReelGameSessionConfig.createReelsItemsSequences(reelsNumber, availableItems);
     }
 
     @Override
@@ -115,7 +85,7 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
     @Override
     public void setReelsItemsNumber(int reelsItemsNumber) {
         this.reelsItemsNumber = reelsItemsNumber;
-        linesDirections = new ReelGameSessionLinesDirectionDataImpl(ReelGameSessionLinesDirectionDataImpl.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber));
+        linesDirections = new ReelGameSessionLinesDirectionDataImpl(ReelGameSessionLinesDirectionData.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber));
     }
 
     @Override
@@ -126,7 +96,7 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
     @Override
     public void setReelsNumber(int reelsItemsNumber) {
         this.reelsNumber = reelsItemsNumber;
-        linesDirections = new ReelGameSessionLinesDirectionDataImpl(ReelGameSessionLinesDirectionDataImpl.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber));
+        linesDirections = new ReelGameSessionLinesDirectionDataImpl(ReelGameSessionLinesDirectionData.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber));
     }
 
     @Override
@@ -137,8 +107,8 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
     @Override
     public void setAvailableItems(String[] availableItems) {
         this.availableItems = availableItems;
-        paytable = new ReelGameSessionPaytableDataImpl(ReelGameSessionPaytableDataImpl.createDefaultPaytableMap(getAvailableBets(), availableItems, reelsNumber, wildItemId));
-        reelsItemsSequences = createReelsItemsSequences(reelsNumber, availableItems);
+        paytable = new ReelGameSessionPaytableDataImpl(ReelGameSessionPaytableData.createDefaultPaytableMap(getAvailableBets(), availableItems, reelsNumber, wildItemId));
+        reelsItemsSequences = ReelGameSessionConfig.createReelsItemsSequences(reelsNumber, availableItems);
     }
 
     @Override
