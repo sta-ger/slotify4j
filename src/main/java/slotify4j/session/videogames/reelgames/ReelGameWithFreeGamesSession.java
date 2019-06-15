@@ -12,8 +12,8 @@ public interface ReelGameWithFreeGamesSession extends ReelGameSession {
 
     void setFreeGameSum(int value);
 
-    int getFreeGameBank();
+    long getFreeGameBank();
 
-    void setFreeGameBank(int value);
+    void setFreeGameBank(long value);
 
 }
