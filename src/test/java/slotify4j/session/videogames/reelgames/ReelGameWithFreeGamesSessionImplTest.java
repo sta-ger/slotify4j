@@ -52,7 +52,7 @@ class ReelGameWithFreeGamesSessionImplTest {
     }
 
     @Test
-    void testPlayFreeGames() {
+    void testPlayFreeGames() throws Exception {
         ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
         ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
 
