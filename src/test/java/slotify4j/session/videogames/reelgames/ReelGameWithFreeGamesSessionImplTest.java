@@ -52,7 +52,7 @@ class ReelGameWithFreeGamesSessionImplTest {
     }
 
     @Test
-    void testPlayFreeGames() throws Exception {
+    void testPlayFreeGames() {
         ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
         ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
 
@@ -63,7 +63,11 @@ class ReelGameWithFreeGamesSessionImplTest {
         boolean wasNoFreeBank = false; //was no winnings during free games mode
         while (!wasNormalFreeGames || !wasAdditionalFreeGames || !wasFreeBank || !wasNoFreeBank) {
             while (session.getFreeGameSum() == 0 || (session.getFreeGameSum() > 0 && session.getFreeGameNum() == session.getFreeGameSum())) { //Play until won free games
-                session.play();
+                try {
+                    session.play();
+                } catch (Exception e) {
+                    session.setCreditsAmount(10000);
+                }
             }
             int playedFreeGamesCount = 0;
             int expectedPlayedFreeGamesCount = session.getFreeGameSum();
