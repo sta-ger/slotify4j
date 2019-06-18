@@ -62,11 +62,8 @@ class ReelGameWithFreeGamesSessionImplTest {
         boolean wasNoFreeBank = false; //was no winnings during free games mode
         while (!wasNormalFreeGames || !wasAdditionalFreeGames || !wasFreeBank || !wasNoFreeBank) {
             while (session.getFreeGameSum() == 0 || (session.getFreeGameSum() > 0 && session.getFreeGameNum() == session.getFreeGameSum())) { //Play until won free games
-                try {
-                    session.play();
-                } catch (Exception e) {
-                    session.setCreditsAmount(10000);
-                }
+                session.setCreditsAmount(10000);
+                session.play();
             }
             int playedFreeGamesCount = 0;
             int expectedPlayedFreeGamesCount = session.getFreeGameSum();
@@ -76,7 +73,11 @@ class ReelGameWithFreeGamesSessionImplTest {
                 lastFreeBank = session.getFreeGameBank();
                 session.play();
                 assertEquals(session.getFreeGameBank(), lastFreeBank + session.getWinningAmount());
-                assertEquals(session.getCreditsAmount(), creditsBeforeFreeGame); //Bet should not be subtracted at free games mode
+                if (session.getFreeGameNum() < session.getFreeGameSum()) {
+                    assertEquals(session.getCreditsAmount(), creditsBeforeFreeGame); //Bet should not be subtracted at free games mode
+                } else {
+                    assertEquals(session.getCreditsAmount(), creditsBeforeFreeGame + session.getFreeGameBank());
+                }
                 playedFreeGamesCount++;
                 if (session.getFreeGameSum() > expectedPlayedFreeGamesCount) {
                     wasAdditionalFreeGames = true;
@@ -100,7 +101,6 @@ class ReelGameWithFreeGamesSessionImplTest {
                 wasFreeBank = true;
             }
 
-            assertEquals(session.getCreditsAmount(), creditsBeforeFreeGame + lastFreeBank);
             assertEquals(playedFreeGamesCount, expectedPlayedFreeGamesCount);
         }
     }
