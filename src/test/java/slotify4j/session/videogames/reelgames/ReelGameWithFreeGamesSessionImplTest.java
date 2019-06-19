@@ -1,11 +1,15 @@
 package slotify4j.session.videogames.reelgames;
 
 import org.junit.jupiter.api.Test;
+import slotify4j.session.GameSessionConfig;
+import slotify4j.session.GameSessionImplTest;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsController;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,6 +52,34 @@ class ReelGameWithFreeGamesSessionImplTest {
             }});
         }}));
         return conf;
+    }
+
+    @Test
+    void passBaseTests() throws Exception {
+        ReelGameWithFreeGamesSessionConfig conf = new DefaultReelGameWithFreeGamesSessionConfig();
+        ReelGameWithFreeGamesSession sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf);
+
+        GameSessionConfig baseConf = GameSessionImplTest.createCustomConfigForTestProperInitialValues();
+        conf = new DefaultReelGameWithFreeGamesSessionConfig();
+        conf.setAvailableBets(baseConf.getAvailableBets());
+        conf.setCreditsAmount(baseConf.getCreditsAmount());
+        sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf);
+
+        baseConf = GameSessionImplTest.createCustomConfigForWrongBetTest();
+        conf = new DefaultReelGameWithFreeGamesSessionConfig();
+        conf.setAvailableBets(baseConf.getAvailableBets());
+        sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        GameSessionImplTest.testDefaultSessionWithWrongInitialBet(sess, conf);
+
+        ReelGameWithFreeGamesSessionConfig configForTestReelGameBaseTests = new DefaultReelGameWithFreeGamesSessionConfig();
+        Arrays.stream(conf.getScattersData()).forEach(scatterData ->
+                IntStream.range(0, configForTestReelGameBaseTests.getReelsNumber() * configForTestReelGameBaseTests.getReelsItemsNumber()).forEach(i ->
+                        configForTestReelGameBaseTests.setFreeGamesForScatters(scatterData.getItemId(), i, 0)));
+        sess = new ReelGameWithFreeGamesSessionImpl(configForTestReelGameBaseTests, new ReelGameSessionReelsControllerImpl(configForTestReelGameBaseTests), new ReelGameSessionWinCalculatorImpl(configForTestReelGameBaseTests));
+        ReelGameSessionImplTest.testDefaultReelGameSessionHasProperInitialValues(sess, configForTestReelGameBaseTests);
+        ReelGameSessionImplTest.testPlayUntilWin(sess, configForTestReelGameBaseTests);
     }
 
     @Test
@@ -104,8 +136,6 @@ class ReelGameWithFreeGamesSessionImplTest {
             assertEquals(playedFreeGamesCount, expectedPlayedFreeGamesCount);
         }
     }
-
-    ;
 
 
 }

@@ -8,7 +8,6 @@ import java.util.Map;
 public class ReelGameWithFreeGamesSessionImpl implements ReelGameWithFreeGamesSession {
     private final ReelGameSession adaptee;
     private final ReelGameWithFreeGamesSessionConfig config;
-    private final ReelGameSessionReelsController reelsController;
     private final ReelGameSessionWinCalculator winningCalculator;
 
     private int freeGamesNum;
@@ -17,7 +16,6 @@ public class ReelGameWithFreeGamesSessionImpl implements ReelGameWithFreeGamesSe
 
     public ReelGameWithFreeGamesSessionImpl(ReelGameWithFreeGamesSessionConfig config, ReelGameSessionReelsController reelsController, ReelGameSessionWinCalculator winningCalculator) {
         this.config = config;
-        this.reelsController = reelsController;
         this.winningCalculator = winningCalculator;
         this.adaptee = new ReelGameSessionImpl(config, reelsController, winningCalculator);
     }
@@ -91,12 +89,12 @@ public class ReelGameWithFreeGamesSessionImpl implements ReelGameWithFreeGamesSe
 
     @Override
     public int getReelsItemsNumber() {
-        return adaptee.getReelsNumber();
+        return adaptee.getReelsItemsNumber();
     }
 
     @Override
     public int getReelsNumber() {
-        return adaptee.getReelsItemsNumber();
+        return adaptee.getReelsNumber();
     }
 
     @Override
