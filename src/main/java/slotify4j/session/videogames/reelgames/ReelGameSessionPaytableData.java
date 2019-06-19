@@ -5,7 +5,12 @@ import java.util.Map;
 
 public interface ReelGameSessionPaytableData {
 
-    static Map<Long, Map<String, Map<Integer, Long>>> createDefaultPaytableMap(long[] availableBets, String[] availableItems, int reelsNumber, String wildItemId) {
+    static Map<Long, Map<String, Map<Integer, Long>>> createDefaultPaytableMap(
+            long[] availableBets,
+            String[] availableItems,
+            int reelsNumber,
+            String wildItemId
+    ) {
         HashMap<Long, Map<String, Map<Integer, Long>>> r = new HashMap<>();
         for (long bet : availableBets) {
             r.put(bet, new HashMap<>());

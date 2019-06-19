@@ -8,12 +8,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Stream;
 
-public interface ReelGameSessionConfig extends GameSessionConfig, ReelGameSessionReelsControllerConfig, ReelGameSessionWinCalculatorConfig {
+public interface ReelGameSessionConfig
+        extends GameSessionConfig, ReelGameSessionReelsControllerConfig, ReelGameSessionWinCalculatorConfig {
 
     static String[][] createReelsItemsSequences(int reelsNumber, String[] availableItems) {
         String[][] r = new String[reelsNumber][availableItems.length * availableItems.length];
         for (int i = 0; i < reelsNumber; i++) {
-            String[] seq = Stream.of(availableItems).reduce("", (a, b) -> a.concat(String.join(",", availableItems) + ",")).split(",");
+            String[] seq = Stream.of(availableItems)
+                    .reduce("", (a, b) -> a.concat(String.join(",", availableItems) + ","))
+                    .split(",");
             Collections.shuffle(Arrays.asList(seq));
             r[i] = seq;
         }

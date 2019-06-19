@@ -20,7 +20,10 @@ public class ReelGameSessionLinesDirectionDataImpl implements ReelGameSessionLin
         Set<Integer> keysSet = linesDirectionsMap.keySet();
         int[] intKeys = new int[keysSet.size()];
         int i = 0;
-        for(Integer element : keysSet) intKeys[i++] = element;
+        for (Integer element : keysSet) {
+            intKeys[i] = element;
+            i++;
+        }
         return intKeys;
     }
 

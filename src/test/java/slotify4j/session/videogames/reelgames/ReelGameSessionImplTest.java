@@ -16,9 +16,9 @@ class ReelGameSessionImplTest {
         assertEquals(session.getReelsItemsSequences().length, config.getReelsItemsSequences().length);
         assertEquals(session.getReelsItemsNumber(), config.getReelsItemsNumber());
         assertEquals(session.getReelsNumber(), config.getReelsNumber());
-        assertNull(session.getReelsItems());
-        assertNull(session.getWinningLines());
-        assertNull(session.getWinningScatters());
+        assertEquals(session.getReelsItems().length, 0);
+        assertEquals(session.getWinningLines().size(), 0);
+        assertEquals(session.getWinningScatters().size(), 0);
     }
 
     public static void testPlayUntilWin(ReelGameSession session, ReelGameSessionConfig config) throws Exception {

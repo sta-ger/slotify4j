@@ -16,10 +16,10 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
     private final ReelGameSessionScatterData[] scatters;
 
     private String[][] items;
-    private Map<Integer, ReelGameSessionWinningLineModel> winningLines;
+    private Map<Integer, ReelGameSessionWinningLineModel> winningLines = new HashMap<>();
     private long linesWinning;
     private long scattersWinning;
-    private Map<String, ReelGameSessionWinningScatterModel> winningScatters;
+    private Map<String, ReelGameSessionWinningScatterModel> winningScatters = new HashMap<>();
 
     public ReelGameSessionWinCalculatorImpl(ReelGameSessionWinCalculatorConfig conf) {
         config = conf;

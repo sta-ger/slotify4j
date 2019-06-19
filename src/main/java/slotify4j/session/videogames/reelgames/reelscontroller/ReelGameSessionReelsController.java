@@ -1,6 +1,10 @@
 package slotify4j.session.videogames.reelgames.reelscontroller;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+import java.util.HashMap;
 
 public interface ReelGameSessionReelsController {
 
@@ -21,8 +25,9 @@ public interface ReelGameSessionReelsController {
     static String[] createItemsSequence(String[] availableItems, Map<String, Integer> numberOfEachItem) {
         ArrayList<String> rv;
         rv = new ArrayList<>();
-        Arrays.stream(availableItems).forEach(itemId -> {
-            int numberOfItem = numberOfEachItem != null && numberOfEachItem.containsKey(itemId) ? numberOfEachItem.get(itemId) : 1;
+        Arrays.stream(availableItems).forEach((String itemId) -> {
+            int numberOfItem = numberOfEachItem != null &&
+                    numberOfEachItem.containsKey(itemId) ? numberOfEachItem.get(itemId) : 1;
             for (int i = 0; i < numberOfItem; i++) {
                 rv.add(itemId);
             }
@@ -34,7 +39,7 @@ public interface ReelGameSessionReelsController {
     static String[] createItemsSequence(String[] availableItems, int numberOfItems) {
         ArrayList<String> rv;
         rv = new ArrayList<>();
-        Arrays.stream(availableItems).forEach(itemId -> {
+        Arrays.stream(availableItems).forEach((String itemId) -> {
             for (int i = 0; i < numberOfItems; i++) {
                 rv.add(itemId);
             }
@@ -47,7 +52,11 @@ public interface ReelGameSessionReelsController {
         return createItemsSequences(reelsNumber, availableItems, 1);
     }
 
-    static String[][] createItemsSequences(int reelsNumber, String[] availableItems, HashMap<Integer, HashMap<String, Integer>> itemsNumbersForReels) {
+    static String[][] createItemsSequences(
+            int reelsNumber,
+            String[] availableItems,
+            HashMap<Integer, HashMap<String, Integer>> itemsNumbersForReels
+    ) {
         String[][] rv;
         int i;
         int reelId;

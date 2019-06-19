@@ -15,7 +15,11 @@ public class GameSessionImpl implements GameSession {
 
     private long getInitialBet() {
         long initialBet;
-        initialBet = isBetAvailable(config.getBet()) ? config.getBet() : config.getAvailableBets()[0];
+        if (isBetAvailable(config.getBet())) {
+            initialBet = config.getBet();
+        } else {
+            initialBet = config.getAvailableBets()[0];
+        }
         return initialBet;
     }
 

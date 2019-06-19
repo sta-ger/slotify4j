@@ -12,10 +12,14 @@ public class ReelGameSessionImpl implements ReelGameSession {
     private final ReelGameSessionConfig config;
     private final ReelGameSessionReelsController reelsController;
     private final ReelGameSessionWinCalculator winningCalculator;
-    private long winningAmount = 0;
-    private String[][] reelsItems;
+    private long winningAmount;
+    private String[][] reelsItems = new String[0][0];
 
-    public ReelGameSessionImpl(ReelGameSessionConfig config, ReelGameSessionReelsController reelsController, ReelGameSessionWinCalculator winningCalculator) {
+    public ReelGameSessionImpl(
+            ReelGameSessionConfig config,
+            ReelGameSessionReelsController reelsController,
+            ReelGameSessionWinCalculator winningCalculator
+    ) {
         this.config = config;
         this.reelsController = reelsController;
         this.winningCalculator = winningCalculator;
@@ -29,7 +33,7 @@ public class ReelGameSessionImpl implements ReelGameSession {
 
     @Override
     public String[][] getReelsItems() {
-        return reelsItems;
+        return reelsItems.clone();
     }
 
     @Override
