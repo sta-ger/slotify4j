@@ -18,7 +18,7 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
     private String[][] items;
     private Map<Integer, ReelGameSessionWinningLineModel> winningLines;
     private long linesWinning;
-    private int scattersWinning;
+    private long scattersWinning;
     private Map<String, ReelGameSessionWinningScatterModel> winningScatters;
 
     public ReelGameSessionWinCalculatorImpl(ReelGameSessionWinCalculatorConfig conf) {
@@ -33,7 +33,7 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
 
     @Override
     public void setGameState(long bet, String[][] items) throws UnableToPlayException {
-        if (Arrays.stream(config.getAvailableBets()).anyMatch((availableBet) -> availableBet == bet)) {
+        if (Arrays.stream(config.getAvailableBets()).anyMatch(availableBet -> availableBet == bet)) {
             this.items = items;
             this.calculateWinning(bet);
         } else {
@@ -55,7 +55,7 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
         }
         this.scattersWinning = 0;
         this.winningScatters = this.generateWinningScatters(bet);
-        winningScatters.forEach((scatterId, scatter) -> this.scattersWinning += scatter.getWinningAmount());
+        winningScatters.forEach((scatterId, scatter) -> this.scattersWinning = this.scattersWinning + scatter.getWinningAmount());
     }
 
     private ReelGameSessionWinningLineModel generateWinningLine(long bet, int lineId) {

@@ -3,7 +3,12 @@ package slotify4j.session.videogames.reelgames;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DefaultReelGameWithFreeGamesSessionConfig extends DefaultReelGameSessionConfig implements ReelGameWithFreeGamesSessionConfig {
+public class DefaultReelGameWithFreeGamesSessionConfig
+        extends DefaultReelGameSessionConfig
+        implements ReelGameWithFreeGamesSessionConfig {
+    
+    public static final int DEFAULT_FREE_GAMES_FOR_SCATTERS_NUM = 10;
+
     private final Map<String, Map<Integer, Integer>> freeGamesForScattersMap;
 
     public DefaultReelGameWithFreeGamesSessionConfig() {

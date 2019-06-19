@@ -9,8 +9,14 @@ public class GameSessionImpl implements GameSession {
 
     public GameSessionImpl(GameSessionConfig config) {
         this.config = config;
-        bet = isBetAvailable(config.getBet()) ? config.getBet() : config.getAvailableBets()[0];
+        bet = getInitialBet();
         credits = config.getCreditsAmount();
+    }
+
+    private long getInitialBet() {
+        long initialBet;
+        initialBet = isBetAvailable(config.getBet()) ? config.getBet() : config.getAvailableBets()[0];
+        return initialBet;
     }
 
     @Override

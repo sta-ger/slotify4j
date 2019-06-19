@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public interface ReelGameWithFreeGamesSessionConfig extends ReelGameSessionConfig {
-    int DEFAULT_FREE_GAMES_FOR_SCATTERS_NUM = 10;
 
     static Map<String, Map<Integer, Integer>> createDefaultFreeGamesForScattersMap() {
         Map<String, Map<Integer, Integer>> rv = new HashMap<>();

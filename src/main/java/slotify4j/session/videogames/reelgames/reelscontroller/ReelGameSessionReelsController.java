@@ -21,7 +21,7 @@ public interface ReelGameSessionReelsController {
     static String[] createItemsSequence(String[] availableItems, Map<String, Integer> numberOfEachItem) {
         ArrayList<String> rv;
         rv = new ArrayList<>();
-        Arrays.stream(availableItems).forEach((itemId) -> {
+        Arrays.stream(availableItems).forEach(itemId -> {
             int numberOfItem = numberOfEachItem != null && numberOfEachItem.containsKey(itemId) ? numberOfEachItem.get(itemId) : 1;
             for (int i = 0; i < numberOfItem; i++) {
                 rv.add(itemId);
@@ -34,7 +34,7 @@ public interface ReelGameSessionReelsController {
     static String[] createItemsSequence(String[] availableItems, int numberOfItems) {
         ArrayList<String> rv;
         rv = new ArrayList<>();
-        Arrays.stream(availableItems).forEach((itemId) -> {
+        Arrays.stream(availableItems).forEach(itemId -> {
             for (int i = 0; i < numberOfItems; i++) {
                 rv.add(itemId);
             }

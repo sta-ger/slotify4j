@@ -1,5 +1,7 @@
 package slotify4j.session.videogames.reelgames.reelscontroller;
 
+import java.util.Random;
+
 public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsController {
     private final int reelsNumber;
     private final int reelsItemsNumber;
@@ -24,7 +26,7 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
     public String[] getRandomReelItems(int reelId) {
         String[] rv = new String[reelsItemsNumber];
         String[] sequence = reelsSequences[reelId];
-        int placeOnSequence = (int) Math.floor(Math.random() * sequence.length);
+        int placeOnSequence = new Random().nextInt(sequence.length);
         int j = 0;
         for (int i = placeOnSequence; i < placeOnSequence + reelsItemsNumber; i++) {
             String item;
@@ -42,7 +44,7 @@ public class ReelGameSessionReelsControllerImpl implements ReelGameSessionReelsC
     @Override
     public String getRandomItem(int reelId) {
         String[] sequence = reelsSequences[reelId];
-        return sequence[(int) Math.floor(Math.random() * sequence.length)];
+        return sequence[new Random().nextInt(sequence.length)];
     }
 
 }

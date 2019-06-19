@@ -13,12 +13,12 @@ public class DefaultGameSessionConfig implements GameSessionConfig {
 
     @Override
     public void setAvailableBets(long[] availableBets) {
-        this.availableBets = availableBets;
+        this.availableBets = availableBets.clone();
     }
 
     @Override
     public long[] getAvailableBets() {
-        return availableBets;
+        return availableBets.clone();
     }
 
     @Override

@@ -24,7 +24,7 @@ public interface ReelGameSessionWinCalculator {
 
     static String[] getItemsForDirection(String[][] items, int[] direction) {
         return IntStream.range(0, direction.length)
-                .mapToObj((col) -> items[col][direction[col]])
+                .mapToObj(col -> items[col][direction[col]])
                 .toArray(String[]::new);
     }
 
@@ -99,7 +99,7 @@ public interface ReelGameSessionWinCalculator {
 
     static int[] getWinningLinesIds(String[][] items, ReelGameSessionLinesDirectionData linesDirections, int[][] patterns, String wildItemId) {
         int[] lines = linesDirections.getLinesIds();
-        return IntStream.of(lines).filter((lineId) -> {
+        return IntStream.of(lines).filter(lineId -> {
             String[] itemsLine = getItemsForDirection(items, linesDirections.getVerticalItemsPositionsForLineId(lineId));
             return getMatchingPattern(itemsLine, patterns, wildItemId) != null;
         }).toArray();
