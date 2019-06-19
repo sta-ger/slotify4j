@@ -90,9 +90,16 @@ class ReelGameWithFreeGamesSessionImplTest {
         //The following situations need to be checked:
         boolean wasNormalFreeGames = false; //played normal 10 free games
         boolean wasAdditionalFreeGames = false; //free games was won again at free games mode
+        boolean wasAdditionalFreeGamesWonAtLastFreeGame = false; //additional free games was won at 10 of 10 free games
         boolean wasFreeBank = false; //was any winning during free games mode
         boolean wasNoFreeBank = false; //was no winnings during free games mode
-        while (!wasNormalFreeGames || !wasAdditionalFreeGames || !wasFreeBank || !wasNoFreeBank) {
+        while (
+                !wasNormalFreeGames ||
+                !wasAdditionalFreeGames ||
+                !wasAdditionalFreeGamesWonAtLastFreeGame ||
+                !wasFreeBank ||
+                !wasNoFreeBank
+        ) {
             while (session.getFreeGameSum() == 0 || (session.getFreeGameSum() > 0 && session.getFreeGameNum() == session.getFreeGameSum())) { //Play until won free games
                 session.setCreditsAmount(10000);
                 session.play();
@@ -100,12 +107,17 @@ class ReelGameWithFreeGamesSessionImplTest {
             int playedFreeGamesCount = 0;
             int expectedPlayedFreeGamesCount = session.getFreeGameSum();
             long lastFreeBank = 0;
+            long lastFreeGamesSum;
             long creditsBeforeFreeGame = session.getCreditsAmount();
             while (session.getFreeGameSum() > 0 && session.getFreeGameNum() != session.getFreeGameSum()) { //Play until end of free games
                 lastFreeBank = session.getFreeGameBank();
+                lastFreeGamesSum = session.getFreeGameSum();
                 session.play();
+                if (session.getFreeGameSum() > lastFreeGamesSum && session.getFreeGameNum() == lastFreeGamesSum) {
+                    wasAdditionalFreeGamesWonAtLastFreeGame = true;
+                }
                 assertEquals(session.getFreeGameBank(), lastFreeBank + session.getWinningAmount());
-                if (session.getFreeGameNum() < session.getFreeGameSum()) {
+                if (session.getFreeGameNum() < session.getFreeGameSum() || session.getFreeGameSum() > expectedPlayedFreeGamesCount) {
                     assertEquals(session.getCreditsAmount(), creditsBeforeFreeGame); //Bet should not be subtracted at free games mode
                 } else {
                     assertEquals(session.getCreditsAmount(), creditsBeforeFreeGame + session.getFreeGameBank());

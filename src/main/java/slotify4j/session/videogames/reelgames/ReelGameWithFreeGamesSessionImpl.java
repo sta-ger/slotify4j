@@ -162,12 +162,13 @@ public class ReelGameWithFreeGamesSessionImpl implements ReelGameWithFreeGamesSe
             this.freeBank += this.getWinningAmount();
             this.setCreditsAmount(creditsBeforePlay);
         }
-        if (this.freeGamesSum > 0 && this.freeGamesNum == this.freeGamesSum) {
-            this.setCreditsAmount(this.getCreditsAmount()+ this.freeBank);
-        }
         wonFreeGames = this.getWonFreeGamesNumber();
         if (wonFreeGames > 0) {
             this.freeGamesSum += wonFreeGames;
+        } else {
+            if (this.freeGamesSum > 0 && this.freeGamesNum == this.freeGamesSum) {
+                this.setCreditsAmount(this.getCreditsAmount() + this.freeBank);
+            }
         }
     }
 }
