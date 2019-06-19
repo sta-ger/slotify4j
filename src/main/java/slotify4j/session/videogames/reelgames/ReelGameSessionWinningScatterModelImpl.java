@@ -7,7 +7,7 @@ public class ReelGameSessionWinningScatterModelImpl implements ReelGameSessionWi
 
     public ReelGameSessionWinningScatterModelImpl(String itemId, int[][] itemsPositions, long winningAmount) {
         this.itemId = itemId;
-        this.itemsPositions = itemsPositions;
+        this.itemsPositions = itemsPositions.clone();
         this.winningAmount = winningAmount;
     }
 
@@ -18,7 +18,7 @@ public class ReelGameSessionWinningScatterModelImpl implements ReelGameSessionWi
 
     @Override
     public int[][] getItemsPositions() {
-        return itemsPositions;
+        return itemsPositions.clone();
     }
 
     @Override

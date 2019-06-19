@@ -15,7 +15,11 @@ public class ReelGameWithFreeGamesSessionImpl implements ReelGameWithFreeGamesSe
     private int freeGamesSum;
     private long freeBank;
 
-    public ReelGameWithFreeGamesSessionImpl(ReelGameWithFreeGamesSessionConfig config, ReelGameSessionReelsController reelsController, ReelGameSessionWinCalculator winningCalculator) {
+    public ReelGameWithFreeGamesSessionImpl(
+            ReelGameWithFreeGamesSessionConfig config,
+            ReelGameSessionReelsController reelsController,
+            ReelGameSessionWinCalculator winningCalculator
+    ) {
         this.config = config;
         this.winningCalculator = winningCalculator;
         this.adaptee = new ReelGameSessionImpl(config, reelsController, winningCalculator);
@@ -26,8 +30,12 @@ public class ReelGameWithFreeGamesSessionImpl implements ReelGameWithFreeGamesSe
         final int[] rv = {0};
         Map<String, ReelGameSessionWinningScatterModel> wonScatters = this.getWinningScatters();
         wonScatters.forEach((String key, ReelGameSessionWinningScatterModel scatterModel) -> {
-            if (this.config.getFreeGamesForScatters(scatterModel.getItemId(), scatterModel.getItemsPositions().length) > 0) {
-                rv[0] += this.config.getFreeGamesForScatters(scatterModel.getItemId(), scatterModel.getItemsPositions().length);
+            if (this.config.getFreeGamesForScatters(
+                    scatterModel.getItemId(), scatterModel.getItemsPositions().length
+            ) > 0) {
+                rv[0] += this.config.getFreeGamesForScatters(
+                        scatterModel.getItemId(), scatterModel.getItemsPositions().length
+                );
             }
         });
         return rv[0];

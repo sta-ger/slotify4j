@@ -5,7 +5,12 @@ import slotify4j.session.videogames.reelgames.ReelGameSessionLinesDirectionData;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWinningLineModel;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWinningScatterModel;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.HashSet;
+
 import java.util.stream.IntStream;
 
 public interface ReelGameSessionWinCalculator {
@@ -52,7 +57,7 @@ public interface ReelGameSessionWinCalculator {
     static String getWinningItemId(String[] items, int[] pattern, String wildItemId) {
         List<String> itemsByPattern = Arrays.asList(getItemsMatchingPattern(items, pattern));
         HashSet<String> unique = new HashSet<>(itemsByPattern);
-        return unique.stream().reduce((prev, cur) -> {
+        return unique.stream().reduce((String prev, String cur) -> {
             if (!cur.equals(wildItemId)) {
                 prev = cur;
             }
@@ -72,7 +77,7 @@ public interface ReelGameSessionWinCalculator {
                 break;
             }
         }
-        return r.length > 0 ? r : null;
+        return r;
     }
 
     static int[] getWildItemsPositions(String[] items, int[] pattern, String wildItemId) {
@@ -93,14 +98,25 @@ public interface ReelGameSessionWinCalculator {
         return r.toArray(new int[r.size()][]);
     }
 
-    static int[] getWinningLinesIds(String[][] items, ReelGameSessionLinesDirectionData linesDirections, int[][] patterns) {
+    static int[] getWinningLinesIds(
+            String[][] items,
+            ReelGameSessionLinesDirectionData linesDirections,
+            int[][] patterns
+    ) {
         return getWinningLinesIds(items, linesDirections, patterns, null);
     }
 
-    static int[] getWinningLinesIds(String[][] items, ReelGameSessionLinesDirectionData linesDirections, int[][] patterns, String wildItemId) {
+    static int[] getWinningLinesIds(
+            String[][] items,
+            ReelGameSessionLinesDirectionData linesDirections,
+            int[][] patterns, String wildItemId
+    ) {
         int[] lines = linesDirections.getLinesIds();
-        return IntStream.of(lines).filter(lineId -> {
-            String[] itemsLine = getItemsForDirection(items, linesDirections.getVerticalItemsPositionsForLineId(lineId));
+        return IntStream.of(lines).filter((int lineId) -> {
+            String[] itemsLine = getItemsForDirection(
+                    items,
+                    linesDirections.getVerticalItemsPositionsForLineId(lineId)
+            );
             return getMatchingPattern(itemsLine, patterns, wildItemId) != null;
         }).toArray();
     }

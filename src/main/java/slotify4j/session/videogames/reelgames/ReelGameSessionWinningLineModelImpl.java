@@ -8,18 +8,20 @@ public class ReelGameSessionWinningLineModelImpl implements ReelGameSessionWinni
     private final int[] wildItemsPositions;
     private final String itemId;
 
-    public ReelGameSessionWinningLineModelImpl(long winAmount, int[] direction, int lineId, int[] itemsPositions, int[] wildItemsPositions, String itemId) {
+    public ReelGameSessionWinningLineModelImpl(
+            long winAmount, int[] direction, int lineId, int[] itemsPositions, int[] wildItemsPositions, String itemId
+    ) {
         this.winAmount = winAmount;
-        this.direction = direction;
+        this.direction = direction.clone();
         this.lineId = lineId;
-        this.itemsPositions = itemsPositions;
-        this.wildItemsPositions = wildItemsPositions;
+        this.itemsPositions = itemsPositions.clone();
+        this.wildItemsPositions = wildItemsPositions.clone();
         this.itemId = itemId;
     }
 
     @Override
     public int[] getDirection() {
-        return direction;
+        return direction.clone();
     }
 
     @Override
@@ -34,12 +36,12 @@ public class ReelGameSessionWinningLineModelImpl implements ReelGameSessionWinni
 
     @Override
     public int[] getItemsPositions() {
-        return itemsPositions;
+        return itemsPositions.clone();
     }
 
     @Override
     public int[] getWildItemsPositions() {
-        return wildItemsPositions;
+        return wildItemsPositions.clone();
     }
 
     @Override

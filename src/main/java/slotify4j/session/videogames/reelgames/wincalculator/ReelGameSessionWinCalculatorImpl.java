@@ -34,7 +34,7 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
     @Override
     public void setGameState(long bet, String[][] items) throws UnableToPlayException {
         if (Arrays.stream(config.getAvailableBets()).anyMatch(availableBet -> availableBet == bet)) {
-            this.items = items;
+            this.items = items.clone();
             this.calculateWinning(bet);
         } else {
             throw new UnableToPlayException("Bet " + bet + "is not specified at paytable");
@@ -45,7 +45,9 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
         ReelGameSessionWinningLineModel line;
         winningLines = new HashMap<>();
         linesWinning = 0;
-        int[] winningLinesIds = ReelGameSessionWinCalculator.getWinningLinesIds(items, linesDirections, linesPatterns, wildItemId);
+        int[] winningLinesIds = ReelGameSessionWinCalculator.getWinningLinesIds(
+                items, linesDirections, linesPatterns, wildItemId
+        );
         for (int lineId : winningLinesIds) {
             line = this.generateWinningLine(bet, lineId);
             if (line.getWinningAmount() > 0) {
@@ -55,7 +57,9 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
         }
         this.scattersWinning = 0;
         this.winningScatters = this.generateWinningScatters(bet);
-        winningScatters.forEach((scatterId, scatter) -> this.scattersWinning = this.scattersWinning + scatter.getWinningAmount());
+        winningScatters.forEach((scatterId, scatter) ->
+                this.scattersWinning = this.scattersWinning + scatter.getWinningAmount()
+        );
     }
 
     private ReelGameSessionWinningLineModel generateWinningLine(long bet, int lineId) {
@@ -67,13 +71,16 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
         String itemId = ReelGameSessionWinCalculator.getWinningItemId(itemsLine, pattern, wildItemId);
         int[] wildItemsPositions = ReelGameSessionWinCalculator.getWildItemsPositions(itemsLine, pattern, wildItemId);
         long winAmount = getLineWinningAmount(bet, itemId, itemsPositions.length, wildItemsPositions.length);
-        return new ReelGameSessionWinningLineModelImpl(winAmount, direction, lineId, itemsPositions, wildItemsPositions, itemId);
+        return new ReelGameSessionWinningLineModelImpl(
+                winAmount, direction, lineId, itemsPositions, wildItemsPositions, itemId
+        );
     }
 
     private long getLineWinningAmount(long bet, String itemId, int numOfWinningItems, int numOfWilds) {
         long rv = 0;
         if (paytable.getWinningAmountForItem(itemId, numOfWinningItems, bet) != 0) {
-            rv = paytable.getWinningAmountForItem(itemId, numOfWinningItems, bet) * wildsMultipliers.getMultiplierValueForWildsNum(numOfWilds);
+            rv = paytable.getWinningAmountForItem(itemId, numOfWinningItems, bet)
+                    * wildsMultipliers.getMultiplierValueForWildsNum(numOfWilds);
         }
         return rv;
     }
@@ -87,7 +94,12 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
                 int[][] curScatterItemsPositions = getScatterItemsPositions(curScatterItemId);
                 long winningAmount = getLineWinningAmount(bet, curScatterItemId, curScatterItemsPositions.length, 0);
                 if (curScatterItemsPositions.length >= curScatterMinItemsForWin) {
-                    rv.put(curScatterItemId, new ReelGameSessionWinningScatterModelImpl(curScatterItemId, curScatterItemsPositions, winningAmount));
+                    rv.put(
+                            curScatterItemId,
+                            new ReelGameSessionWinningScatterModelImpl(
+                                    curScatterItemId, curScatterItemsPositions, winningAmount
+                            )
+                    );
                 }
             }
         }

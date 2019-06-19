@@ -26,8 +26,12 @@ public interface ReelGameSessionReelsController {
         ArrayList<String> rv;
         rv = new ArrayList<>();
         Arrays.stream(availableItems).forEach((String itemId) -> {
-            int numberOfItem = numberOfEachItem != null &&
-                    numberOfEachItem.containsKey(itemId) ? numberOfEachItem.get(itemId) : 1;
+            int numberOfItem;
+            if (numberOfEachItem != null && numberOfEachItem.containsKey(itemId)) {
+                numberOfItem = numberOfEachItem.get(itemId);
+            } else {
+                numberOfItem = 1;
+            }
             for (int i = 0; i < numberOfItem; i++) {
                 rv.add(itemId);
             }
