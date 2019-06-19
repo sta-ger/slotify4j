@@ -1,5 +1,6 @@
 package slotify4j.session.videogames.reelgames.wincalculator;
 
+import slotify4j.session.UnableToPlayException;
 import slotify4j.session.videogames.reelgames.ReelGameSessionLinesDirectionData;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWinningLineModel;
 import slotify4j.session.videogames.reelgames.ReelGameSessionWinningScatterModel;
@@ -104,7 +105,7 @@ public interface ReelGameSessionWinCalculator {
         }).toArray();
     }
 
-    void setGameState(long bet, String[][] items) throws Exception;
+    void setGameState(long bet, String[][] items) throws UnableToPlayException;
 
     Map<Integer, ReelGameSessionWinningLineModel> getWinningLines();
 

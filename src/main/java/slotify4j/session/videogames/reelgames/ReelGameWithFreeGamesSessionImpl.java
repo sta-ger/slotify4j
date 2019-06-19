@@ -1,5 +1,6 @@
 package slotify4j.session.videogames.reelgames;
 
+import slotify4j.session.UnableToPlayException;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsController;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculator;
 
@@ -138,7 +139,7 @@ public class ReelGameWithFreeGamesSessionImpl implements ReelGameWithFreeGamesSe
     }
 
     @Override
-    public void play() throws Exception {
+    public void play() throws UnableToPlayException {
         long creditsBeforePlay;
         int wonFreeGames;
         if (this.freeGamesNum == this.freeGamesSum) {

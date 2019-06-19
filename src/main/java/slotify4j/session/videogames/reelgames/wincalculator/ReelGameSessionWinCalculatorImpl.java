@@ -1,5 +1,6 @@
 package slotify4j.session.videogames.reelgames.wincalculator;
 
+import slotify4j.session.UnableToPlayException;
 import slotify4j.session.videogames.reelgames.*;
 
 import java.util.*;
@@ -31,12 +32,12 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
     }
 
     @Override
-    public void setGameState(long bet, String[][] items) throws Exception {
+    public void setGameState(long bet, String[][] items) throws UnableToPlayException {
         if (Arrays.stream(config.getAvailableBets()).anyMatch((availableBet) -> availableBet == bet)) {
             this.items = items;
             this.calculateWinning(bet);
         } else {
-            throw new Exception("Bet " + bet + "is not specified at paytable");
+            throw new UnableToPlayException("Bet " + bet + "is not specified at paytable");
         }
     }
 

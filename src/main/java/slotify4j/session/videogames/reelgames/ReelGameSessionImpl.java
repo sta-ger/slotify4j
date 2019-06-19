@@ -1,6 +1,7 @@
 package slotify4j.session.videogames.reelgames;
 
 import slotify4j.session.GameSessionImpl;
+import slotify4j.session.UnableToPlayException;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsController;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculator;
 
@@ -97,7 +98,7 @@ public class ReelGameSessionImpl implements ReelGameSession {
     }
 
     @Override
-    public void play() throws Exception {
+    public void play() throws UnableToPlayException {
         adaptee.play();
         reelsItems = reelsController.getRandomItemsCombination();
         winningCalculator.setGameState(this.getBet(), reelsItems);

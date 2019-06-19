@@ -2,6 +2,6 @@ package slotify4j.session;
 
 public interface Playable {
 
-    void play() throws Exception;
+    void play() throws UnableToPlayException;
 
 }
