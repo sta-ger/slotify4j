@@ -70,7 +70,7 @@ public interface ReelGameSessionWinCalculator {
     }
 
     static int[] getMatchingPattern(String[] items, int[][] patterns, String wildItemId) {
-        int[] r = new int[0];
+        int[] r = null;
         for (int[] pattern : patterns) {
             if (isMatchPattern(items, pattern, wildItemId)) {
                 r = pattern;

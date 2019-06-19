@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GameSessionImplTest {
 
     public static void testDefaultSessionHasProperInitialValues(GameSession session, GameSessionConfig config) {
-        assertEquals(session.getAvailableBets(), config.getAvailableBets());
+        assertArrayEquals(session.getAvailableBets(), config.getAvailableBets());
         assertEquals(session.getBet(), config.getAvailableBets()[0]);
         assertEquals(session.getCreditsAmount(), 1000);
     }
@@ -22,7 +22,7 @@ public class GameSessionImplTest {
     public static void testDefaultSessionHasProperInitialValuesWithCustomConfig(GameSession session, GameSessionConfig config) {
         assertFalse(session.isBetAvailable(1));
         assertTrue(session.isBetAvailable(10));
-        assertEquals(session.getAvailableBets(), config.getAvailableBets());
+        assertArrayEquals(session.getAvailableBets(), config.getAvailableBets());
         assertEquals(session.getBet(), config.getAvailableBets()[0]);
         assertEquals(session.getCreditsAmount(), config.getCreditsAmount());
     }

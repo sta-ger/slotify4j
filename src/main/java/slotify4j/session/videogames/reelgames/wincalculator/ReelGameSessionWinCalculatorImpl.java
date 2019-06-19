@@ -66,7 +66,6 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
         int[] direction = linesDirections.getVerticalItemsPositionsForLineId(lineId);
         String[] itemsLine = ReelGameSessionWinCalculator.getItemsForDirection(items, direction);
         int[] pattern = ReelGameSessionWinCalculator.getMatchingPattern(itemsLine, linesPatterns, wildItemId);
-        assert pattern != null;
         int[] itemsPositions = IntStream.range(0, pattern.length).filter(i -> pattern[i] == 1).toArray();
         String itemId = ReelGameSessionWinCalculator.getWinningItemId(itemsLine, pattern, wildItemId);
         int[] wildItemsPositions = ReelGameSessionWinCalculator.getWildItemsPositions(itemsLine, pattern, wildItemId);
