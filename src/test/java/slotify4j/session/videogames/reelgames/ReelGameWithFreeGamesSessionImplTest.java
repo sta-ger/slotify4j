@@ -38,7 +38,7 @@ class ReelGameWithFreeGamesSessionImplTest {
             session.play();
         }
         assertEquals(session.getFreeGameNum(), 0);
-        assertEquals(session.getFreeGameSum(), 0);
+        assertTrue(session.getFreeGameSum() > 0);
     }
 
     public static ReelGameWithFreeGamesSessionConfig createConfigForTestPlayFreeGames() {
