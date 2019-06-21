@@ -83,7 +83,28 @@ class ReelGameWithFreeGamesSessionImplTest {
     }
 
     @Test
-    void testPlayFreeGames() throws Exception {
+    void feeGamesNumSumBankSettersTest() {
+        ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
+        ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        testFreeGamesGettersSetters(session);
+    }
+
+    @Test
+    void createDefaultReelGameWithFreeGamesSessionTest() {
+        ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
+        ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        testDefaultReelGameWithFreeGamesSession(session);
+    }
+
+    @Test
+    void playUntilWinFreeGamesTest() throws Exception {
+        ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
+        ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        testPlayUntilWinFreeGames(session);
+    }
+
+    @Test
+    void playFreeGamesTest() throws Exception {
         ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
         ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
 
