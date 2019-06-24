@@ -1,4 +1,4 @@
-package simulation;
+package slotify4j.simulation;
 
 public class GameSessionSimulationImpl implements GameSessionSimulation {
 

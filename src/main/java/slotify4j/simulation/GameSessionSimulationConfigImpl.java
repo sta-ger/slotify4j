@@ -1,4 +1,4 @@
-package simulation;
+package slotify4j.simulation;
 
 public class GameSessionSimulationConfigImpl implements GameSessionSimulationConfig {
     private long numberOfRounds = 1000;
