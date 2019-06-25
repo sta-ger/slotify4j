@@ -2,6 +2,9 @@ package slotify4j.simulation;
 
 public class GameSessionSimulationImpl implements GameSessionSimulation {
 
+    public GameSessionSimulationImpl(GameSessionSimulationConfig config) {
+
+    }
 
     @Override
     public void run() {
