@@ -40,4 +40,33 @@ public class DefaultGameSessionConfig implements GameSessionConfig {
     public long getBet() {
         return bet;
     }
+
+    public static class Builder {
+        private GameSessionConfig config;
+
+        public Builder() {
+            config = new DefaultGameSessionConfig();
+        }
+
+        public Builder withAvailableBets(long[] value) {
+            config.setAvailableBets(value);
+            return this;
+        }
+
+        public Builder withCreditsAmount(long value) {
+            config.setCreditsAmount(value);
+            return this;
+        }
+
+        public Builder withBet(long value) {
+            config.setBet(value);
+            return this;
+        }
+
+        public GameSessionConfig build() {
+            return config;
+        }
+
+    }
+
 }

@@ -13,10 +13,10 @@ public class GameSessionImplTest {
     }
 
     public static GameSessionConfig createCustomConfigForTestProperInitialValues() {
-        DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
-        conf.setAvailableBets(new long[]{10, 20, 30});
-        conf.setCreditsAmount(5000);
-        return conf;
+        return new DefaultGameSessionConfig.Builder()
+                .withAvailableBets(new long[]{10, 20, 30})
+                .withCreditsAmount(5000)
+                .build();
     }
 
     public static void testDefaultSessionHasProperInitialValuesWithCustomConfig(GameSession session, GameSessionConfig config) {
@@ -28,9 +28,9 @@ public class GameSessionImplTest {
     }
 
     public static GameSessionConfig createCustomConfigForWrongBetTest() {
-        DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
-        conf.setAvailableBets(new long[]{10, 20, 30});
-        return conf;
+        return new DefaultGameSessionConfig.Builder()
+                .withAvailableBets(new long[]{10, 20, 30})
+                .build();
     }
 
     public static void testDefaultSessionWithWrongInitialBet(GameSession session, GameSessionConfig config) {
