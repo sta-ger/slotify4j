@@ -2,7 +2,7 @@ package slotify4j.simulation;
 
 public enum ChangeBetScenario {
 
-    DontChange,
-    ChangeRandomly
+    DONT_CHANGE,
+    CHANGE_RANDOMLY
 
 }

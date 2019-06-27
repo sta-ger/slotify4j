@@ -10,7 +10,7 @@ public class GameSessionSimulationImpl implements GameSessionSimulation {
 
     @Override
     public void run() {
-
+        // Not implemented
     }
 
     @Override
@@ -40,31 +40,31 @@ public class GameSessionSimulationImpl implements GameSessionSimulation {
 
     @Override
     public void setBeforePlayCallback(Runnable callback) {
-
+        // Not implemented
     }
 
     @Override
     public void removeBeforePlayCallback() {
-
+        // Not implemented
     }
 
     @Override
     public void setAfterPlayCallback(Runnable callback) {
-
+        // Not implemented
     }
 
     @Override
     public void removeAfterPlayCallback() {
-
+        // Not implemented
     }
 
     @Override
     public void setOnFinishedCallback(Runnable callback) {
-
+        // Not implemented
     }
 
     @Override
     public void removeOnFinishedCallback() {
-
+        // Not implemented
     }
 }
