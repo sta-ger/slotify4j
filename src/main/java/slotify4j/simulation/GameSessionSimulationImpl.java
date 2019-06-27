@@ -1,8 +1,10 @@
 package slotify4j.simulation;
 
+import slotify4j.session.videogames.reelgames.ReelGameSession;
+
 public class GameSessionSimulationImpl implements GameSessionSimulation {
 
-    public GameSessionSimulationImpl(GameSessionSimulationConfig config) {
+    public GameSessionSimulationImpl(ReelGameSession session, GameSessionSimulationConfig simulationConfig) {
 
     }
 

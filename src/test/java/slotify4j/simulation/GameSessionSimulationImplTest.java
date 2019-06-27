@@ -18,12 +18,12 @@ public class GameSessionSimulationImplTest {
     void playSpecifiedNumOfRoundsAndCalculateRtpTest() {
         ReelGameSessionConfig sessionConfig = new DefaultReelGameSessionConfig();
         sessionConfig.setCreditsAmount(10000);
-        sessionConfig.setReelsItemsSequences(new String[]{
-                new String{"J", "9", "Q", "10", "A", "S", "K"},
-                new String{"K", "S", "10", "A", "9", "Q", "J"},
-                new String{"J", "Q", "10", "9", "S", "A", "K"},
-                new String{"Q", "10", "9", "S", "K", "A", "J"},
-                new String{"Q", "A", "J", "10", "9", "S", "K"},
+        sessionConfig.setReelsItemsSequences(new String[][]{
+                {"J", "9", "Q", "10", "A", "S", "K"},
+                {"K", "S", "10", "A", "9", "Q", "J"},
+                {"J", "Q", "10", "9", "S", "A", "K"},
+                {"Q", "10", "9", "S", "K", "A", "J"},
+                {"Q", "A", "J", "10", "9", "S", "K"},
         });
 
         ReelGameSessionReelsController reelsController = new ReelGameSessionReelsControllerImpl(sessionConfig);
@@ -32,7 +32,7 @@ public class GameSessionSimulationImplTest {
         GameSessionSimulationConfig simulationConfig = new GameSessionSimulationConfigImpl.Builder()
                 .withNumberOfRounds(10000)
                 .build();
-        GameSessionSimulation simulation = new GameSessionSimulationImpl(simulationConfig);
+        GameSessionSimulation simulation = new GameSessionSimulationImpl(session, simulationConfig);
 
         int[] callbacksCounds = {0, 0, 0};
         simulation.setBeforePlayCallback(() -> callbacksCounds[0]++);
