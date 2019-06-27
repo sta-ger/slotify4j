@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DefaultReelGameWithFreeGamesSessionConfigTest {
 
     @Test
-    void getFreeGamesForScatters() {
+    public void getFreeGamesForScatters() {
         DefaultReelGameWithFreeGamesSessionConfig conf = new DefaultReelGameWithFreeGamesSessionConfig();
         assertEquals(conf.getFreeGamesForScatters(DefaultReelGameSessionConfig.DEFAULT_SCATTER_ITEM_ID, DefaultReelGameSessionConfig.DEFAULT_MINIMUM_ITEMS_NUM_FOR_SCATTER_WIN), DefaultReelGameWithFreeGamesSessionConfig.DEFAULT_FREE_GAMES_FOR_SCATTERS_NUM);
         assertEquals(conf.getFreeGamesForScatters(DefaultReelGameSessionConfig.DEFAULT_SCATTER_ITEM_ID, 1), 0);

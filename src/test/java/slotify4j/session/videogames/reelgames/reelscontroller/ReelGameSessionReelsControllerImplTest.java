@@ -38,7 +38,7 @@ class ReelGameSessionReelsControllerImplTest {
     }
 
     @Test
-    void transposeMatrixTest() {
+    public void transposeMatrixTest() {
         assertArrayEquals(ReelGameSessionReelsController.transposeItemsMatrix(new String[][]{
                 {"1", "2", "3", "4"},
                 {"5", "6", "7", "8"},
@@ -51,12 +51,12 @@ class ReelGameSessionReelsControllerImplTest {
     }
 
     @Test
-    void testCreateShuffledSequenceOfSpecifiedItems() {
+    public void testCreateShuffledSequenceOfSpecifiedItems() {
         assertEquals(ReelGameSessionReelsController.createItemsSequence(availableItems).length, availableItems.length);
     }
 
     @Test
-    void testCreateShuffledSequenceOfSpecifiedItemsAndNumbersOfItems() {
+    public void testCreateShuffledSequenceOfSpecifiedItemsAndNumbersOfItems() {
         assertEquals(Objects.requireNonNull(ReelGameSessionReelsController.createItemsSequence(availableItems, new HashMap<>() {{
             put("A", 2);
         }})).length, availableItems.length + 1);
@@ -79,14 +79,14 @@ class ReelGameSessionReelsControllerImplTest {
     }
 
     @Test
-    void testCreateShuffledSequencesForSpecifiedNumberOfReels() {
+    public void testCreateShuffledSequencesForSpecifiedNumberOfReels() {
         assertEquals(ReelGameSessionReelsController.createItemsSequences(5, availableItems).length, 5);
         assertEquals(ReelGameSessionReelsController.createItemsSequences(3, availableItems).length, 3);
         Arrays.stream(ReelGameSessionReelsController.createItemsSequences(3, availableItems)).forEach(curItems -> assertEquals(curItems.length, availableItems.length));
     }
 
     @Test
-    void testCcreateShuffledSequencesForSpecifiedNumberOfReelsAndNumbersOfItems() {
+    public void testCcreateShuffledSequencesForSpecifiedNumberOfReelsAndNumbersOfItems() {
         String[][] items = ReelGameSessionReelsController.createItemsSequences(5, availableItems, new HashMap<>() {{
             put(0, new HashMap<>() {{
                 put("A", 0);
@@ -144,7 +144,7 @@ class ReelGameSessionReelsControllerImplTest {
     }
 
     @Test
-    void getRandomItemTest() {
+    public void getRandomItemTest() {
         for (int i = 0; i < reelsNumber; i++) {
             //For each reel
             for (int j = 0; j < 1000; j++) {
@@ -160,7 +160,7 @@ class ReelGameSessionReelsControllerImplTest {
     }
 
     @Test
-    void getRandomReelItemsTest() {
+    public void getRandomReelItemsTest() {
         for (int i = 0; i < reelsNumber; i++) {
             //For each reel
             for (int j = 0; j < 1000; j++) {
@@ -180,7 +180,7 @@ class ReelGameSessionReelsControllerImplTest {
     }
 
     @Test
-    void getRandomItemsCombinationTest() {
+    public void getRandomItemsCombinationTest() {
         String[][] items = reelsController.getRandomItemsCombination();
         assertEquals(items.length, reelsNumber);
         for (int i = 0; i < reelsNumber; i++) {

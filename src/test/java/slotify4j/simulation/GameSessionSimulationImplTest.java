@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GameSessionSimulationImplTest {
 
     @Test
-    void playSpecifiedNumOfRoundsAndCalculateRtpTest() {
+    public void playSpecifiedNumOfRoundsAndCalculateRtpTest() {
         ReelGameSessionConfig sessionConfig = new DefaultReelGameSessionConfig();
         sessionConfig.setCreditsAmount(10000);
         sessionConfig.setReelsItemsSequences(new String[][]{

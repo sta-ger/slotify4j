@@ -50,7 +50,7 @@ class ReelGameSessionImplTest {
     }
 
     @Test
-    void passBaseTests() {
+    public void passBaseTests() {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf);
@@ -70,14 +70,14 @@ class ReelGameSessionImplTest {
     }
 
     @Test
-    void testCreateNewSession() {
+    public void testCreateNewSession() {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         testDefaultReelGameSessionHasProperInitialValues(sess, conf);
     }
 
     @Test
-    void testPlaySeveralTimesUntilAnyWinning() throws Exception {
+    public void testPlaySeveralTimesUntilAnyWinning() throws Exception {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         conf.setCreditsAmount(10000000);
         ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));

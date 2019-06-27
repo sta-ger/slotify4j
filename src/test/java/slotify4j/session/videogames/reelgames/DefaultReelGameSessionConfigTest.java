@@ -16,7 +16,7 @@ class DefaultReelGameSessionConfigTest {
     }
 
     @Test
-    void testCreateDefaultConfig() {
+    public void testCreateDefaultConfig() {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         assertEquals(conf.getWildItemId(), "W");
 
@@ -62,14 +62,14 @@ class DefaultReelGameSessionConfigTest {
     }
 
     @Test
-    void testIsItemWild() {
+    public void testIsItemWild() {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         assertTrue(conf.isItemWild("W"));
         assertFalse(conf.isItemWild("A"));
     }
 
     @Test
-    void testIsItemScatter() {
+    public void testIsItemScatter() {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         assertTrue(conf.isItemScatter("S"));
         assertFalse(conf.isItemScatter("A"));

@@ -32,7 +32,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void createLinesPatternsTest() {
+    public void createLinesPatternsTest() {
         int[][] patterns = ReelGameSessionWinCalculator.createLinesPatterns(5);
         assertArrayEquals(patterns, new int[][]{
                 {1, 1, 1, 1, 1},
@@ -43,7 +43,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void getItemsMatchingPatternTest() {
+    public void getItemsMatchingPatternTest() {
         assertArrayEquals(ReelGameSessionWinCalculator.getItemsMatchingPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 1, 0, 0}), new String[]{"A", "A", "A"});
         assertArrayEquals(ReelGameSessionWinCalculator.getItemsMatchingPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{0, 1, 1, 1, 0}), new String[]{"A", "A", "K"});
         assertArrayEquals(ReelGameSessionWinCalculator.getItemsMatchingPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{0, 0, 1, 1, 1}), new String[]{"A", "K", "Q"});
@@ -51,7 +51,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void isMatchPatternTest() {
+    public void isMatchPatternTest() {
         assertTrue(ReelGameSessionWinCalculator.isMatchPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 0, 0, 0}));
         assertTrue(ReelGameSessionWinCalculator.isMatchPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 1, 0, 0}));
         assertFalse(ReelGameSessionWinCalculator.isMatchPattern(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 1, 1, 0}));
@@ -73,7 +73,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void getWinningItemIdTest() {
+    public void getWinningItemIdTest() {
         assertEquals(ReelGameSessionWinCalculator.getWinningItemId(new String[]{"A", "A", "A", "K", "Q",}, new int[]{1, 1, 1, 0, 0}), "A");
         assertEquals(ReelGameSessionWinCalculator.getWinningItemId(new String[]{"A", "W", "A", "K", "Q",}, new int[]{1, 1, 1, 0, 0}, "W"), "A");
         assertEquals(ReelGameSessionWinCalculator.getWinningItemId(new String[]{"A", "W", "W", "K", "Q",}, new int[]{1, 1, 1, 0, 0}, "W"), "A");
@@ -83,7 +83,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void getMatchingPatternTest() {
+    public void getMatchingPatternTest() {
         int[][] patterns = ReelGameSessionWinCalculator.createLinesPatterns(5);
         assertArrayEquals(ReelGameSessionWinCalculator.getMatchingPattern(new String[]{"A", "A", "K", "Q", "J",}, patterns), new int[]{1, 1, 0, 0, 0});
         assertArrayEquals(ReelGameSessionWinCalculator.getMatchingPattern(new String[]{"A", "A", "A", "K", "Q",}, patterns), new int[]{1, 1, 1, 0, 0});
@@ -95,7 +95,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void getWildItemsPositionsTest() {
+    public void getWildItemsPositionsTest() {
         assertArrayEquals(ReelGameSessionWinCalculator.getWildItemsPositions(new String[]{"A", "W", "K", "Q", "J",}, new int[]{1, 1, 0, 0, 0}, "W"), new int[]{1});
         assertArrayEquals(ReelGameSessionWinCalculator.getWildItemsPositions(new String[]{"W", "A", "K", "Q", "J",}, new int[]{1, 1, 0, 0, 0}, "W"), new int[]{0});
         assertArrayEquals(ReelGameSessionWinCalculator.getWildItemsPositions(new String[]{"A", "W", "W", "Q", "J",}, new int[]{1, 1, 1, 0, 0}, "W"), new int[]{1, 2});
@@ -109,7 +109,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void getScatterItemsPositionsTest() {
+    public void getScatterItemsPositionsTest() {
         assertArrayEquals(ReelGameSessionWinCalculator.getScatterItemsPositions(ReelGameSessionReelsController.transposeItemsMatrix(new String[][]{
                 {"A", "K", "Q", "J", "10"},
                 {"S", "S", "Q", "J", "S"},
@@ -123,7 +123,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void getItemsForDirectionTest() {
+    public void getItemsForDirectionTest() {
         assertArrayEquals(ReelGameSessionWinCalculator.getItemsForDirection(ReelGameSessionReelsController.transposeItemsMatrix(new String[][]{
                 {"A", "A", "A", "K", "Q"},
                 {"A", "K", "Q", "J", "10"},
@@ -152,7 +152,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void getWinningLinesIdsTest() {
+    public void getWinningLinesIdsTest() {
         ReelGameSessionLinesDirectionDataImpl directions = new ReelGameSessionLinesDirectionDataImpl(
                 new HashMap<>() {{
                     put(0, new int[]{1, 1, 1});
@@ -199,7 +199,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void setGameStateTest() {
+    public void setGameStateTest() {
         assertDoesNotThrow(() -> winningCalculator.setGameState(1, ReelGameSessionReelsController.transposeItemsMatrix(new String[][]{
                 {"A", "A", "A", "A", "A"},
                 {"A", "A", "A", "A", "A"},
@@ -213,7 +213,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void calculateWinningLinesAfterUpdateStateTest() throws Exception {
+    public void calculateWinningLinesAfterUpdateStateTest() throws Exception {
         Arrays.stream(config.getAvailableBets()).forEach(bet -> Arrays.stream(config.getAvailableItems()).forEach(item -> {
             if (!config.isItemWild(item) && !config.isItemScatter(item)) {
                 try {
@@ -252,7 +252,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void calculateWinningLinesWithWildsAfterUpdateStateTest() throws Exception {
+    public void calculateWinningLinesWithWildsAfterUpdateStateTest() throws Exception {
         winningCalculator.setGameState(1, ReelGameSessionReelsController.transposeItemsMatrix(new String[][]{
                 {"A", "W", "A", "K", "Q"},
                 {"A", "K", "Q", "J", "10"},
@@ -347,7 +347,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void calculateWinningScattersAfterUpdateStateTest() throws Exception {
+    public void calculateWinningScattersAfterUpdateStateTest() throws Exception {
         winningCalculator.setGameState(1, ReelGameSessionReelsController.transposeItemsMatrix(new String[][]{
                 {"A", "S", "A", "K", "Q"},
                 {"A", "K", "Q", "J", "10"},
@@ -375,7 +375,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void calculateAllLinesWinAmountAfterUpdateStateTest() throws Exception {
+    public void calculateAllLinesWinAmountAfterUpdateStateTest() throws Exception {
         winningCalculator.setGameState(1, ReelGameSessionReelsController.transposeItemsMatrix(new String[][]{
                 {"A", "A", "A", "A", "A"},
                 {"A", "A", "A", "K", "Q"},
@@ -385,7 +385,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void calculateAllScattersWinAmountAfterUpdateStateTest() throws Exception {
+    public void calculateAllScattersWinAmountAfterUpdateStateTest() throws Exception {
         winningCalculator.setGameState(1, ReelGameSessionReelsController.transposeItemsMatrix(new String[][]{
                 {"A", "A", "A", "A", "A"},
                 {"A", "A", "A", "S", "S"},
@@ -395,7 +395,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    void calculateTotalWinAmountAfterUpdateStateTest() throws Exception {
+    public void calculateTotalWinAmountAfterUpdateStateTest() throws Exception {
         winningCalculator.setGameState(1, ReelGameSessionReelsController.transposeItemsMatrix(new String[][]{
                 {"A", "A", "A", "A", "A"},
                 {"A", "A", "A", "S", "S"},

@@ -55,7 +55,7 @@ class ReelGameWithFreeGamesSessionImplTest {
     }
 
     @Test
-    void passBaseTests() throws Exception {
+    public void passBaseTests() throws Exception {
         ReelGameWithFreeGamesSessionConfig conf = new DefaultReelGameWithFreeGamesSessionConfig();
         ReelGameWithFreeGamesSession sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf);
@@ -83,28 +83,28 @@ class ReelGameWithFreeGamesSessionImplTest {
     }
 
     @Test
-    void feeGamesNumSumBankSettersTest() {
+    public void feeGamesNumSumBankSettersTest() {
         ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
         ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         testFreeGamesGettersSetters(session);
     }
 
     @Test
-    void createDefaultReelGameWithFreeGamesSessionTest() {
+    public void createDefaultReelGameWithFreeGamesSessionTest() {
         ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
         ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         testDefaultReelGameWithFreeGamesSession(session);
     }
 
     @Test
-    void playUntilWinFreeGamesTest() throws Exception {
+    public void playUntilWinFreeGamesTest() throws Exception {
         ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
         ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         testPlayUntilWinFreeGames(session);
     }
 
     @Test
-    void playFreeGamesTest() throws Exception {
+    public void playFreeGamesTest() throws Exception {
         ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
         ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
 

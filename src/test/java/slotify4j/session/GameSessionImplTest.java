@@ -72,28 +72,28 @@ public class GameSessionImplTest {
     }
 
     @Test
-    void testCreateNewSession() {
+    public void testCreateNewSession() {
         DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
         GameSessionImpl sess = new GameSessionImpl(conf);
         testDefaultSessionHasProperInitialValues(sess, conf);
     }
 
     @Test
-    void testCreateNewSessionWithCustomConfig() {
+    public void testCreateNewSessionWithCustomConfig() {
         GameSessionConfig conf = createCustomConfigForTestProperInitialValues();
         GameSessionImpl sess = new GameSessionImpl(conf);
         testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf);
     }
 
     @Test
-    void testCreateNewSessionWithWrongBet() {
+    public void testCreateNewSessionWithWrongBet() {
         GameSessionConfig conf = createCustomConfigForWrongBetTest();
         GameSessionImpl sess = new GameSessionImpl(conf);
         testDefaultSessionWithWrongInitialBet(sess, createCustomConfigForTestProperInitialValues());
     }
 
     @Test
-    void testPlayWhileEnoughCredits() throws Exception {
+    public void testPlayWhileEnoughCredits() throws Exception {
         DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
         GameSessionImpl sess = new GameSessionImpl(conf);
         testDefaultSessionPlaysWhileEnoughCredits(sess);
