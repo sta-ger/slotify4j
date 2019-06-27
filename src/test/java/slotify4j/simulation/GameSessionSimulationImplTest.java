@@ -33,6 +33,19 @@ public class GameSessionSimulationImplTest {
                 .withNumberOfRounds(10000)
                 .build();
         GameSessionSimulation simulation = new GameSessionSimulationImpl(simulationConfig);
+
+        int[] callbacksCounds = {0, 0, 0};
+        simulation.setBeforePlayCallback(() -> callbacksCounds[0]++);
+        simulation.setAfterPlayCallback(() -> callbacksCounds[1]++);
+        simulation.setOnFinishedCallback(() -> callbacksCounds[2]++);
+
+        simulation.run();
+
+        assertEquals(callbacksCounds[0], simulation.getTotalGamesToPlayNumber());
+        assertEquals(callbacksCounds[1], simulation.getTotalGamesToPlayNumber());
+        assertEquals(callbacksCounds[2], 1);
+
+        assertTrue(simulation.getRtp() > 0.5 && simulation.getRtp() < 0.6);
     }
 
 }
