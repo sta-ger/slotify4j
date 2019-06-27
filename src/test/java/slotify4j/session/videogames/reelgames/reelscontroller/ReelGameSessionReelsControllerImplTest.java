@@ -28,7 +28,7 @@ class ReelGameSessionReelsControllerImplTest {
 
     ReelGameSessionReelsControllerImplTest() {
         String[][] sequences = ReelGameSessionReelsController.createItemsSequences(5, availableItems, 10);
-        sequences[2] = Arrays.stream(sequences[2]).filter(item -> !item.equals("A")).toArray(String[]::new);
+        sequences[2] = Arrays.stream(sequences[2]).filter(item -> !"A".equals(item)).toArray(String[]::new);
         DefaultReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         conf.setReelsNumber(reelsNumber);
         conf.setReelsItemsNumber(reelsItemsNumber);
