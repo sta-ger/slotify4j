@@ -59,7 +59,7 @@ public interface ReelGameSessionReelsController {
     static String[][] createItemsSequences(
             int reelsNumber,
             String[] availableItems,
-            HashMap<Integer, HashMap<String, Integer>> itemsNumbersForReels
+            Map<Integer, Map<String, Integer>> itemsNumbersForReels
     ) {
         String[][] rv;
         int i;

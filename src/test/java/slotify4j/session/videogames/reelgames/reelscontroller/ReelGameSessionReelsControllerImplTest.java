@@ -3,10 +3,7 @@ package slotify4j.session.videogames.reelgames.reelscontroller;
 import org.junit.jupiter.api.Test;
 import slotify4j.session.videogames.reelgames.DefaultReelGameSessionConfig;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -113,7 +110,7 @@ class ReelGameSessionReelsControllerImplTest {
             }
         });
 
-        HashMap<Integer, HashMap<String, Integer>> itemsNumbersMap = new HashMap<>() {{
+        Map<Integer, Map<String, Integer>> itemsNumbersMap = new HashMap<>() {{
             put(0, new HashMap<>());
             put(1, new HashMap<>());
             put(2, new HashMap<>());

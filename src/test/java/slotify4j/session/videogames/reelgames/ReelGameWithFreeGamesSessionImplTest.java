@@ -9,6 +9,7 @@ import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCa
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -43,14 +44,10 @@ class ReelGameWithFreeGamesSessionImplTest {
 
     public static ReelGameWithFreeGamesSessionConfig createConfigForTestPlayFreeGames() {
         DefaultReelGameWithFreeGamesSessionConfig conf = new DefaultReelGameWithFreeGamesSessionConfig();
-        conf.setReelsItemsSequences(ReelGameSessionReelsController.createItemsSequences(conf.getReelsNumber(), conf.getAvailableItems(), new HashMap<>() {{
-            put(0, new HashMap<>() {{
-                put("S", 0);
-            }});
-            put(4, new HashMap<>() {{
-                put("S", 0);
-            }});
-        }}));
+        conf.setReelsItemsSequences(ReelGameSessionReelsController.createItemsSequences(conf.getReelsNumber(), conf.getAvailableItems(), Map.of(
+                0, Map.of("S", 0),
+                4, Map.of("S", 0)
+        )));
         return conf;
     }
 
