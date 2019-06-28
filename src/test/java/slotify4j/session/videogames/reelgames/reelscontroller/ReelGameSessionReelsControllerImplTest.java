@@ -72,20 +72,12 @@ class ReelGameSessionReelsControllerImplTest {
 
     @Test
     public void testCcreateShuffledSequencesForSpecifiedNumberOfReelsAndNumbersOfItems() {
-        String[][] items = ReelGameSessionReelsController.createItemsSequences(5, availableItems, new HashMap<>() {{
-            put(0, new HashMap<>() {{
-                put("A", 0);
-            }});
-            put(1, new HashMap<>() {{
-                put("A", 0);
-            }});
-            put(3, new HashMap<>() {{
-                put("A", 0);
-            }});
-            put(4, new HashMap<>() {{
-                put("A", 0);
-            }});
-        }});
+        String[][] items = ReelGameSessionReelsController.createItemsSequences(5, availableItems, Map.of(
+                0, Map.of("A", 0),
+                1, Map.of("A", 0),
+                3, Map.of("A", 0),
+                4, Map.of("A", 0)
+        ));
 
         assertEquals(items.length, 5);
 
@@ -98,13 +90,13 @@ class ReelGameSessionReelsControllerImplTest {
             }
         });
 
-        Map<Integer, Map<String, Integer>> itemsNumbersMap = new HashMap<>() {{
-            put(0, new HashMap<>());
-            put(1, new HashMap<>());
-            put(2, new HashMap<>());
-            put(3, new HashMap<>());
-            put(4, new HashMap<>());
-        }};
+        Map<Integer, Map<String, Integer>> itemsNumbersMap = Map.of(
+                0, new HashMap<>(),
+                1, new HashMap<>(),
+                2, new HashMap<>(),
+                3, new HashMap<>(),
+                4, new HashMap<>()
+        );
 
         itemsNumbersMap.forEach((reelId, sequenceMap) -> {
             sequenceMap.put("A", 10);
