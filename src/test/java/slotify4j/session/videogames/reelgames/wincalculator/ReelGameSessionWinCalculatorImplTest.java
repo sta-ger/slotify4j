@@ -5,7 +5,6 @@ import slotify4j.session.videogames.reelgames.*;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsController;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -154,13 +153,13 @@ class ReelGameSessionWinCalculatorImplTest {
     @Test
     public void getWinningLinesIdsTest() {
         ReelGameSessionLinesDirectionDataImpl directions = new ReelGameSessionLinesDirectionDataImpl(
-                new HashMap<>() {{
-                    put(0, new int[]{1, 1, 1});
-                    put(1, new int[]{0, 0, 0});
-                    put(2, new int[]{2, 2, 2});
-                    put(3, new int[]{0, 1, 2});
-                    put(4, new int[]{2, 1, 0});
-                }}
+                Map.of(
+                        0, new int[]{1, 1, 1},
+                        1, new int[]{0, 0, 0},
+                        2, new int[]{2, 2, 2},
+                        3, new int[]{0, 1, 2},
+                        4, new int[]{2, 1, 0}
+                )
         );
 
         int[][] patterns = ReelGameSessionWinCalculator.createLinesPatterns(3);
