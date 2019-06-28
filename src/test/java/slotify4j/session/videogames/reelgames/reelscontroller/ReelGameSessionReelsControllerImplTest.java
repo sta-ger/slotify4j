@@ -54,22 +54,10 @@ class ReelGameSessionReelsControllerImplTest {
 
     @Test
     public void testCreateShuffledSequenceOfSpecifiedItemsAndNumbersOfItems() {
-        assertEquals(Objects.requireNonNull(ReelGameSessionReelsController.createItemsSequence(availableItems, new HashMap<>() {{
-            put("A", 2);
-        }})).length, availableItems.length + 1);
+        assertEquals(Objects.requireNonNull(ReelGameSessionReelsController.createItemsSequence(availableItems, Map.of("A", 2))).length, availableItems.length + 1);
+        assertEquals(Objects.requireNonNull(ReelGameSessionReelsController.createItemsSequence(availableItems, Map.of("A", 0))).length, availableItems.length - 1);
 
-        assertEquals(Objects.requireNonNull(ReelGameSessionReelsController.createItemsSequence(availableItems, new HashMap<>() {{
-            put("A", 0);
-        }})).length, availableItems.length - 1);
-
-        HashMap<String, Integer> numbersOfItems = new HashMap<>() {{
-            put("A", 10);
-            put("K", 20);
-            put("Q", 30);
-            put("J", 40);
-            put("10", 50);
-            put("9", 60);
-        }};
+        Map<String, Integer> numbersOfItems = Map.of("A", 10, "K", 20, "Q", 30, "J", 40, "10", 50, "9", 60);
 
         assertEquals(Optional.of(ReelGameSessionReelsController.createItemsSequence(availableItems, numbersOfItems).length), numbersOfItems.values().stream().reduce(Integer::sum));
         assertEquals(ReelGameSessionReelsController.createItemsSequence(availableItems, 10).length, 10 * availableItems.length);

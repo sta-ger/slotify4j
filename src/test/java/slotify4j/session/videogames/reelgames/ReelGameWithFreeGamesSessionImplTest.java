@@ -8,7 +8,6 @@ import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionRee
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
