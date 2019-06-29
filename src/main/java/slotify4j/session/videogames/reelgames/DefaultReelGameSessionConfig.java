@@ -4,13 +4,15 @@ import slotify4j.session.DefaultGameSessionConfig;
 
 import java.util.stream.Stream;
 
-public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig implements ReelGameSessionConfig {
+public class DefaultReelGameSessionConfig implements ReelGameSessionConfig {
     public static final String DEFAULT_SCATTER_ITEM_ID = "S";
     public static final int DEFAULT_MINIMUM_ITEMS_NUM_FOR_SCATTER_WIN = 3;
 
     public static final int DEFAULT_REELS_NUMBER = 5;
     public static final int DEFAULT_REELS_ITEMS_NUMBER = 3;
     public static final String DEFAULT_WILD_ITEM_ID = "W";
+
+    private final DefaultGameSessionConfig baseConfig;
 
     private int reelsNumber;
     private int reelsItemsNumber;
@@ -23,6 +25,7 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
     private ReelGameSessionWildsMultipliersData wildsMultipliers;
 
     public DefaultReelGameSessionConfig() {
+        baseConfig = new DefaultGameSessionConfig();
         reelsNumber = DEFAULT_REELS_NUMBER;
         reelsItemsNumber = DEFAULT_REELS_ITEMS_NUMBER;
         availableItems = getDefaultAvailableItems();
@@ -166,6 +169,106 @@ public class DefaultReelGameSessionConfig extends DefaultGameSessionConfig imple
     @Override
     public boolean isItemScatter(String itemId) {
         return Stream.of(scatters).anyMatch(s -> s.getItemId().equals(itemId));
+    }
+
+    @Override
+    public void setAvailableBets(long[] availableBets) {
+        baseConfig.setAvailableBets(availableBets);
+    }
+
+    @Override
+    public long[] getAvailableBets() {
+        return baseConfig.getAvailableBets();
+    }
+
+    @Override
+    public void setCreditsAmount(long creditsAmount) {
+        baseConfig.setCreditsAmount(creditsAmount);
+    }
+
+    @Override
+    public long getCreditsAmount() {
+        return baseConfig.getCreditsAmount();
+    }
+
+    @Override
+    public void setBet(long bet) {
+        baseConfig.setBet(bet);
+    }
+
+    @Override
+    public long getBet() {
+        return baseConfig.getBet();
+    }
+
+    public static class Builder {
+        private final DefaultReelGameSessionConfig config;
+
+        public Builder() {
+            config = new DefaultReelGameSessionConfig();
+        }
+
+        public Builder withAvailableBets(long[] value) {
+            config.setAvailableBets(value);
+            return this;
+        }
+
+        public Builder withCreditsAmount(long value) {
+            config.setCreditsAmount(value);
+            return this;
+        }
+
+        public Builder withBet(long value) {
+            config.setBet(value);
+            return this;
+        }
+
+        public Builder withReelsNumber(int value) {
+            config.setReelsNumber(value);
+            return this;
+        }
+
+        public Builder withReelsItemsNumber(int value) {
+            config.setReelsItemsNumber(value);
+            return this;
+        }
+
+        public Builder withAvailableItems(String[] value) {
+            config.setAvailableItems(value);
+            return this;
+        }
+
+        public Builder withReelsItemsSequences(String[][] value) {
+            config.setReelsItemsSequences(value);
+            return this;
+        }
+
+        public Builder withPaytable(ReelGameSessionPaytableData value) {
+            config.setPaytable(value);
+            return this;
+        }
+        public Builder withWildItemId(String value) {
+            config.setWildItemId(value);
+            return this;
+        }
+        public Builder withScattersData(ReelGameSessionScatterData[] value) {
+            config.setScattersData(value);
+            return this;
+        }
+
+        public Builder withLinesDirections(ReelGameSessionLinesDirectionData value) {
+            config.setLinesDirections(value);
+            return this;
+        }
+        public Builder withWildsMultipliers(ReelGameSessionWildsMultipliersData value) {
+            config.setWildsMultipliers(value);
+            return this;
+        }
+
+        public ReelGameSessionConfig build() {
+            return config;
+        }
+
     }
 
 }

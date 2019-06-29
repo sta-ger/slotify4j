@@ -9,11 +9,9 @@ public interface ReelGameSessionReelsControllerConfig {
     void setReelsItemsNumber(int reelsItemsNumber);
 
     String[] getAvailableItems();
-
     void setAvailableItems(String[] availableItems);
 
     String[][] getReelsItemsSequences();
-
     void setReelsItemsSequences(String[][] reelsItemsSequences);
 
 }
