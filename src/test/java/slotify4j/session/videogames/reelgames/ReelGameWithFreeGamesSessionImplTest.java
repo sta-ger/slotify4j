@@ -17,93 +17,34 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReelGameWithFreeGamesSessionImplTest {
 
-    public static void testDefaultReelGameWithFreeGamesSession(ReelGameWithFreeGamesSession session) {
+    public static boolean testDefaultReelGameWithFreeGamesSession(ReelGameWithFreeGamesSession session) {
         assertEquals(session.getFreeGameNum(), 0);
         assertEquals(session.getFreeGameSum(), 0);
         assertEquals(session.getFreeGameBank(), 0);
+        return true;
     }
 
-    public static void testFreeGamesGettersSetters(ReelGameWithFreeGamesSession session) {
+    public static boolean testFreeGamesGettersSetters(ReelGameWithFreeGamesSession session) {
         session.setFreeGameBank(100);
         session.setFreeGameNum(5);
         session.setFreeGameSum(10);
         assertEquals(session.getFreeGameSum(), 10);
         assertEquals(session.getFreeGameNum(), 5);
         assertEquals(session.getFreeGameBank(), 100);
+        return true;
     }
 
-    public static void testPlayUntilWinFreeGames(ReelGameWithFreeGamesSession session) throws Exception {
+    public static boolean testPlayUntilWinFreeGames(ReelGameWithFreeGamesSession session) throws Exception {
         while (session.getFreeGameSum() == 0) {
             session.setCreditsAmount(Long.MIN_VALUE);
             session.play();
         }
         assertEquals(session.getFreeGameNum(), 0);
         assertTrue(session.getFreeGameSum() > 0);
+        return true;
     }
 
-    public static ReelGameWithFreeGamesSessionConfig createConfigForTestPlayFreeGames() {
-        DefaultReelGameWithFreeGamesSessionConfig conf = new DefaultReelGameWithFreeGamesSessionConfig();
-        conf.setReelsItemsSequences(ReelGameSessionReelsController.createItemsSequences(conf.getReelsNumber(), conf.getAvailableItems(), Map.of(
-                0, Map.of("S", 0),
-                4, Map.of("S", 0)
-        )));
-        return conf;
-    }
-
-    @Test
-    public void passBaseTests() throws Exception {
-        ReelGameWithFreeGamesSessionConfig conf = new DefaultReelGameWithFreeGamesSessionConfig();
-        ReelGameWithFreeGamesSession sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-        GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf);
-
-        GameSessionConfig baseConf = GameSessionImplTest.createCustomConfigForTestProperInitialValues();
-        conf = new DefaultReelGameWithFreeGamesSessionConfig();
-        conf.setAvailableBets(baseConf.getAvailableBets());
-        conf.setCreditsAmount(baseConf.getCreditsAmount());
-        sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-        GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf);
-
-        baseConf = GameSessionImplTest.createCustomConfigForWrongBetTest();
-        conf = new DefaultReelGameWithFreeGamesSessionConfig();
-        conf.setAvailableBets(baseConf.getAvailableBets());
-        sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-        GameSessionImplTest.testDefaultSessionWithWrongInitialBet(sess, conf);
-
-        ReelGameWithFreeGamesSessionConfig configForTestReelGameBaseTests = new DefaultReelGameWithFreeGamesSessionConfig();
-        Arrays.stream(conf.getScattersData()).forEach(scatterData ->
-                IntStream.range(0, configForTestReelGameBaseTests.getReelsNumber() * configForTestReelGameBaseTests.getReelsItemsNumber()).forEach(i ->
-                        configForTestReelGameBaseTests.setFreeGamesForScatters(scatterData.getItemId(), i, 0)));
-        sess = new ReelGameWithFreeGamesSessionImpl(configForTestReelGameBaseTests, new ReelGameSessionReelsControllerImpl(configForTestReelGameBaseTests), new ReelGameSessionWinCalculatorImpl(configForTestReelGameBaseTests));
-        ReelGameSessionImplTest.testDefaultReelGameSessionHasProperInitialValues(sess, configForTestReelGameBaseTests);
-        ReelGameSessionImplTest.testPlayUntilWin(sess, configForTestReelGameBaseTests);
-    }
-
-    @Test
-    public void feeGamesNumSumBankSettersTest() {
-        ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
-        ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-        testFreeGamesGettersSetters(session);
-    }
-
-    @Test
-    public void createDefaultReelGameWithFreeGamesSessionTest() {
-        ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
-        ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-        testDefaultReelGameWithFreeGamesSession(session);
-    }
-
-    @Test
-    public void playUntilWinFreeGamesTest() throws Exception {
-        ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
-        ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-        testPlayUntilWinFreeGames(session);
-    }
-
-    @Test
-    public void playFreeGamesTest() throws Exception {
-        ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
-        ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-
+    public static boolean testPlayFreeGames(ReelGameWithFreeGamesSession session, ReelGameWithFreeGamesSessionConfig conf) throws Exception {
         //The following situations need to be checked:
         boolean wasNormalFreeGames = false; //played normal 10 free games
         boolean wasAdditionalFreeGames = false; //free games was won again at free games mode
@@ -112,10 +53,10 @@ class ReelGameWithFreeGamesSessionImplTest {
         boolean wasNoFreeBank = false; //was no winnings during free games mode
         while (
                 !wasNormalFreeGames ||
-                !wasAdditionalFreeGames ||
-                !wasAdditionalFreeGamesWonAtLastFreeGame ||
-                !wasFreeBank ||
-                !wasNoFreeBank
+                        !wasAdditionalFreeGames ||
+                        !wasAdditionalFreeGamesWonAtLastFreeGame ||
+                        !wasFreeBank ||
+                        !wasNoFreeBank
         ) {
             while (session.getFreeGameSum() == 0 || (session.getFreeGameSum() > 0 && session.getFreeGameNum() == session.getFreeGameSum())) { //Play until won free games
                 session.setCreditsAmount(10000);
@@ -164,7 +105,72 @@ class ReelGameWithFreeGamesSessionImplTest {
 
             assertEquals(playedFreeGamesCount, expectedPlayedFreeGamesCount);
         }
+        return true;
     }
 
+    public static ReelGameWithFreeGamesSessionConfig createConfigForTestPlayFreeGames() {
+        DefaultReelGameWithFreeGamesSessionConfig conf = new DefaultReelGameWithFreeGamesSessionConfig();
+        conf.setReelsItemsSequences(ReelGameSessionReelsController.createItemsSequences(conf.getReelsNumber(), conf.getAvailableItems(), Map.of(
+                0, Map.of("S", 0),
+                4, Map.of("S", 0)
+        )));
+        return conf;
+    }
+
+    @Test
+    public void passBaseTests() throws Exception {
+        ReelGameWithFreeGamesSessionConfig conf = new DefaultReelGameWithFreeGamesSessionConfig();
+        ReelGameWithFreeGamesSession sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf));
+
+        GameSessionConfig baseConf = GameSessionImplTest.createCustomConfigForTestProperInitialValues();
+        conf = new DefaultReelGameWithFreeGamesSessionConfig();
+        conf.setAvailableBets(baseConf.getAvailableBets());
+        conf.setCreditsAmount(baseConf.getCreditsAmount());
+        sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf));
+
+        baseConf = GameSessionImplTest.createCustomConfigForWrongBetTest();
+        conf = new DefaultReelGameWithFreeGamesSessionConfig();
+        conf.setAvailableBets(baseConf.getAvailableBets());
+        sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        assertTrue(GameSessionImplTest.testDefaultSessionWithWrongInitialBet(sess, conf));
+
+        ReelGameWithFreeGamesSessionConfig configForTestReelGameBaseTests = new DefaultReelGameWithFreeGamesSessionConfig();
+        Arrays.stream(conf.getScattersData()).forEach(scatterData ->
+                IntStream.range(0, configForTestReelGameBaseTests.getReelsNumber() * configForTestReelGameBaseTests.getReelsItemsNumber()).forEach(i ->
+                        configForTestReelGameBaseTests.setFreeGamesForScatters(scatterData.getItemId(), i, 0)));
+        sess = new ReelGameWithFreeGamesSessionImpl(configForTestReelGameBaseTests, new ReelGameSessionReelsControllerImpl(configForTestReelGameBaseTests), new ReelGameSessionWinCalculatorImpl(configForTestReelGameBaseTests));
+        ReelGameSessionImplTest.testDefaultReelGameSessionHasProperInitialValues(sess, configForTestReelGameBaseTests);
+        assertTrue(ReelGameSessionImplTest.testPlayUntilWin(sess, configForTestReelGameBaseTests));
+    }
+
+    @Test
+    public void feeGamesNumSumBankSettersTest() {
+        ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
+        ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        assertTrue(testFreeGamesGettersSetters(session));
+    }
+
+    @Test
+    public void createDefaultReelGameWithFreeGamesSessionTest() {
+        ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
+        ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        assertTrue(testDefaultReelGameWithFreeGamesSession(session));
+    }
+
+    @Test
+    public void playUntilWinFreeGamesTest() throws Exception {
+        ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
+        ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        assertTrue(testPlayUntilWinFreeGames(session));
+    }
+
+    @Test
+    public void playFreeGamesTest() throws Exception {
+        ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
+        ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
+        assertTrue(testPlayFreeGames(session, conf));
+    }
 
 }

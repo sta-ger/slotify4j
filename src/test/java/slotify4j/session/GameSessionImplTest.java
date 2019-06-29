@@ -6,10 +6,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class GameSessionImplTest {
 
-    public static void testDefaultSessionHasProperInitialValues(GameSession session, GameSessionConfig config) {
+    public static boolean testDefaultSessionHasProperInitialValues(GameSession session, GameSessionConfig config) {
         assertArrayEquals(session.getAvailableBets(), config.getAvailableBets());
         assertEquals(session.getBet(), config.getAvailableBets()[0]);
         assertEquals(session.getCreditsAmount(), 1000);
+        return true;
     }
 
     public static GameSessionConfig createCustomConfigForTestProperInitialValues() {
@@ -19,12 +20,13 @@ public class GameSessionImplTest {
                 .build();
     }
 
-    public static void testDefaultSessionHasProperInitialValuesWithCustomConfig(GameSession session, GameSessionConfig config) {
+    public static boolean testDefaultSessionHasProperInitialValuesWithCustomConfig(GameSession session, GameSessionConfig config) {
         assertFalse(session.isBetAvailable(1));
         assertTrue(session.isBetAvailable(10));
         assertArrayEquals(session.getAvailableBets(), config.getAvailableBets());
         assertEquals(session.getBet(), config.getAvailableBets()[0]);
         assertEquals(session.getCreditsAmount(), config.getCreditsAmount());
+        return true;
     }
 
     public static GameSessionConfig createCustomConfigForWrongBetTest() {
@@ -33,11 +35,12 @@ public class GameSessionImplTest {
                 .build();
     }
 
-    public static void testDefaultSessionWithWrongInitialBet(GameSession session, GameSessionConfig config) {
+    public static boolean testDefaultSessionWithWrongInitialBet(GameSession session, GameSessionConfig config) {
         assertEquals(session.getBet(), config.getAvailableBets()[0]);
+        return true;
     }
 
-    public static void testDefaultSessionPlaysWhileEnoughCredits(GameSession session) throws Exception {
+    public static boolean testDefaultSessionPlaysWhileEnoughCredits(GameSession session) throws Exception {
         session.setBet(10);
         session.play();
         assertEquals(session.getCreditsAmount(), 990);
@@ -69,34 +72,36 @@ public class GameSessionImplTest {
         }
 
         assertEquals(playedGamesNum, expectedGamesToPlay);
+
+        return true;
     }
 
     @Test
     public void testCreateNewSession() {
         DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
         GameSessionImpl sess = new GameSessionImpl(conf);
-        testDefaultSessionHasProperInitialValues(sess, conf);
+        assertTrue(testDefaultSessionHasProperInitialValues(sess, conf));
     }
 
     @Test
     public void testCreateNewSessionWithCustomConfig() {
         GameSessionConfig conf = createCustomConfigForTestProperInitialValues();
         GameSessionImpl sess = new GameSessionImpl(conf);
-        testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf);
+        assertTrue(testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf));
     }
 
     @Test
     public void testCreateNewSessionWithWrongBet() {
         GameSessionConfig conf = createCustomConfigForWrongBetTest();
         GameSessionImpl sess = new GameSessionImpl(conf);
-        testDefaultSessionWithWrongInitialBet(sess, createCustomConfigForTestProperInitialValues());
+        assertTrue(testDefaultSessionWithWrongInitialBet(sess, createCustomConfigForTestProperInitialValues()));
     }
 
     @Test
     public void testPlayWhileEnoughCredits() throws Exception {
         DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
         GameSessionImpl sess = new GameSessionImpl(conf);
-        testDefaultSessionPlaysWhileEnoughCredits(sess);
+        assertTrue(testDefaultSessionPlaysWhileEnoughCredits(sess));
     }
 
 }

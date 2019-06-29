@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ReelGameSessionImplTest {
 
-    public static void testDefaultReelGameSessionHasProperInitialValues(ReelGameSession session, ReelGameSessionConfig config) {
+    public static boolean testDefaultReelGameSessionHasProperInitialValues(ReelGameSession session, ReelGameSessionConfig config) {
         assertEquals(session.getWinningAmount(), 0);
         assertEquals(session.getPaytable(), config.getPaytable());
         assertEquals(session.getReelsItemsSequences().length, config.getReelsItemsSequences().length);
@@ -19,9 +19,10 @@ class ReelGameSessionImplTest {
         assertEquals(session.getReelsItems().length, 0);
         assertEquals(session.getWinningLines().size(), 0);
         assertEquals(session.getWinningScatters().size(), 0);
+        return true;
     }
 
-    public static void testPlayUntilWin(ReelGameSession session, ReelGameSessionConfig config) throws Exception {
+    public static boolean testPlayUntilWin(ReelGameSession session, ReelGameSessionConfig config) throws Exception {
         long lastBet = 0;
         long lastCredits = 0;
         boolean wasLinesWin = false;
@@ -47,33 +48,34 @@ class ReelGameSessionImplTest {
                 i = 0;
             }
         }
+        return true;
     }
 
     @Test
     public void passBaseTests() {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-        GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf);
+        assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf));
 
         GameSessionConfig baseConf = GameSessionImplTest.createCustomConfigForTestProperInitialValues();
         conf = new DefaultReelGameSessionConfig();
         conf.setAvailableBets(baseConf.getAvailableBets());
         conf.setCreditsAmount(baseConf.getCreditsAmount());
         sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-        GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf);
+        assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf));
 
         baseConf = GameSessionImplTest.createCustomConfigForWrongBetTest();
         conf = new DefaultReelGameSessionConfig();
         conf.setAvailableBets(baseConf.getAvailableBets());
         sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-        GameSessionImplTest.testDefaultSessionWithWrongInitialBet(sess, conf);
+        assertTrue(GameSessionImplTest.testDefaultSessionWithWrongInitialBet(sess, conf));
     }
 
     @Test
     public void testCreateNewSession() {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-        testDefaultReelGameSessionHasProperInitialValues(sess, conf);
+        assertTrue(testDefaultReelGameSessionHasProperInitialValues(sess, conf));
     }
 
     @Test
@@ -81,7 +83,7 @@ class ReelGameSessionImplTest {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         conf.setCreditsAmount(10000000);
         ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
-        testPlayUntilWin(sess, conf);
+        assertTrue(testPlayUntilWin(sess, conf));
     }
 
 }
