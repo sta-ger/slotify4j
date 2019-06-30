@@ -58,15 +58,17 @@ class ReelGameSessionImplTest {
         assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf));
 
         GameSessionConfig baseConf = GameSessionImplTest.createCustomConfigForTestProperInitialValues();
-        conf = new DefaultReelGameSessionConfig();
-        conf.setAvailableBets(baseConf.getAvailableBets());
-        conf.setCreditsAmount(baseConf.getCreditsAmount());
+        conf = new DefaultReelGameSessionConfig.Builder()
+                .withAvailableBets(baseConf.getAvailableBets())
+                .withCreditsAmount(baseConf.getCreditsAmount())
+                .build();
         sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf));
 
         baseConf = GameSessionImplTest.createCustomConfigForWrongBetTest();
-        conf = new DefaultReelGameSessionConfig();
-        conf.setAvailableBets(baseConf.getAvailableBets());
+        conf = new DefaultReelGameSessionConfig.Builder()
+                .withAvailableBets(baseConf.getAvailableBets())
+                .build();
         sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         assertTrue(GameSessionImplTest.testDefaultSessionWithWrongInitialBet(sess, conf));
     }
@@ -80,8 +82,9 @@ class ReelGameSessionImplTest {
 
     @Test
     public void testPlaySeveralTimesUntilAnyWinning() throws Exception {
-        ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
-        conf.setCreditsAmount(10000000);
+        ReelGameSessionConfig conf = new DefaultReelGameSessionConfig.Builder()
+                .withCreditsAmount(10000000)
+                .build();
         ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         assertTrue(testPlayUntilWin(sess, conf));
     }
