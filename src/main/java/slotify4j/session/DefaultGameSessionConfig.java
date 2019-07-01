@@ -42,7 +42,7 @@ public class DefaultGameSessionConfig implements GameSessionConfig {
     }
 
     public static class Builder {
-        private GameSessionConfig config;
+        private DefaultGameSessionConfig config;
 
         public Builder() {
             config = new DefaultGameSessionConfig();
@@ -63,7 +63,7 @@ public class DefaultGameSessionConfig implements GameSessionConfig {
             return this;
         }
 
-        public GameSessionConfig build() {
+        public DefaultGameSessionConfig build() {
             return config;
         }
 

@@ -265,7 +265,7 @@ public class DefaultReelGameSessionConfig implements ReelGameSessionConfig {
             return this;
         }
 
-        public ReelGameSessionConfig build() {
+        public DefaultReelGameSessionConfig build() {
             return config;
         }
 

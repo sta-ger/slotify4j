@@ -229,7 +229,7 @@ public class DefaultReelGameWithFreeGamesSessionConfig implements ReelGameWithFr
             return this;
         }
 
-        public ReelGameWithFreeGamesSessionConfig build() {
+        public DefaultReelGameWithFreeGamesSessionConfig build() {
             return config;
         }
 
