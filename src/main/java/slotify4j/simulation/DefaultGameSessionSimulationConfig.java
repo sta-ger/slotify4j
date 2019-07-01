@@ -1,6 +1,6 @@
 package slotify4j.simulation;
 
-public class GameSessionSimulationConfigImpl implements GameSessionSimulationConfig {
+public class DefaultGameSessionSimulationConfig implements GameSessionSimulationConfig {
     public static final long DEFAULT_NUMBER_OF_ROUNDS = 1000;
     public static final ChangeBetScenario DEFAULT_CHANGE_BET_SCENARIO = ChangeBetScenario.DONT_CHANGE;
 
@@ -28,10 +28,10 @@ public class GameSessionSimulationConfigImpl implements GameSessionSimulationCon
     }
 
     public static class Builder {
-        private GameSessionSimulationConfigImpl config;
+        private DefaultGameSessionSimulationConfig config;
 
         public Builder() {
-            config = new GameSessionSimulationConfigImpl();
+            config = new DefaultGameSessionSimulationConfig();
         }
 
         public Builder withNumberOfRounds(long value) {

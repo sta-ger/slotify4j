@@ -1,70 +1,162 @@
 package slotify4j.simulation;
 
+import slotify4j.session.GameSession;
+import slotify4j.session.UnableToPlayException;
 import slotify4j.session.videogames.reelgames.ReelGameSession;
 
+import java.util.Arrays;
+import java.util.Random;
+
 public class GameSessionSimulationImpl implements GameSessionSimulation {
+    private final GameSession session;
+    private final long numberOfRounds;
+    private final ChangeBetScenario changeBetScenario;
 
-    public GameSessionSimulationImpl(ReelGameSession session, GameSessionSimulationConfig simulationConfig) {
+    private long totalBet;
+    private long totalReturn;
+    private double rtp;
 
+    private long currentGameNumber;
+
+    private Runnable beforePlayCallback;
+    private Runnable afterPlayCallback;
+    private Runnable onFinishedCallback;
+
+    public GameSessionSimulationImpl(ReelGameSession session, GameSessionSimulationConfig config) {
+        this.session = session;
+        numberOfRounds = config.getNumberOfRounds();
+        changeBetScenario = config.getChangeBetScenario();
     }
 
     @Override
-    public void run() {
-        // Not implemented
+    public void run() throws UnableToPlayException {
+        long i;
+        for (i = 0; i < this.numberOfRounds; i++) {
+            this.doBeforePlay();
+            if (this.canPlayNextGame()) {
+                this.doPlay();
+            } else {
+                this.setBetOnCantPlayNextBet();
+                if (this.canPlayNextGame()) {
+                    this.doPlay();
+                } else {
+                    break;
+                }
+            }
+        }
+        this.onFinished();
+    }
+
+    private void setBetOnCantPlayNextBet() {
+        long[] bets;
+        bets = this.session.getAvailableBets();
+        Arrays.sort(bets);
+        this.session.setBet(bets[0]);
+    }
+
+    private void onFinished() {
+        if (this.onFinishedCallback != null) {
+            this.onFinishedCallback.run();
+        }
+    }
+
+    private boolean canPlayNextGame() {
+        return this.session.canPlayNextGame();
+    }
+
+    private void setBetBeforePlay() {
+        if (changeBetScenario == ChangeBetScenario.CHANGE_RANDOMLY) {
+            this.setRandomBet();
+        }
+    }
+
+    private void setRandomBet() {
+        long bet;
+        long[] bets;
+        bets = this.session.getAvailableBets();
+        bet = bets[new Random().nextInt(bets.length)];
+        this.session.setBet(bet);
+    }
+
+    private void doPlay() throws UnableToPlayException {
+        this.currentGameNumber++;
+        this.setBetBeforePlay();
+        this.totalBet += this.session.getBet();
+        this.session.play();
+        this.totalReturn += this.session.getWinningAmount();
+        this.calculateRtp();
+        this.doAfterPlay();
+    }
+
+    private void doBeforePlay() {
+        if (this.beforePlayCallback != null) {
+            this.beforePlayCallback.run();
+        }
+    }
+
+    private void doAfterPlay() {
+        if (this.afterPlayCallback != null) {
+            this.afterPlayCallback.run();
+        }
+    }
+
+    private void calculateRtp() {
+        this.rtp = (double) this.totalReturn / this.totalBet;
     }
 
     @Override
     public double getRtp() {
-        return 0;
+        return rtp;
     }
 
     @Override
     public long getTotalBetAmount() {
-        return 0;
+        return totalBet;
     }
 
     @Override
     public long getTotalReturn() {
-        return 0;
+        return totalReturn;
     }
 
     @Override
     public long getCurrentGameNumber() {
-        return 0;
+        return currentGameNumber;
     }
 
     @Override
     public long getTotalGamesToPlayNumber() {
-        return 0;
+        return numberOfRounds;
     }
 
     @Override
     public void setBeforePlayCallback(Runnable callback) {
-        // Not implemented
+        beforePlayCallback = callback;
     }
 
     @Override
     public void removeBeforePlayCallback() {
-        // Not implemented
+        beforePlayCallback = null;
     }
 
     @Override
     public void setAfterPlayCallback(Runnable callback) {
-        // Not implemented
+        afterPlayCallback = callback;
     }
 
     @Override
     public void removeAfterPlayCallback() {
-        // Not implemented
+        afterPlayCallback = null;
     }
 
     @Override
     public void setOnFinishedCallback(Runnable callback) {
-        // Not implemented
+        onFinishedCallback = callback;
     }
 
     @Override
     public void removeOnFinishedCallback() {
-        // Not implemented
+        onFinishedCallback = null;
     }
+
 }

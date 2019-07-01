@@ -1,8 +1,10 @@
 package slotify4j.simulation;
 
+import slotify4j.session.UnableToPlayException;
+
 public interface GameSessionSimulation {
 
-    void run();
+    void run() throws UnableToPlayException;
 
     double getRtp();
 
