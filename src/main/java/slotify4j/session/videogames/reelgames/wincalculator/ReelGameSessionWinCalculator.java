@@ -112,13 +112,15 @@ public interface ReelGameSessionWinCalculator {
             int[][] patterns, String wildItemId
     ) {
         int[] lines = linesDirections.getLinesIds();
-        return IntStream.of(lines).filter((int lineId) -> {
+        int[] ids = IntStream.of(lines).filter((int lineId) -> {
             String[] itemsLine = getItemsForDirection(
                     items,
                     linesDirections.getVerticalItemsPositionsForLineId(lineId)
             );
             return getMatchingPattern(itemsLine, patterns, wildItemId) != null;
         }).toArray();
+        Arrays.sort(ids);
+        return ids;
     }
 
     void setGameState(long bet, String[][] items) throws UnableToPlayException;
