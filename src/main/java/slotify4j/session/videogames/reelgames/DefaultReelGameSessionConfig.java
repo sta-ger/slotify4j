@@ -173,12 +173,12 @@ public class DefaultReelGameSessionConfig implements ReelGameSessionConfig {
 
     @Override
     public void setAvailableBets(long[] availableBets) {
-        baseConfig.setAvailableBets(availableBets);
+        baseConfig.setAvailableBets(availableBets.clone());
     }
 
     @Override
     public long[] getAvailableBets() {
-        return baseConfig.getAvailableBets();
+        return baseConfig.getAvailableBets().clone();
     }
 
     @Override
@@ -209,7 +209,7 @@ public class DefaultReelGameSessionConfig implements ReelGameSessionConfig {
         }
 
         public Builder withAvailableBets(long[] value) {
-            config.setAvailableBets(value);
+            config.setAvailableBets(value.clone());
             return this;
         }
 
@@ -252,7 +252,7 @@ public class DefaultReelGameSessionConfig implements ReelGameSessionConfig {
             return this;
         }
         public Builder withScattersData(ReelGameSessionScatterData[] value) {
-            config.setScattersData(value);
+            config.setScattersData(value.clone());
             return this;
         }
 
