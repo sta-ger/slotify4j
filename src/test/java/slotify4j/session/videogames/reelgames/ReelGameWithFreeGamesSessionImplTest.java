@@ -124,15 +124,17 @@ class ReelGameWithFreeGamesSessionImplTest {
         assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf));
 
         GameSessionConfig baseConf = GameSessionImplTest.createCustomConfigForTestProperInitialValues();
-        conf = new DefaultReelGameWithFreeGamesSessionConfig();
-        conf.setAvailableBets(baseConf.getAvailableBets());
-        conf.setCreditsAmount(baseConf.getCreditsAmount());
+        conf = new DefaultReelGameWithFreeGamesSessionConfig.Builder()
+                .withAvailableBets(baseConf.getAvailableBets())
+                .withCreditsAmount(baseConf.getCreditsAmount())
+                .build();
         sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf));
 
         baseConf = GameSessionImplTest.createCustomConfigForWrongBetTest();
-        conf = new DefaultReelGameWithFreeGamesSessionConfig();
-        conf.setAvailableBets(baseConf.getAvailableBets());
+        conf = new DefaultReelGameWithFreeGamesSessionConfig.Builder()
+                .withAvailableBets(baseConf.getAvailableBets())
+                .build();
         sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         assertTrue(GameSessionImplTest.testDefaultSessionWithWrongInitialBet(sess, conf));
 

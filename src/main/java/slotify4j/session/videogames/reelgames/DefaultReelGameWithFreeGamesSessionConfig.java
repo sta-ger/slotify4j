@@ -69,7 +69,7 @@ public class DefaultReelGameWithFreeGamesSessionConfig implements ReelGameWithFr
 
     @Override
     public ReelGameSessionScatterData[] getScattersData() {
-        return new ReelGameSessionScatterData[0];
+        return baseConfig.getScattersData();
     }
 
     @Override
