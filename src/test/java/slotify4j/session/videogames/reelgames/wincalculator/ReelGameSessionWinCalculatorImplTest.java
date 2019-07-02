@@ -2,7 +2,6 @@ package slotify4j.session.videogames.reelgames.wincalculator;
 
 import org.junit.jupiter.api.Test;
 import slotify4j.session.videogames.reelgames.*;
-import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsController;
 
 import java.util.Arrays;
 import java.util.Map;
