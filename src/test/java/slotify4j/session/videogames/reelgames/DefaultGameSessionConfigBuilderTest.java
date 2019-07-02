@@ -32,7 +32,7 @@ public class DefaultGameSessionConfigBuilderTest {
         assertEquals(DefaultGameSessionConfig.builder()
                         .withBet(100)
                         .build()
-                        .getCreditsAmount(),
+                        .getBet(),
                 100
         );
     }
