@@ -4,7 +4,11 @@ import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class ReelGameSessionTools {
+public final class ReelGameSessionTools {
+
+    private ReelGameSessionTools() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static String[][] transposeItemsMatrix(String[][] source) {
         String[][] tmp = new String[source[0].length][source.length];
@@ -86,7 +90,11 @@ public class ReelGameSessionTools {
         return rv;
     }
 
-    public static String[][] createItemsSequences(int reelsNumber, String[] availableItems, int numberOfEachItemOnEachReel) {
+    public static String[][] createItemsSequences(
+            int reelsNumber,
+            String[] availableItems,
+            int numberOfEachItemOnEachReel
+    ) {
         String[][] rv;
         int i;
         int reelId;
