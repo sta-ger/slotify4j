@@ -110,7 +110,7 @@ class ReelGameWithFreeGamesSessionImplTest {
 
     public static ReelGameWithFreeGamesSessionConfig createConfigForTestPlayFreeGames() {
         DefaultReelGameWithFreeGamesSessionConfig conf = new DefaultReelGameWithFreeGamesSessionConfig();
-        conf.setReelsItemsSequences(ReelGameSessionReelsController.createItemsSequences(conf.getReelsNumber(), conf.getAvailableItems(), Map.of(
+        conf.setReelsItemsSequences(ReelGameSessionTools.createItemsSequences(conf.getReelsNumber(), conf.getAvailableItems(), Map.of(
                 0, Map.of("S", 0),
                 4, Map.of("S", 0)
         )));

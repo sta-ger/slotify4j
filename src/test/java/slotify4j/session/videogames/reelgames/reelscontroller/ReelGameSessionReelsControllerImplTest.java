@@ -2,6 +2,7 @@ package slotify4j.session.videogames.reelgames.reelscontroller;
 
 import org.junit.jupiter.api.Test;
 import slotify4j.session.videogames.reelgames.DefaultReelGameSessionConfig;
+import slotify4j.session.videogames.reelgames.ReelGameSessionTools;
 
 import java.util.*;
 import java.util.stream.IntStream;
@@ -24,7 +25,7 @@ class ReelGameSessionReelsControllerImplTest {
     private final int reelsItemsNumber = 3;
 
     ReelGameSessionReelsControllerImplTest() {
-        String[][] sequences = ReelGameSessionReelsController.createItemsSequences(5, availableItems, 10);
+        String[][] sequences = ReelGameSessionTools.createItemsSequences(5, availableItems, 10);
         sequences[2] = Arrays.stream(sequences[2]).filter(item -> !"A".equals(item)).toArray(String[]::new);
         DefaultReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
         conf.setReelsNumber(reelsNumber);
@@ -36,7 +37,7 @@ class ReelGameSessionReelsControllerImplTest {
 
     @Test
     public void transposeMatrixTest() {
-        assertArrayEquals(ReelGameSessionReelsController.transposeItemsMatrix(new String[][]{
+        assertArrayEquals(ReelGameSessionTools.transposeItemsMatrix(new String[][]{
                 {"1", "2", "3", "4"},
                 {"5", "6", "7", "8"},
         }), new String[][]{
@@ -49,30 +50,30 @@ class ReelGameSessionReelsControllerImplTest {
 
     @Test
     public void testCreateShuffledSequenceOfSpecifiedItems() {
-        assertEquals(ReelGameSessionReelsController.createItemsSequence(availableItems).length, availableItems.length);
+        assertEquals(ReelGameSessionTools.createItemsSequence(availableItems).length, availableItems.length);
     }
 
     @Test
     public void testCreateShuffledSequenceOfSpecifiedItemsAndNumbersOfItems() {
-        assertEquals(Objects.requireNonNull(ReelGameSessionReelsController.createItemsSequence(availableItems, Map.of("A", 2))).length, availableItems.length + 1);
-        assertEquals(Objects.requireNonNull(ReelGameSessionReelsController.createItemsSequence(availableItems, Map.of("A", 0))).length, availableItems.length - 1);
+        assertEquals(Objects.requireNonNull(ReelGameSessionTools.createItemsSequence(availableItems, Map.of("A", 2))).length, availableItems.length + 1);
+        assertEquals(Objects.requireNonNull(ReelGameSessionTools.createItemsSequence(availableItems, Map.of("A", 0))).length, availableItems.length - 1);
 
         Map<String, Integer> numbersOfItems = Map.of("A", 10, "K", 20, "Q", 30, "J", 40, "10", 50, "9", 60);
 
-        assertEquals(Optional.of(ReelGameSessionReelsController.createItemsSequence(availableItems, numbersOfItems).length), numbersOfItems.values().stream().reduce(Integer::sum));
-        assertEquals(ReelGameSessionReelsController.createItemsSequence(availableItems, 10).length, 10 * availableItems.length);
+        assertEquals(Optional.of(ReelGameSessionTools.createItemsSequence(availableItems, numbersOfItems).length), numbersOfItems.values().stream().reduce(Integer::sum));
+        assertEquals(ReelGameSessionTools.createItemsSequence(availableItems, 10).length, 10 * availableItems.length);
     }
 
     @Test
     public void testCreateShuffledSequencesForSpecifiedNumberOfReels() {
-        assertEquals(ReelGameSessionReelsController.createItemsSequences(5, availableItems).length, 5);
-        assertEquals(ReelGameSessionReelsController.createItemsSequences(3, availableItems).length, 3);
-        Arrays.stream(ReelGameSessionReelsController.createItemsSequences(3, availableItems)).forEach(curItems -> assertEquals(curItems.length, availableItems.length));
+        assertEquals(ReelGameSessionTools.createItemsSequences(5, availableItems).length, 5);
+        assertEquals(ReelGameSessionTools.createItemsSequences(3, availableItems).length, 3);
+        Arrays.stream(ReelGameSessionTools.createItemsSequences(3, availableItems)).forEach(curItems -> assertEquals(curItems.length, availableItems.length));
     }
 
     @Test
     public void testCcreateShuffledSequencesForSpecifiedNumberOfReelsAndNumbersOfItems() {
-        String[][] items = ReelGameSessionReelsController.createItemsSequences(5, availableItems, Map.of(
+        String[][] items = ReelGameSessionTools.createItemsSequences(5, availableItems, Map.of(
                 0, Map.of("A", 0),
                 1, Map.of("A", 0),
                 3, Map.of("A", 0),
@@ -107,13 +108,13 @@ class ReelGameSessionReelsControllerImplTest {
             sequenceMap.put("9", 60);
         });
 
-        String[][] itemsForMapOfNumbers = ReelGameSessionReelsController.createItemsSequences(5, availableItems, itemsNumbersMap);
+        String[][] itemsForMapOfNumbers = ReelGameSessionTools.createItemsSequences(5, availableItems, itemsNumbersMap);
         IntStream.range(0, items.length).forEach((i) -> {
             String[] curItems = itemsForMapOfNumbers[i];
             assertEquals(Optional.of(curItems.length), itemsNumbersMap.get(i).values().stream().reduce((sum, num) -> sum += num));
         });
 
-        String[][] itemsForNumberOfNumbers = ReelGameSessionReelsController.createItemsSequences(5, availableItems, 10);
+        String[][] itemsForNumberOfNumbers = ReelGameSessionTools.createItemsSequences(5, availableItems, 10);
         IntStream.range(0, items.length).forEach((i) -> {
             String[] curItems = itemsForNumberOfNumbers[i];
             assertEquals(curItems.length, availableItems.length * 10);

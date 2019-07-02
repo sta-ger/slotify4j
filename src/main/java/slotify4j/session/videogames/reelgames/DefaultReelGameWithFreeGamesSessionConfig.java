@@ -11,7 +11,7 @@ public class DefaultReelGameWithFreeGamesSessionConfig implements ReelGameWithFr
 
     public DefaultReelGameWithFreeGamesSessionConfig() {
         baseConfig = new DefaultReelGameSessionConfig();
-        this.freeGamesForScattersMap = ReelGameWithFreeGamesSessionConfig.createDefaultFreeGamesForScattersMap();
+        this.freeGamesForScattersMap = ReelGameSessionTools.createDefaultFreeGamesForScattersMap();
     }
 
     @Override

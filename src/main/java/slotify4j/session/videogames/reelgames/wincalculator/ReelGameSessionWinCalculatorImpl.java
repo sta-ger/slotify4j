@@ -27,7 +27,7 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
         wildsMultipliers = conf.getWildsMultipliers();
         paytable = conf.getPaytable();
         linesDirections = conf.getLinesDirections();
-        linesPatterns = ReelGameSessionWinCalculator.createLinesPatterns(conf.getReelsNumber());
+        linesPatterns = ReelGameSessionTools.createLinesPatterns(conf.getReelsNumber());
         scatters = conf.getScattersData();
     }
 
@@ -45,7 +45,7 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
         ReelGameSessionWinningLineModel line;
         winningLines = new HashMap<>();
         linesWinning = 0;
-        int[] winningLinesIds = ReelGameSessionWinCalculator.getWinningLinesIds(
+        int[] winningLinesIds = ReelGameSessionTools.getWinningLinesIds(
                 items, linesDirections, linesPatterns, wildItemId
         );
         for (int lineId : winningLinesIds) {
@@ -64,11 +64,11 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
 
     private ReelGameSessionWinningLineModel generateWinningLine(long bet, int lineId) {
         int[] direction = linesDirections.getVerticalItemsPositionsForLineId(lineId);
-        String[] itemsLine = ReelGameSessionWinCalculator.getItemsForDirection(items, direction);
-        int[] pattern = ReelGameSessionWinCalculator.getMatchingPattern(itemsLine, linesPatterns, wildItemId);
+        String[] itemsLine = ReelGameSessionTools.getItemsForDirection(items, direction);
+        int[] pattern = ReelGameSessionTools.getMatchingPattern(itemsLine, linesPatterns, wildItemId);
         int[] itemsPositions = IntStream.range(0, pattern.length).filter(i -> pattern[i] == 1).toArray();
-        String itemId = ReelGameSessionWinCalculator.getWinningItemId(itemsLine, pattern, wildItemId);
-        int[] wildItemsPositions = ReelGameSessionWinCalculator.getWildItemsPositions(itemsLine, pattern, wildItemId);
+        String itemId = ReelGameSessionTools.getWinningItemId(itemsLine, pattern, wildItemId);
+        int[] wildItemsPositions = ReelGameSessionTools.getWildItemsPositions(itemsLine, pattern, wildItemId);
         long winAmount = getLineWinningAmount(bet, itemId, itemsPositions.length, wildItemsPositions.length);
         return new ReelGameSessionWinningLineModelImpl(
                 winAmount, direction, lineId, itemsPositions, wildItemsPositions, itemId
@@ -106,7 +106,7 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
     }
 
     private int[][] getScatterItemsPositions(String itemId) {
-        return ReelGameSessionWinCalculator.getScatterItemsPositions(this.items, itemId);
+        return ReelGameSessionTools.getScatterItemsPositions(this.items, itemId);
     }
 
     @Override

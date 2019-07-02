@@ -30,17 +30,17 @@ public class DefaultReelGameSessionConfig implements ReelGameSessionConfig {
         reelsItemsNumber = DEFAULT_REELS_ITEMS_NUMBER;
         availableItems = getDefaultAvailableItems();
         wildItemId = DEFAULT_WILD_ITEM_ID;
-        paytable = new ReelGameSessionPaytableDataImpl(ReelGameSessionPaytableData.createDefaultPaytableMap(
+        paytable = new ReelGameSessionPaytableDataImpl(ReelGameSessionTools.createDefaultPaytableMap(
                         getAvailableBets(), availableItems, reelsNumber, wildItemId)
         );
         scatters = new ReelGameSessionScatterData[] {
                 new ReelGameSessionScattersDataImpl(DEFAULT_SCATTER_ITEM_ID, DEFAULT_MINIMUM_ITEMS_NUM_FOR_SCATTER_WIN)
         };
         linesDirections = new ReelGameSessionLinesDirectionDataImpl(
-                ReelGameSessionLinesDirectionData.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber)
+                ReelGameSessionTools.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber)
         );
         wildsMultipliers = new ReelGameSessionWildsMultipliersDataPowerOfTwo();
-        reelsItemsSequences = ReelGameSessionConfig.createReelsItemsSequences(reelsNumber, availableItems);
+        reelsItemsSequences = ReelGameSessionTools.createReelsItemsSequences(reelsNumber, availableItems);
     }
 
     public static String[] getDefaultAvailableItems() {
@@ -115,7 +115,7 @@ public class DefaultReelGameSessionConfig implements ReelGameSessionConfig {
     public void setReelsItemsNumber(int reelsItemsNumber) {
         this.reelsItemsNumber = reelsItemsNumber;
         linesDirections = new ReelGameSessionLinesDirectionDataImpl(
-                ReelGameSessionLinesDirectionData.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber)
+                ReelGameSessionTools.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber)
         );
     }
 
@@ -128,7 +128,7 @@ public class DefaultReelGameSessionConfig implements ReelGameSessionConfig {
     public void setReelsNumber(int reelsItemsNumber) {
         this.reelsNumber = reelsItemsNumber;
         linesDirections = new ReelGameSessionLinesDirectionDataImpl(
-                ReelGameSessionLinesDirectionData.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber)
+                ReelGameSessionTools.createDefaultLinesDirectionsMap(reelsNumber, reelsItemsNumber)
         );
     }
 
@@ -141,14 +141,14 @@ public class DefaultReelGameSessionConfig implements ReelGameSessionConfig {
     public void setAvailableItems(String[] availableItems) {
         this.availableItems = availableItems.clone();
         paytable = new ReelGameSessionPaytableDataImpl(
-                ReelGameSessionPaytableData.createDefaultPaytableMap(
+                ReelGameSessionTools.createDefaultPaytableMap(
                         getAvailableBets(),
                         availableItems,
                         reelsNumber,
                         wildItemId
                 )
         );
-        reelsItemsSequences = ReelGameSessionConfig.createReelsItemsSequences(reelsNumber, availableItems);
+        reelsItemsSequences = ReelGameSessionTools.createReelsItemsSequences(reelsNumber, availableItems);
     }
 
     @Override
