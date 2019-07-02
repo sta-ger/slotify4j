@@ -1,4 +1,5 @@
 apply plugin: 'java'
+apply plugin: 'jacoco'
 
 repositories {
     mavenCentral()
@@ -12,3 +13,5 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+check.dependsOn jacocoTestReport
