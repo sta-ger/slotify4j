@@ -3,7 +3,7 @@ package slotify4j.session.videogames.reelgames;
 public class DefaultReelGameWithFreeGamesSessionConfigBuilder {
     private final DefaultReelGameWithFreeGamesSessionConfig config;
 
-    public DefaultReelGameWithFreeGamesSessionConfigBuilder() {
+    DefaultReelGameWithFreeGamesSessionConfigBuilder() {
         config = new DefaultReelGameWithFreeGamesSessionConfig();
     }
 
