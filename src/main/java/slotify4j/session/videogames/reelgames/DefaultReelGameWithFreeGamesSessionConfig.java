@@ -157,82 +157,8 @@ public class DefaultReelGameWithFreeGamesSessionConfig implements ReelGameWithFr
         baseConfig.setReelsItemsSequences(reelsItemsSequences.clone());
     }
 
-    public static class Builder {
-        private final DefaultReelGameWithFreeGamesSessionConfig config;
-
-        public Builder() {
-            config = new DefaultReelGameWithFreeGamesSessionConfig();
-        }
-
-        public Builder withFreeGamesForScatters(String itemId, int numberOfItems, int freeGamesNum) {
-            config.setFreeGamesForScatters(itemId, numberOfItems, freeGamesNum);
-            return this;
-        }
-
-        public Builder withAvailableBets(long[] value) {
-            config.setAvailableBets(value);
-            return this;
-        }
-
-        public Builder withCreditsAmount(long value) {
-            config.setCreditsAmount(value);
-            return this;
-        }
-
-        public Builder withBet(long value) {
-            config.setBet(value);
-            return this;
-        }
-
-        public Builder withReelsNumber(int value) {
-            config.setReelsNumber(value);
-            return this;
-        }
-
-        public Builder withReelsItemsNumber(int value) {
-            config.setReelsItemsNumber(value);
-            return this;
-        }
-
-        public Builder withAvailableItems(String[] value) {
-            config.setAvailableItems(value);
-            return this;
-        }
-
-        public Builder withReelsItemsSequences(String[][] value) {
-            config.setReelsItemsSequences(value);
-            return this;
-        }
-
-        public Builder withPaytable(ReelGameSessionPaytableData value) {
-            config.setPaytable(value);
-            return this;
-        }
-
-        public Builder withWildItemId(String value) {
-            config.setWildItemId(value);
-            return this;
-        }
-
-        public Builder withScattersData(ReelGameSessionScatterData[] value) {
-            config.setScattersData(value);
-            return this;
-        }
-
-        public Builder withLinesDirections(ReelGameSessionLinesDirectionData value) {
-            config.setLinesDirections(value);
-            return this;
-        }
-
-        public Builder withWildsMultipliers(ReelGameSessionWildsMultipliersData value) {
-            config.setWildsMultipliers(value);
-            return this;
-        }
-
-        public DefaultReelGameWithFreeGamesSessionConfig build() {
-            return config;
-        }
-
+    public static DefaultReelGameWithFreeGamesSessionConfigBuilder builder() {
+        return new DefaultReelGameWithFreeGamesSessionConfigBuilder();
     }
 
 }

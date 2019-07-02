@@ -1,5 +1,7 @@
 package slotify4j.session;
 
+import slotify4j.session.videogames.reelgames.DefaultGameSessionConfigBuilder;
+
 public class DefaultGameSessionConfig implements GameSessionConfig {
     private long[] availableBets = {1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 100};
 
@@ -41,32 +43,8 @@ public class DefaultGameSessionConfig implements GameSessionConfig {
         return bet;
     }
 
-    public static class Builder {
-        private DefaultGameSessionConfig config;
-
-        public Builder() {
-            config = new DefaultGameSessionConfig();
-        }
-
-        public Builder withAvailableBets(long[] value) {
-            config.setAvailableBets(value);
-            return this;
-        }
-
-        public Builder withCreditsAmount(long value) {
-            config.setCreditsAmount(value);
-            return this;
-        }
-
-        public Builder withBet(long value) {
-            config.setBet(value);
-            return this;
-        }
-
-        public DefaultGameSessionConfig build() {
-            return config;
-        }
-
+    public static DefaultGameSessionConfigBuilder builder() {
+        return new DefaultGameSessionConfigBuilder();
     }
 
 }

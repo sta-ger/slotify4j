@@ -14,7 +14,7 @@ public class GameSessionImplTest {
     }
 
     public static GameSessionConfig createCustomConfigForTestProperInitialValues() {
-        return new DefaultGameSessionConfig.Builder()
+        return DefaultGameSessionConfig.builder()
                 .withAvailableBets(new long[]{10, 20, 30})
                 .withCreditsAmount(5000)
                 .build();
@@ -30,7 +30,7 @@ public class GameSessionImplTest {
     }
 
     public static GameSessionConfig createCustomConfigForWrongBetTest() {
-        return new DefaultGameSessionConfig.Builder()
+        return DefaultGameSessionConfig.builder()
                 .withAvailableBets(new long[]{10, 20, 30})
                 .build();
     }

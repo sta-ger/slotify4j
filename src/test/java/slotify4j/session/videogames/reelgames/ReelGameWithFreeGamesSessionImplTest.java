@@ -3,7 +3,6 @@ package slotify4j.session.videogames.reelgames;
 import org.junit.jupiter.api.Test;
 import slotify4j.session.GameSessionConfig;
 import slotify4j.session.GameSessionImplTest;
-import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsController;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
@@ -124,7 +123,7 @@ class ReelGameWithFreeGamesSessionImplTest {
         assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf));
 
         GameSessionConfig baseConf = GameSessionImplTest.createCustomConfigForTestProperInitialValues();
-        conf = new DefaultReelGameWithFreeGamesSessionConfig.Builder()
+        conf = DefaultReelGameWithFreeGamesSessionConfig.builder()
                 .withAvailableBets(baseConf.getAvailableBets())
                 .withCreditsAmount(baseConf.getCreditsAmount())
                 .build();
@@ -132,7 +131,7 @@ class ReelGameWithFreeGamesSessionImplTest {
         assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf));
 
         baseConf = GameSessionImplTest.createCustomConfigForWrongBetTest();
-        conf = new DefaultReelGameWithFreeGamesSessionConfig.Builder()
+        conf = DefaultReelGameWithFreeGamesSessionConfig.builder()
                 .withAvailableBets(baseConf.getAvailableBets())
                 .build();
         sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));

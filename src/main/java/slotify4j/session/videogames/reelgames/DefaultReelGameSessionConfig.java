@@ -201,74 +201,8 @@ public class DefaultReelGameSessionConfig implements ReelGameSessionConfig {
         return baseConfig.getBet();
     }
 
-    public static class Builder {
-        private final DefaultReelGameSessionConfig config;
-
-        public Builder() {
-            config = new DefaultReelGameSessionConfig();
-        }
-
-        public Builder withAvailableBets(long[] value) {
-            config.setAvailableBets(value.clone());
-            return this;
-        }
-
-        public Builder withCreditsAmount(long value) {
-            config.setCreditsAmount(value);
-            return this;
-        }
-
-        public Builder withBet(long value) {
-            config.setBet(value);
-            return this;
-        }
-
-        public Builder withReelsNumber(int value) {
-            config.setReelsNumber(value);
-            return this;
-        }
-
-        public Builder withReelsItemsNumber(int value) {
-            config.setReelsItemsNumber(value);
-            return this;
-        }
-
-        public Builder withAvailableItems(String[] value) {
-            config.setAvailableItems(value);
-            return this;
-        }
-
-        public Builder withReelsItemsSequences(String[][] value) {
-            config.setReelsItemsSequences(value);
-            return this;
-        }
-
-        public Builder withPaytable(ReelGameSessionPaytableData value) {
-            config.setPaytable(value);
-            return this;
-        }
-        public Builder withWildItemId(String value) {
-            config.setWildItemId(value);
-            return this;
-        }
-        public Builder withScattersData(ReelGameSessionScatterData[] value) {
-            config.setScattersData(value.clone());
-            return this;
-        }
-
-        public Builder withLinesDirections(ReelGameSessionLinesDirectionData value) {
-            config.setLinesDirections(value);
-            return this;
-        }
-        public Builder withWildsMultipliers(ReelGameSessionWildsMultipliersData value) {
-            config.setWildsMultipliers(value);
-            return this;
-        }
-
-        public DefaultReelGameSessionConfig build() {
-            return config;
-        }
-
+    public static DefaultReelGameSessionConfigBuilder builder() {
+        return new DefaultReelGameSessionConfigBuilder();
     }
 
 }

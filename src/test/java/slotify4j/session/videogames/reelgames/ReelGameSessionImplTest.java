@@ -58,7 +58,7 @@ class ReelGameSessionImplTest {
         assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf));
 
         GameSessionConfig baseConf = GameSessionImplTest.createCustomConfigForTestProperInitialValues();
-        conf = new DefaultReelGameSessionConfig.Builder()
+        conf = DefaultReelGameSessionConfig.builder()
                 .withAvailableBets(baseConf.getAvailableBets())
                 .withCreditsAmount(baseConf.getCreditsAmount())
                 .build();
@@ -66,7 +66,7 @@ class ReelGameSessionImplTest {
         assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValuesWithCustomConfig(sess, conf));
 
         baseConf = GameSessionImplTest.createCustomConfigForWrongBetTest();
-        conf = new DefaultReelGameSessionConfig.Builder()
+        conf = DefaultReelGameSessionConfig.builder()
                 .withAvailableBets(baseConf.getAvailableBets())
                 .build();
         sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
@@ -82,7 +82,7 @@ class ReelGameSessionImplTest {
 
     @Test
     public void testPlaySeveralTimesUntilAnyWinning() throws Exception {
-        ReelGameSessionConfig conf = new DefaultReelGameSessionConfig.Builder()
+        ReelGameSessionConfig conf = DefaultReelGameSessionConfig.builder()
                 .withCreditsAmount(10000000)
                 .build();
         ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));

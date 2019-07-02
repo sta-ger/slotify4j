@@ -11,13 +11,14 @@ import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionRee
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculator;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameSessionSimulationImplTest {
 
     @Test
     public void playSpecifiedNumOfRoundsAndCalculateRtpTest() throws UnableToPlayException {
-        ReelGameSessionConfig sessionConfig = new DefaultReelGameSessionConfig.Builder().withReelsItemsSequences(
+        ReelGameSessionConfig sessionConfig = DefaultReelGameSessionConfig.builder().withReelsItemsSequences(
                 new String[][]{
                         {"J", "9", "Q", "10", "A", "S", "K"},
                         {"K", "S", "10", "A", "9", "Q", "J"},
