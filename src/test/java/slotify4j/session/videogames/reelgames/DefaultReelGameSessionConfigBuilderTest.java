@@ -108,8 +108,7 @@ class DefaultReelGameSessionConfigBuilderTest {
 
     @Test
     public void withWildItemId() {
-        assertEquals(
-                DefaultReelGameSessionConfig
+        assertEquals(DefaultReelGameSessionConfig
                         .builder()
                         .withWildItemId("WILD")
                         .build()
@@ -139,8 +138,7 @@ class DefaultReelGameSessionConfigBuilderTest {
         ReelGameSessionLinesDirectionDataImpl lData = new ReelGameSessionLinesDirectionDataImpl(
                 ReelGameSessionTools.createDefaultLinesDirectionsMap(5, 3)
         );
-        assertEquals(
-                DefaultReelGameSessionConfig
+        assertEquals(DefaultReelGameSessionConfig
                         .builder()
                         .withLinesDirections(lData)
                         .build()
@@ -152,8 +150,7 @@ class DefaultReelGameSessionConfigBuilderTest {
     @Test
     public void withWildsMultipliers() {
         ReelGameSessionWildsMultipliersDataPowerOfTwo m = new ReelGameSessionWildsMultipliersDataPowerOfTwo();
-        assertEquals(
-                DefaultReelGameSessionConfig
+        assertEquals(DefaultReelGameSessionConfig
                         .builder()
                         .withWildsMultipliers(m)
                         .build()

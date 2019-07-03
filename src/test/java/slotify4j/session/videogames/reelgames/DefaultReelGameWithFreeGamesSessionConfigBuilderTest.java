@@ -8,8 +8,7 @@ class DefaultReelGameWithFreeGamesSessionConfigBuilderTest {
 
     @Test
     public void withFreeGamesForScatters() {
-        assertEquals(
-                DefaultReelGameWithFreeGamesSessionConfig
+        assertEquals(DefaultReelGameWithFreeGamesSessionConfig
                         .builder()
                         .withFreeGamesForScatters("S", 3, 10)
                         .build()
@@ -70,39 +69,32 @@ class DefaultReelGameWithFreeGamesSessionConfigBuilderTest {
 
     @Test
     public void withAvailableItems() {
+        String[] testItems = new String[]{
+                "A",
+                "K",
+                "Q",
+                "J",
+        };
         assertArrayEquals(DefaultReelGameWithFreeGamesSessionConfig.builder()
-                        .withAvailableItems(new String[]{
-                                "A",
-                                "K",
-                                "Q",
-                                "J",
-                        })
+                        .withAvailableItems(testItems)
                         .build()
                         .getAvailableItems(),
-                new String[]{
-                        "A",
-                        "K",
-                        "Q",
-                        "J",
-                }
+                testItems.clone()
         );
     }
 
     @Test
     public void withReelsItemsSequences() {
+        String[][] testItems = new String[][]{
+                {"A", "K", "Q", "J"},
+                {"A", "K", "Q", "J"},
+                {"A", "K", "Q", "J"},
+        };
         assertArrayEquals(DefaultReelGameWithFreeGamesSessionConfig.builder()
-                        .withReelsItemsSequences(new String[][]{
-                                {"A", "K", "Q", "J"},
-                                {"A", "K", "Q", "J"},
-                                {"A", "K", "Q", "J"},
-                        })
+                        .withReelsItemsSequences(testItems)
                         .build()
                         .getReelsItemsSequences(),
-                new String[][]{
-                        {"A", "K", "Q", "J"},
-                        {"A", "K", "Q", "J"},
-                        {"A", "K", "Q", "J"},
-                }
+                testItems.clone()
         );
     }
 
@@ -120,8 +112,7 @@ class DefaultReelGameWithFreeGamesSessionConfigBuilderTest {
 
     @Test
     public void withWildItemId() {
-        assertEquals(
-                DefaultReelGameWithFreeGamesSessionConfig
+        assertEquals(DefaultReelGameWithFreeGamesSessionConfig
                         .builder()
                         .withWildItemId("WILD")
                         .build()
@@ -136,8 +127,7 @@ class DefaultReelGameWithFreeGamesSessionConfigBuilderTest {
                 new ReelGameSessionScattersDataImpl("S", 3),
                 new ReelGameSessionScattersDataImpl("SCTR", 5),
         };
-        assertArrayEquals(
-                DefaultReelGameWithFreeGamesSessionConfig
+        assertArrayEquals(DefaultReelGameWithFreeGamesSessionConfig
                         .builder()
                         .withScattersData(sData)
                         .build()
@@ -151,8 +141,7 @@ class DefaultReelGameWithFreeGamesSessionConfigBuilderTest {
         ReelGameSessionLinesDirectionDataImpl lData = new ReelGameSessionLinesDirectionDataImpl(
                 ReelGameSessionTools.createDefaultLinesDirectionsMap(5, 3)
         );
-        assertEquals(
-                DefaultReelGameWithFreeGamesSessionConfig
+        assertEquals(DefaultReelGameWithFreeGamesSessionConfig
                         .builder()
                         .withLinesDirections(lData)
                         .build()
@@ -164,8 +153,7 @@ class DefaultReelGameWithFreeGamesSessionConfigBuilderTest {
     @Test
     public void withWildsMultipliers() {
         ReelGameSessionWildsMultipliersDataPowerOfTwo m = new ReelGameSessionWildsMultipliersDataPowerOfTwo();
-        assertEquals(
-                DefaultReelGameWithFreeGamesSessionConfig
+        assertEquals(DefaultReelGameWithFreeGamesSessionConfig
                         .builder()
                         .withWildsMultipliers(m)
                         .build()
