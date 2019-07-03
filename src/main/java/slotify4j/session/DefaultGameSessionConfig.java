@@ -1,7 +1,5 @@
 package slotify4j.session;
 
-import slotify4j.session.videogames.reelgames.DefaultGameSessionConfigBuilder;
-
 public class DefaultGameSessionConfig implements GameSessionConfig {
     private long[] availableBets = {1, 2, 3, 4, 5, 10, 20, 30, 40, 50, 100};
 

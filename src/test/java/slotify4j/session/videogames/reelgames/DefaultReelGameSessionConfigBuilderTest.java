@@ -6,65 +6,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class DefaultReelGameSessionConfigBuilderTest {
 
-    @Test
-    public void withAvailableBetsTest() {
-        assertArrayEquals(DefaultReelGameSessionConfig.builder()
-                        .withAvailableBets(new long[]{1, 2, 3, 4, 5})
-                        .build()
-                        .getAvailableBets(),
-                new long[]{1, 2, 3, 4, 5}
-        );
-    }
-
-    @Test
-    public void withCreditsAmountTest() {
-        assertEquals(DefaultReelGameSessionConfig.builder()
-                        .withCreditsAmount(999)
-                        .build()
-                        .getCreditsAmount(),
-                999
-        );
-    }
-
-    @Test
-    public void withBetTest() {
-        assertEquals(DefaultReelGameSessionConfig.builder()
-                        .withBet(100)
-                        .build()
-                        .getBet(),
-                100
-        );
-    }
-
-    @Test
-    public void withReelsNumber() {
-        assertEquals(DefaultReelGameSessionConfig.builder()
+    public static boolean testBuilderMethods(ReelGameSessionConfigBuilder builder) {
+        assertEquals(builder
                         .withReelsNumber(6)
                         .build()
                         .getReelsNumber(),
                 6
         );
-    }
 
-    @Test
-    public void withReelsItemsNumber() {
-        assertEquals(DefaultReelGameSessionConfig.builder()
+        assertEquals(builder
                         .withReelsItemsNumber(4)
                         .build()
                         .getReelsItemsNumber(),
                 4
         );
-    }
 
-    @Test
-    public void withAvailableItems() {
-        assertArrayEquals(DefaultReelGameSessionConfig.builder()
+        assertArrayEquals(builder
                         .withAvailableItems(new String[]{
-                                "A",
-                                "K",
-                                "Q",
-                                "J",
-                        })
+                                        "A",
+                                        "K",
+                                        "Q",
+                                        "J",
+                                }
+                        )
                         .build()
                         .getAvailableItems(),
                 new String[]{
@@ -74,16 +38,14 @@ class DefaultReelGameSessionConfigBuilderTest {
                         "J",
                 }
         );
-    }
 
-    @Test
-    public void withReelsItemsSequences() {
-        assertArrayEquals(DefaultReelGameSessionConfig.builder()
+        assertArrayEquals(builder
                         .withReelsItemsSequences(new String[][]{
-                                {"A", "K", "Q", "J"},
-                                {"A", "K", "Q", "J"},
-                                {"A", "K", "Q", "J"},
-                        })
+                                        {"A", "K", "Q", "J"},
+                                        {"A", "K", "Q", "J"},
+                                        {"A", "K", "Q", "J"},
+                                }
+                        )
                         .build()
                         .getReelsItemsSequences(),
                 new String[][]{
@@ -91,11 +53,9 @@ class DefaultReelGameSessionConfigBuilderTest {
                         {"A", "K", "Q", "J"},
                         {"A", "K", "Q", "J"},
                 }
-        );
-    }
 
-    @Test
-    public void withPaytable() {
+        );
+
         ReelGameSessionPaytableDataImpl paytable = new ReelGameSessionPaytableDataImpl(
                 ReelGameSessionTools.createDefaultPaytableMap(
                         new long[]{1, 2, 3},
@@ -103,60 +63,57 @@ class DefaultReelGameSessionConfigBuilderTest {
                         5,
                         "W"
                 ));
-        assertEquals(DefaultReelGameSessionConfig.builder().withPaytable(paytable).build().getPaytable(), paytable);
-    }
 
-    @Test
-    public void withWildItemId() {
-        assertEquals(DefaultReelGameSessionConfig
-                        .builder()
+        assertEquals(builder
+                        .withPaytable(paytable)
+                        .build()
+                        .getPaytable(),
+                paytable
+        );
+
+        assertEquals(builder
                         .withWildItemId("WILD")
                         .build()
                         .getWildItemId(),
                 "WILD"
         );
-    }
 
-    @Test
-    public void withScattersData() {
         ReelGameSessionScattersDataImpl[] sData = new ReelGameSessionScattersDataImpl[]{
                 new ReelGameSessionScattersDataImpl("S", 3),
                 new ReelGameSessionScattersDataImpl("SCTR", 5),
         };
         assertArrayEquals(
-                DefaultReelGameSessionConfig
-                        .builder()
+                builder
                         .withScattersData(sData)
                         .build()
                         .getScattersData(),
                 sData
         );
-    }
 
-    @Test
-    public void withLinesDirections() {
+
         ReelGameSessionLinesDirectionDataImpl lData = new ReelGameSessionLinesDirectionDataImpl(
                 ReelGameSessionTools.createDefaultLinesDirectionsMap(5, 3)
         );
-        assertEquals(DefaultReelGameSessionConfig
-                        .builder()
+        assertEquals(builder
                         .withLinesDirections(lData)
                         .build()
                         .getLinesDirections(),
                 lData
         );
-    }
 
-    @Test
-    public void withWildsMultipliers() {
         ReelGameSessionWildsMultipliersDataPowerOfTwo m = new ReelGameSessionWildsMultipliersDataPowerOfTwo();
-        assertEquals(DefaultReelGameSessionConfig
-                        .builder()
+        assertEquals(builder
                         .withWildsMultipliers(m)
                         .build()
                         .getWildsMultipliers(),
                 m
         );
+        return true;
+    }
+
+    @Test
+    public void testDefaultReelGameSessionConfigBuilder() {
+        assertTrue(testBuilderMethods(DefaultReelGameSessionConfig.builder()));
     }
 
     @Test

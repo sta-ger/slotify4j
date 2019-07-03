@@ -58,6 +58,7 @@ class ReelGameSessionImplTest {
         assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf));
 
         GameSessionConfig baseConf = GameSessionImplTest.createCustomConfigForTestProperInitialValues();
+
         conf = DefaultReelGameSessionConfig.builder()
                 .withAvailableBets(baseConf.getAvailableBets())
                 .withCreditsAmount(baseConf.getCreditsAmount())

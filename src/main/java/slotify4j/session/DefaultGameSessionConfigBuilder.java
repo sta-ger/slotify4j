@@ -1,25 +1,23 @@
-package slotify4j.session.videogames.reelgames;
+package slotify4j.session;
 
-import slotify4j.session.DefaultGameSessionConfig;
-
-public class DefaultGameSessionConfigBuilder {
+public class DefaultGameSessionConfigBuilder implements GameSessionConfigBuilder {
     private DefaultGameSessionConfig config;
 
     public DefaultGameSessionConfigBuilder() {
         config = new DefaultGameSessionConfig();
     }
 
-    public DefaultGameSessionConfigBuilder withAvailableBets(long[] value) {
+    public GameSessionConfigBuilder withAvailableBets(long[] value) {
         config.setAvailableBets(value);
         return this;
     }
 
-    public DefaultGameSessionConfigBuilder withCreditsAmount(long value) {
+    public GameSessionConfigBuilder withCreditsAmount(long value) {
         config.setCreditsAmount(value);
         return this;
     }
 
-    public DefaultGameSessionConfigBuilder withBet(long value) {
+    public GameSessionConfigBuilder withBet(long value) {
         config.setBet(value);
         return this;
     }
