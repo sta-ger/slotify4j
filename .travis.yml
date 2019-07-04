@@ -6,14 +6,14 @@ branches:
     - develop
 
 jdk:
-  - openjdk9
   - openjdk10
   - openjdk11
   - oraclejdk9
   - oraclejdk11
 
 before_install:
-  - echo "JDK $TRAVIS_JDK_VERSION"
+  - echo "JDK is $TRAVIS_JDK_VERSION"
+  - test $TRAVIS_JDK_VERSION = "oraclejdk11" && echo "JDK match"
   - test $TRAVIS_JDK_VERSION = "oraclejdk11" && sudo apt-get install jq
   - test $TRAVIS_JDK_VERSION = "oraclejdk11" && wget -O ~/codacy-coverage-reporter-assembly-latest.jar https://github.com/codacy/codacy-coverage-reporter/releases/download/6.0.0/codacy-coverage-reporter-6.0.0-assembly.jar
 
