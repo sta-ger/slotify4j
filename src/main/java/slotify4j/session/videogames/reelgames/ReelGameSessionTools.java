@@ -6,7 +6,7 @@ import java.util.stream.Stream;
 
 public final class ReelGameSessionTools {
 
-    private ReelGameSessionTools() {
+    public ReelGameSessionTools() {
         throw new IllegalStateException("Utility class");
     }
 
