@@ -32,6 +32,7 @@ class DefaultGameSessionConfigBuilderTest {
     @Test
     public void testDefaultGameSessionConfigBuilder() {
         assertTrue(testBuilderMethods(DefaultGameSessionConfig.builder()));
+        assertTrue(testBuilderMethods(DefaultReelGameSessionConfig.builder()));
     }
 
     @Test

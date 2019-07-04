@@ -2,24 +2,24 @@ package slotify4j.session.videogames.reelgames;
 
 import slotify4j.session.GameSessionConfigBuilder;
 
-public class DefaultReelGameSessionConfigBuilder implements ReelGameSessionConfigBuilder, GameSessionConfigBuilder {
+public class DefaultReelGameSessionConfigBuilder implements ReelGameSessionConfigBuilder {
     private final DefaultReelGameSessionConfig config;
 
     DefaultReelGameSessionConfigBuilder() {
         config = new DefaultReelGameSessionConfig();
     }
 
-    public GameSessionConfigBuilder withAvailableBets(long[] value) {
+    public ReelGameSessionConfigBuilder withAvailableBets(long[] value) {
         config.setAvailableBets(value.clone());
         return this;
     }
 
-    public GameSessionConfigBuilder withCreditsAmount(long value) {
+    public ReelGameSessionConfigBuilder withCreditsAmount(long value) {
         config.setCreditsAmount(value);
         return this;
     }
 
-    public GameSessionConfigBuilder withBet(long value) {
+    public ReelGameSessionConfigBuilder withBet(long value) {
         config.setBet(value);
         return this;
     }
