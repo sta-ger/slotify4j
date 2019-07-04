@@ -22,4 +22,10 @@ class DefaultReelGameWithFreeGamesSessionConfigBuilderTest {
         assertTrue(testBuilderMethods(DefaultReelGameWithFreeGamesSessionConfig.builder()));
     }
 
+    @Test
+    public void testBaseTests() {
+        assertTrue(DefaultGameSessionConfigBuilderTest.testBuilderMethods(DefaultReelGameWithFreeGamesSessionConfig.builder()));
+        assertTrue(DefaultReelGameSessionConfigBuilderTest.testBuilderMethods(DefaultReelGameWithFreeGamesSessionConfig.builder()));
+    }
+
 }

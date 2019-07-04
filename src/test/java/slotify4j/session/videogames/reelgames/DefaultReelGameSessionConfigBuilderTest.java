@@ -115,4 +115,9 @@ class DefaultReelGameSessionConfigBuilderTest {
         assertTrue(testBuilderMethods(DefaultReelGameSessionConfig.builder()));
     }
 
+    @Test
+    public void testBaseTests() {
+        assertTrue(DefaultGameSessionConfigBuilderTest.testBuilderMethods(DefaultReelGameSessionConfig.builder()));
+    }
+
 }
