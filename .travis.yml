@@ -1,8 +1,15 @@
 language: java
+
+branches:
+  only:
+    - master
+    - develop
+
 jdk:
   - oraclejdk11
 
 before_install:
+  - echo "JDK $TRAVIS_JDK_VERSION"
   - sudo apt-get install jq
   - wget -O ~/codacy-coverage-reporter-assembly-latest.jar https://github.com/codacy/codacy-coverage-reporter/releases/download/6.0.0/codacy-coverage-reporter-6.0.0-assembly.jar
 
