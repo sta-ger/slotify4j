@@ -13,9 +13,9 @@ jdk:
 
 before_install:
   - echo "JDK is $TRAVIS_JDK_VERSION"
-  - test $TRAVIS_JDK_VERSION = "oraclejdk11" && echo "JDK match"
-  - test $TRAVIS_JDK_VERSION = "oraclejdk11" && sudo apt-get install jq
-  - test $TRAVIS_JDK_VERSION = "oraclejdk11" && wget -O ~/codacy-coverage-reporter-assembly-latest.jar https://github.com/codacy/codacy-coverage-reporter/releases/download/6.0.0/codacy-coverage-reporter-6.0.0-assembly.jar
+  - if [ $TRAVIS_JDK_VERSION = "oraclejdk11" ]; then echo "JDK match"; fi
+  - if [ $TRAVIS_JDK_VERSION = "oraclejdk11" ]; then sudo apt-get install jq; fi
+  - if [ $TRAVIS_JDK_VERSION = "oraclejdk11" ]; then wget -O ~/codacy-coverage-reporter-assembly-latest.jar https://github.com/codacy/codacy-coverage-reporter/releases/download/6.0.0/codacy-coverage-reporter-6.0.0-assembly.jar; fi
 
 after_success:
-  - test $TRAVIS_JDK_VERSION = "oraclejdk11" && java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r build/reports/jacoco/test/jacocoTestReport.xml
+  - if [ $TRAVIS_JDK_VERSION = "oraclejdk11" ]; then java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r build/reports/jacoco/test/jacocoTestReport.xml; fi
