@@ -28,7 +28,7 @@ public class DefaultGameSessionSimulationConfig implements GameSessionSimulation
     }
 
     public static class Builder {
-        private DefaultGameSessionSimulationConfig config;
+        private final DefaultGameSessionSimulationConfig config;
 
         public Builder() {
             config = new DefaultGameSessionSimulationConfig();

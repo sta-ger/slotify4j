@@ -30,8 +30,10 @@ public class DefaultReelGameSessionConfig implements ReelGameSessionConfig {
         reelsItemsNumber = DEFAULT_REELS_ITEMS_NUMBER;
         availableItems = getDefaultAvailableItems();
         wildItemId = DEFAULT_WILD_ITEM_ID;
-        paytable = new ReelGameSessionPaytableDataImpl(ReelGameSessionTools.createDefaultPaytableMap(
-                        getAvailableBets(), availableItems, reelsNumber, wildItemId)
+        paytable = new ReelGameSessionPaytableDataImpl(
+                ReelGameSessionTools.createDefaultPaytableMap(
+                        getAvailableBets(), availableItems, reelsNumber, wildItemId
+                )
         );
         scatters = new ReelGameSessionScatterData[] {
                 new ReelGameSessionScattersDataImpl(DEFAULT_SCATTER_ITEM_ID, DEFAULT_MINIMUM_ITEMS_NUM_FOR_SCATTER_WIN)

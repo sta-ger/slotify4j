@@ -1,16 +1,13 @@
 package slotify4j.session.videogames.reelgames;
 
-import slotify4j.session.GameSessionConfigBuilder;
-
-public class DefaultReelGameWithFreeGamesSessionConfigBuilder
-        implements ReelGameWithFreeGamesSessionConfigBuilder, ReelGameSessionConfigBuilder, GameSessionConfigBuilder {
+public class DefaultReelGameWithFreeGamesSessionConfigBuilder implements ReelGameWithFreeGamesSessionConfigBuilder {
     private final DefaultReelGameWithFreeGamesSessionConfig config;
 
     DefaultReelGameWithFreeGamesSessionConfigBuilder() {
         config = new DefaultReelGameWithFreeGamesSessionConfig();
     }
 
-    public ReelGameWithFreeGamesSessionConfigBuilder withFreeGamesForScatters(
+    public DefaultReelGameWithFreeGamesSessionConfigBuilder withFreeGamesForScatters(
             String itemId,
             int numberOfItems,
             int freeGamesNum
@@ -19,64 +16,64 @@ public class DefaultReelGameWithFreeGamesSessionConfigBuilder
         return this;
     }
 
-    public GameSessionConfigBuilder withAvailableBets(long[] value) {
+    public DefaultReelGameWithFreeGamesSessionConfigBuilder withAvailableBets(long[] value) {
         config.setAvailableBets(value);
         return this;
     }
 
-    public GameSessionConfigBuilder withCreditsAmount(long value) {
+    public DefaultReelGameWithFreeGamesSessionConfigBuilder withCreditsAmount(long value) {
         config.setCreditsAmount(value);
         return this;
     }
 
-    public GameSessionConfigBuilder withBet(long value) {
+    public DefaultReelGameWithFreeGamesSessionConfigBuilder withBet(long value) {
         config.setBet(value);
         return this;
     }
 
-    public ReelGameSessionConfigBuilder withReelsNumber(int value) {
+    public DefaultReelGameWithFreeGamesSessionConfigBuilder withReelsNumber(int value) {
         config.setReelsNumber(value);
         return this;
     }
 
-    public ReelGameSessionConfigBuilder withReelsItemsNumber(int value) {
+    public DefaultReelGameWithFreeGamesSessionConfigBuilder withReelsItemsNumber(int value) {
         config.setReelsItemsNumber(value);
         return this;
     }
 
-    public ReelGameSessionConfigBuilder withAvailableItems(String[] value) {
+    public DefaultReelGameWithFreeGamesSessionConfigBuilder withAvailableItems(String[] value) {
         config.setAvailableItems(value);
         return this;
     }
 
-    public ReelGameSessionConfigBuilder withReelsItemsSequences(String[][] value) {
+    public DefaultReelGameWithFreeGamesSessionConfigBuilder withReelsItemsSequences(String[][] value) {
         config.setReelsItemsSequences(value);
         return this;
     }
 
-    public ReelGameSessionConfigBuilder withPaytable(ReelGameSessionPaytableData value) {
+    public DefaultReelGameWithFreeGamesSessionConfigBuilder withPaytable(ReelGameSessionPaytableData value) {
         config.setPaytable(value);
         return this;
     }
 
-    public ReelGameSessionConfigBuilder withWildItemId(String value) {
+    public DefaultReelGameWithFreeGamesSessionConfigBuilder withWildItemId(String value) {
         config.setWildItemId(value);
         return this;
     }
 
-    public ReelGameSessionConfigBuilder withScattersData(ReelGameSessionScatterData[] value) {
+    public DefaultReelGameWithFreeGamesSessionConfigBuilder withScattersData(ReelGameSessionScatterData[] value) {
         config.setScattersData(value);
         return this;
     }
 
-    public ReelGameSessionConfigBuilder withLinesDirections(
+    public DefaultReelGameWithFreeGamesSessionConfigBuilder withLinesDirections(
             ReelGameSessionLinesDirectionData value
     ) {
         config.setLinesDirections(value);
         return this;
     }
 
-    public ReelGameSessionConfigBuilder withWildsMultipliers(
+    public DefaultReelGameWithFreeGamesSessionConfigBuilder withWildsMultipliers(
             ReelGameSessionWildsMultipliersData value
     ) {
         config.setWildsMultipliers(value);

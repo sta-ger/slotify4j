@@ -1,6 +1,6 @@
 package slotify4j.session.videogames.reelgames;
 
-public interface ReelGameWithFreeGamesSessionConfigBuilder {
+public interface ReelGameWithFreeGamesSessionConfigBuilder extends ReelGameSessionConfigBuilder {
 
     ReelGameWithFreeGamesSessionConfigBuilder withFreeGamesForScatters(
             String itemId,

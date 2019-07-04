@@ -3,10 +3,6 @@ package slotify4j.session.videogames.reelgames;
 import slotify4j.session.GameSessionConfigBuilder;
 
 public interface ReelGameSessionConfigBuilder extends GameSessionConfigBuilder {
-    ReelGameSessionConfigBuilder withAvailableBets(long[] value);
-    ReelGameSessionConfigBuilder withCreditsAmount(long value);
-    ReelGameSessionConfigBuilder withBet(long value);
-
 
     ReelGameSessionConfigBuilder withReelsNumber(int value);
 

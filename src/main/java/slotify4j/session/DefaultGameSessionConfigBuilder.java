@@ -1,7 +1,7 @@
 package slotify4j.session;
 
 public class DefaultGameSessionConfigBuilder implements GameSessionConfigBuilder {
-    private DefaultGameSessionConfig config;
+    private final DefaultGameSessionConfig config;
 
     public DefaultGameSessionConfigBuilder() {
         config = new DefaultGameSessionConfig();
@@ -22,7 +22,7 @@ public class DefaultGameSessionConfigBuilder implements GameSessionConfigBuilder
         return this;
     }
 
-    public DefaultGameSessionConfig build() {
+    public GameSessionConfig build() {
         return config;
     }
 

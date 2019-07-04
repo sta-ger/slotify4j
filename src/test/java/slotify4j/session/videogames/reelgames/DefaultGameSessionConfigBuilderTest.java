@@ -26,18 +26,13 @@ class DefaultGameSessionConfigBuilderTest {
                         .getBet(),
                 100
         );
+        assertDoesNotThrow(() -> DefaultGameSessionConfig.builder().build());
         return true;
     }
 
     @Test
     public void testDefaultGameSessionConfigBuilder() {
         assertTrue(testBuilderMethods(DefaultGameSessionConfig.builder()));
-        assertTrue(testBuilderMethods(DefaultReelGameSessionConfig.builder()));
-    }
-
-    @Test
-    public void buildTest() {
-        assertDoesNotThrow(() -> DefaultGameSessionConfig.builder().build());
     }
 
 }

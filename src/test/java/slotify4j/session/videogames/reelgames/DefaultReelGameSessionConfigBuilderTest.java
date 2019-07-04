@@ -63,7 +63,6 @@ class DefaultReelGameSessionConfigBuilderTest {
                         5,
                         "W"
                 ));
-
         assertEquals(builder
                         .withPaytable(paytable)
                         .build()
@@ -114,11 +113,6 @@ class DefaultReelGameSessionConfigBuilderTest {
     @Test
     public void testDefaultReelGameSessionConfigBuilder() {
         assertTrue(testBuilderMethods(DefaultReelGameSessionConfig.builder()));
-    }
-
-    @Test
-    public void buildTest() {
-        assertDoesNotThrow(() -> DefaultReelGameSessionConfig.builder().build());
     }
 
 }
