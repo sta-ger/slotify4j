@@ -18,3 +18,9 @@ before_install:
 
 after_success:
   - if [ $TRAVIS_JDK_VERSION = "oraclejdk11" ]; then java -jar ~/codacy-coverage-reporter-assembly-latest.jar report -l Java -r build/reports/jacoco/test/jacocoTestReport.xml; fi
+
+deploy:
+  provider: script
+  script: if [ $TRAVIS_JDK_VERSION = "oraclejdk11" ]; ./gradlew bintrayUpload; fi
+  on:
+    branch: master
