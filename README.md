@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/sta-ger/slotify4j.svg?branch=master)](https://travis-ci.org/sta-ger/slotify4j)
 [![Download](https://api.bintray.com/packages/sta-ger/maven/slotify4j/images/download.svg)](https://bintray.com/sta-ger/maven/slotify4j/_latestVersion)
 
-A server-side video slot game logic framework in JavaScript.
+A server-side video slot game logic framework for Java.
 
 [slotify.js](https://github.com/sta-ger/slotify.js) - JavaScript/TypeScript version.
 
