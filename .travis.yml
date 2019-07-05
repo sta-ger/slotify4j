@@ -21,6 +21,6 @@ after_success:
 
 deploy:
   provider: script
-  script: if [ $TRAVIS_JDK_VERSION = "oraclejdk11" ]; ./gradlew bintrayUpload; fi
+  script: ./gradlew bintrayUpload
   on:
     branch: master
