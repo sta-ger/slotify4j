@@ -6,9 +6,8 @@ import slotify4j.session.GameSessionImplTest;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
-import java.util.Random;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ReelGameSessionImplTest {
 
