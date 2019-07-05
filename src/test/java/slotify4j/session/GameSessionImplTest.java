@@ -2,6 +2,9 @@ package slotify4j.session;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameSessionImplTest {
@@ -36,6 +39,11 @@ public class GameSessionImplTest {
     }
 
     public static boolean testDefaultSessionWithWrongInitialBet(GameSession session, GameSessionConfig config) {
+        long bet = config.getAvailableBets()[0];
+        while (session.isBetAvailable(bet)) {
+            bet = new Random().nextInt();
+        }
+        session.setBet(bet);
         assertEquals(session.getBet(), config.getAvailableBets()[0]);
         return true;
     }

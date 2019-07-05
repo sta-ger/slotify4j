@@ -55,7 +55,11 @@ public class GameSessionImpl implements GameSession {
 
     @Override
     public void setBet(long bet) {
-        this.bet = bet;
+        if (!isBetAvailable(bet)) {
+            this.bet = this.getAvailableBets()[0];
+        } else {
+            this.bet = bet;
+        }
     }
 
     @Override

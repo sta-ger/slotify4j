@@ -6,8 +6,8 @@ import java.util.stream.Stream;
 
 public final class ReelGameSessionTools {
 
-    public ReelGameSessionTools() {
-        throw new IllegalStateException("Utility class");
+    private ReelGameSessionTools() {
+
     }
 
     public static String[][] transposeItemsMatrix(String[][] source) {
