@@ -1,7 +1,9 @@
 apply plugin: "java"
 apply plugin: "jacoco"
+apply plugin: "com.jfrog.bintray"
+apply plugin: "maven-publish"
 
-version "0.0.0"
+version "1.0.0"
 group "com.github.sta-ger"
 
 repositories {
@@ -32,35 +34,23 @@ buildscript {
     }
 }
 
-apply plugin: "com.jfrog.bintray"
-apply plugin: "maven-publish"
-
-// Create the pom configuration:
 def pomConfig = {
-    licenses {
-        license {
-            name 'GNU AFFERO GENERAL PUBLIC LICENSE, Version 3.0'
-            url 'https://www.gnu.org/licenses/agpl.txt'
-            distribution 'repo'
-        }
-    }
     developers {
         developer {
-            id 'developer-id'
-            name 'developer-name'
-            email 'developer@me'
+            name "sta-ger"
+            email "pascaldelger@gmail.com"
         }
     }
 
     scm {
-        url 'https://github.com/myproject'
-        connection 'https://git@github.com/myproject.git'
-        developerConnection 'scm:git:https://github.com/myproject.git'
+        url "https://github.com/sta-ger/slotify4j"
+        connection "https://git@github.com/sta-ger/slotify4j"
+        developerConnection "scm:git:https://github.com/sta-ger/slotify4j"
     }
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+    classifier = "sources"
     from sourceSets.main.allSource
 }
 
@@ -80,9 +70,9 @@ publishing {
             version project.version
             pom.withXml {
                 def root = asNode()
-                root.appendNode('description', 'descr')
-                root.appendNode('name', 'slotify4j')
-                root.appendNode('url', 'https://github.com/myproject')
+                root.appendNode("description", "A server-side video slot game logic framework for Java.")
+                root.appendNode("name", "slotify4j")
+                root.appendNode("url", "https://github.com/sta-ger/slotify4j")
                 root.children().last() + pomConfig
             }
         }
@@ -108,9 +98,9 @@ bintray {
         }
     }
 
-    publications = ['MavenCustom']
+    publications = ["MavenCustom"]
 
-    //configurations = ['archives']
+    //configurations = ["archives"]
 }
 
 check.dependsOn jacocoTestReport
