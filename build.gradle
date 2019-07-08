@@ -99,8 +99,6 @@ bintray {
     }
 
     publications = ["MavenCustom"]
-
-    //configurations = ["archives"]
 }
 
 check.dependsOn jacocoTestReport

@@ -39,6 +39,8 @@ class ReelGameSessionImplTest {
                 session.play();
                 if (session.getWinningAmount() == 0) {
                     assertEquals(session.getCreditsAmount(), lastCredits - lastBet);
+                } else if (!session.canPlayNextGame()) {
+                    session.setCreditsAmount(Integer.MAX_VALUE);
                 }
             }
             assertTrue(session.getCreditsAmount() >= lastCredits - lastBet);
@@ -84,7 +86,7 @@ class ReelGameSessionImplTest {
     @Test
     public void testPlaySeveralTimesUntilAnyWinning() throws Exception {
         ReelGameSessionConfig conf = DefaultReelGameSessionConfig.builder()
-                .withCreditsAmount(10000000)
+                .withCreditsAmount(Integer.MAX_VALUE)
                 .build();
         ReelGameSessionImpl sess = new ReelGameSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         assertTrue(testPlayUntilWin(sess, conf));
