@@ -14,14 +14,12 @@ class DefaultGameSessionConfigBuilderTest {
                         .getAvailableBets(),
                 new long[]{1, 2, 3, 4, 5}
         );
-        assertEquals(DefaultGameSessionConfig.builder()
-                        .withCreditsAmount(999)
+        assertEquals(builder.withCreditsAmount(999)
                         .build()
                         .getCreditsAmount(),
                 999
         );
-        assertEquals(DefaultGameSessionConfig.builder()
-                        .withBet(100)
+        assertEquals(builder.withBet(100)
                         .build()
                         .getBet(),
                 100
