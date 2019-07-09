@@ -12,6 +12,7 @@ public class GameSessionImplTest {
         assertArrayEquals(session.getAvailableBets(), config.getAvailableBets());
         assertEquals(session.getBet(), config.getAvailableBets()[0]);
         assertEquals(session.getCreditsAmount(), 1000);
+        assertEquals(session.getWinningAmount(), 0);
         return true;
     }
 
