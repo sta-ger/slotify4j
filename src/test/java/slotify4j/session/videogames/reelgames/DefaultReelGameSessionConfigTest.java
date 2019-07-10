@@ -18,7 +18,7 @@ class DefaultReelGameSessionConfigTest {
     @Test
     public void testCreateDefaultConfig() {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
-        assertEquals(conf.getWildItemId(), "W");
+        assertEquals(conf.getWildItemId(), DefaultReelGameSessionConfig.DEFAULT_WILD_ITEM_ID);
 
         assertEquals(conf.getWildsMultipliers().getMultiplierValueForWildsNum(0), 1);
         assertEquals(conf.getWildsMultipliers().getMultiplierValueForWildsNum(1), 2);
@@ -28,7 +28,7 @@ class DefaultReelGameSessionConfigTest {
         assertEquals(conf.getWildsMultipliers().getMultiplierValueForWildsNum(5), 32);
 
         assertEquals(conf.getScattersData().length, 1);
-        assertEquals(conf.getScattersData()[0].getItemId(), "S");
+        assertEquals(conf.getScattersData()[0].getItemId(), DefaultReelGameSessionConfig.DEFAULT_SCATTER_ITEM_ID);
         assertEquals(conf.getScattersData()[0].getMinimumItemsNumForScatterWin(), 3);
 
         assertEquals(conf.getReelsNumber(), 5);
@@ -64,14 +64,14 @@ class DefaultReelGameSessionConfigTest {
     @Test
     public void testIsItemWild() {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
-        assertTrue(conf.isItemWild("W"));
+        assertTrue(conf.isItemWild(DefaultReelGameSessionConfig.DEFAULT_WILD_ITEM_ID));
         assertFalse(conf.isItemWild("A"));
     }
 
     @Test
     public void testIsItemScatter() {
         ReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
-        assertTrue(conf.isItemScatter("S"));
+        assertTrue(conf.isItemScatter(DefaultReelGameSessionConfig.DEFAULT_SCATTER_ITEM_ID));
         assertFalse(conf.isItemScatter("A"));
     }
 

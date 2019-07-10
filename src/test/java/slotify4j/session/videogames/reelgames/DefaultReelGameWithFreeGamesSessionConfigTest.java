@@ -18,4 +18,18 @@ class DefaultReelGameWithFreeGamesSessionConfigTest {
         assertEquals(conf.getFreeGamesForScatters("SCTR", 2), 0);
     }
 
+    @Test
+    public void testIsItemWild() {
+        ReelGameSessionConfig conf = new DefaultReelGameWithFreeGamesSessionConfig();
+        assertTrue(conf.isItemWild(DefaultReelGameSessionConfig.DEFAULT_WILD_ITEM_ID));
+        assertFalse(conf.isItemWild("K"));
+    }
+
+    @Test
+    public void testIsItemScatter() {
+        ReelGameSessionConfig conf = new DefaultReelGameWithFreeGamesSessionConfig();
+        assertTrue(conf.isItemScatter(DefaultReelGameSessionConfig.DEFAULT_SCATTER_ITEM_ID));
+        assertFalse(conf.isItemScatter("K"));
+    }
+
 }

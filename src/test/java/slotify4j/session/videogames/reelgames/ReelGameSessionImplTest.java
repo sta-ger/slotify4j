@@ -6,8 +6,7 @@ import slotify4j.session.GameSessionImplTest;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ReelGameSessionImplTest {
 
@@ -46,6 +45,14 @@ class ReelGameSessionImplTest {
             assertTrue(session.getCreditsAmount() >= lastCredits - lastBet);
 
             wasLinesWin = session.getWinningLines().size() > 0;
+            if (wasLinesWin) {
+                session.getWinningLines().forEach((lineId, lineModel) ->
+                        assertArrayEquals(
+                                lineModel.getDirection(),
+                                config.getLinesDirections().getVerticalItemsPositionsForLineId(lineModel.getLineId())
+                        )
+                );
+            }
             wasScattersWin = session.getWinningScatters().size() > 0;
             if (i == timesToPlay - 1 && !wasLinesWin && !wasScattersWin) {
                 i = 0;
