@@ -107,6 +107,19 @@ class DefaultReelGameSessionConfigBuilderTest {
                         .getWildsMultipliers(),
                 m
         );
+
+        ReelGameSessionWildsMultipliersDataNoMultipliers mNo = new ReelGameSessionWildsMultipliersDataNoMultipliers();
+        assertEquals(builder
+                        .withWildsMultipliers(mNo)
+                        .build()
+                        .getWildsMultipliers(),
+                mNo
+        );
+
+        assertEquals(mNo.getMultiplierValueForWildsNum(1), 1);
+        assertEquals(mNo.getMultiplierValueForWildsNum(2), 1);
+        assertEquals(mNo.getMultiplierValueForWildsNum(3), 1);
+        assertEquals(mNo.getMultiplierValueForWildsNum(4), 1);
         return true;
     }
 
