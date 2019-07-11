@@ -29,7 +29,7 @@ public class GameSessionSimulationImplTest {
         ReelGameSessionReelsController reelsController = new ReelGameSessionReelsControllerImpl(sessionConfig);
         ReelGameSessionWinCalculator winningCalculator = new ReelGameSessionWinCalculatorImpl(sessionConfig);
         ReelGameSession session = new ReelGameSessionImpl(sessionConfig, reelsController, winningCalculator);
-        GameSessionSimulationConfig simulationConfig = new DefaultGameSessionSimulationConfig.Builder()
+        GameSessionSimulationConfig simulationConfig = DefaultGameSessionSimulationConfig.builder()
                 .withNumberOfRounds(10000)
                 .build();
         GameSessionSimulation simulation = new GameSessionSimulationImpl(session, simulationConfig);

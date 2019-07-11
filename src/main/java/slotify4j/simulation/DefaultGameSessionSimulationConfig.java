@@ -27,26 +27,8 @@ public class DefaultGameSessionSimulationConfig implements GameSessionSimulation
         return changeBetScenario;
     }
 
-    public static class Builder {
-        private final DefaultGameSessionSimulationConfig config;
-
-        public Builder() {
-            config = new DefaultGameSessionSimulationConfig();
-        }
-
-        public Builder withNumberOfRounds(long value) {
-            config.setNumberOfRounds(value);
-            return this;
-        }
-
-        public Builder withChangeBetScenario(ChangeBetScenario value) {
-            config.setChangeBetScenario(value);
-            return this;
-        }
-
-        public GameSessionSimulationConfig build() {
-            return config;
-        }
-
+    public static DefaultGameSessionSimulationBuilder builder() {
+        return new DefaultGameSessionSimulationBuilder();
     }
+
 }
