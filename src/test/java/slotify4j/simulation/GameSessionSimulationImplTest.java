@@ -11,6 +11,7 @@ import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionRee
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculator;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -61,6 +62,43 @@ public class GameSessionSimulationImplTest {
         assertEquals(simulation.getTotalBetAmount(), totalBet.get());
         assertEquals(simulation.getTotalReturn(), totalReturn.get());
         assertTrue(simulation.getRtp() > 0.5 && simulation.getRtp() < 0.6);
+    }
+
+    @Test
+    public void testSetAndRemoveCallbacks() throws UnableToPlayException {
+        ReelGameSessionConfig sessionConfig = new DefaultReelGameSessionConfig();
+        ReelGameSessionReelsController reelsController = new ReelGameSessionReelsControllerImpl(sessionConfig);
+        ReelGameSessionWinCalculator winningCalculator = new ReelGameSessionWinCalculatorImpl(sessionConfig);
+        ReelGameSession session = new ReelGameSessionImpl(sessionConfig, reelsController, winningCalculator);
+        GameSessionSimulationConfig simulationConfig = DefaultGameSessionSimulationConfig
+                .builder()
+                .withNumberOfRounds(100)
+                .build();
+        GameSessionSimulation simulation = new GameSessionSimulationImpl(session, simulationConfig);
+
+        int[] callbacksCounts = {0, 0, 0};
+        simulation.setBeforePlayCallback(() -> callbacksCounts[0]++);
+        simulation.setAfterPlayCallback(() -> {
+                callbacksCounts[1]++;
+                if (simulation.getCurrentGameNumber() == 50) {
+                    simulation.removeBeforePlayCallback();
+                    simulation.removeAfterPlayCallback();
+                }
+        });
+        simulation.setOnFinishedCallback(() -> callbacksCounts[2]++);
+
+        simulation.run();
+
+        assertEquals(callbacksCounts[0], 50);
+        assertEquals(callbacksCounts[1], 50);
+        assertEquals(callbacksCounts[2], 1);
+
+        callbacksCounts[2] = 0;
+
+        simulation.removeOnFinishedCallback();
+        simulation.run();
+
+        assertEquals(callbacksCounts[2], 0);
     }
 
 }
