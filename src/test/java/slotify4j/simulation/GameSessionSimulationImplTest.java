@@ -11,6 +11,9 @@ import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionRee
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculator;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -34,12 +37,19 @@ public class GameSessionSimulationImplTest {
                 .build();
         GameSessionSimulation simulation = new GameSessionSimulationImpl(session, simulationConfig);
 
+        AtomicLong totalBet = new AtomicLong();
+        AtomicLong totalReturn = new AtomicLong();
         int[] callbacksCounts = {0, 0, 0};
         simulation.setBeforePlayCallback(() -> {
+            assertEquals(simulation.getCurrentGameNumber(), callbacksCounts[0]);
             callbacksCounts[0]++;
             session.setCreditsAmount(10000);
         });
-        simulation.setAfterPlayCallback(() -> callbacksCounts[1]++);
+        simulation.setAfterPlayCallback(() -> {
+            callbacksCounts[1]++;
+            totalBet.addAndGet(session.getBet());
+            totalReturn.addAndGet(session.getWinningAmount());
+        });
         simulation.setOnFinishedCallback(() -> callbacksCounts[2]++);
 
         simulation.run();
@@ -48,6 +58,8 @@ public class GameSessionSimulationImplTest {
         assertEquals(callbacksCounts[1], simulation.getTotalGamesToPlayNumber());
         assertEquals(callbacksCounts[2], 1);
 
+        assertEquals(simulation.getTotalBetAmount(), totalBet.get());
+        assertEquals(simulation.getTotalReturn(), totalReturn.get());
         assertTrue(simulation.getRtp() > 0.5 && simulation.getRtp() < 0.6);
     }
 
