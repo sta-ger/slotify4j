@@ -1,7 +1,7 @@
 package slotify4j.simulation;
 
 import org.junit.jupiter.api.Test;
-import slotify4j.session.UnableToPlayException;
+import slotify4j.session.*;
 import slotify4j.session.videogames.reelgames.DefaultReelGameSessionConfig;
 import slotify4j.session.videogames.reelgames.ReelGameSession;
 import slotify4j.session.videogames.reelgames.ReelGameSessionConfig;
@@ -12,13 +12,19 @@ import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCa
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameSessionSimulationImplTest {
+
+    public static ReelGameSession createDefaultReelGameSessionForTest() {
+        ReelGameSessionConfig sessionConfig = new DefaultReelGameSessionConfig();
+        ReelGameSessionReelsController reelsController = new ReelGameSessionReelsControllerImpl(sessionConfig);
+        ReelGameSessionWinCalculator winningCalculator = new ReelGameSessionWinCalculatorImpl(sessionConfig);
+        return new ReelGameSessionImpl(sessionConfig, reelsController, winningCalculator);
+    }
 
     @Test
     public void playSpecifiedNumOfRoundsAndCalculateRtpTest() throws UnableToPlayException {
@@ -66,10 +72,7 @@ public class GameSessionSimulationImplTest {
 
     @Test
     public void testSetAndRemoveCallbacks() throws UnableToPlayException {
-        ReelGameSessionConfig sessionConfig = new DefaultReelGameSessionConfig();
-        ReelGameSessionReelsController reelsController = new ReelGameSessionReelsControllerImpl(sessionConfig);
-        ReelGameSessionWinCalculator winningCalculator = new ReelGameSessionWinCalculatorImpl(sessionConfig);
-        ReelGameSession session = new ReelGameSessionImpl(sessionConfig, reelsController, winningCalculator);
+        ReelGameSession session = createDefaultReelGameSessionForTest();
         GameSessionSimulationConfig simulationConfig = DefaultGameSessionSimulationConfig
                 .builder()
                 .withNumberOfRounds(100)
@@ -99,6 +102,36 @@ public class GameSessionSimulationImplTest {
         simulation.run();
 
         assertEquals(callbacksCounts[2], 0);
+    }
+
+    @Test
+    public void testSetBetBeforePlay() throws UnableToPlayException {
+        long[] bets = {1, 10};
+        GameSessionConfig config = DefaultGameSessionConfig
+                .builder()
+                .withAvailableBets(bets)
+                .withCreditsAmount(59)
+                .withBet(10)
+                .build();
+        GameSession session = new GameSessionImpl(config);
+        GameSessionSimulationConfig simulationConfig = new DefaultGameSessionSimulationConfig();
+        GameSessionSimulation simulation = new GameSessionSimulationImpl(session, simulationConfig);
+
+        AtomicBoolean expectLowerBet = new AtomicBoolean();
+        simulation.setBeforePlayCallback(() -> {
+            if (session.getCreditsAmount() < 10) {
+                expectLowerBet.set(true);
+            }
+        });
+        simulation.setAfterPlayCallback(() -> {
+            if (expectLowerBet.get()) {
+                assertEquals(session.getBet(), 1);
+            } else {
+                assertEquals(session.getBet(), 10);
+            }
+        });
+
+        simulation.run();
     }
 
 }

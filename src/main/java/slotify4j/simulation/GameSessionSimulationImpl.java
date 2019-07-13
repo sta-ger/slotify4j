@@ -2,7 +2,6 @@ package slotify4j.simulation;
 
 import slotify4j.session.GameSession;
 import slotify4j.session.UnableToPlayException;
-import slotify4j.session.videogames.reelgames.ReelGameSession;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -22,7 +21,7 @@ public class GameSessionSimulationImpl implements GameSessionSimulation {
     private Runnable afterPlayCallback;
     private Runnable onFinishedCallback;
 
-    public GameSessionSimulationImpl(ReelGameSession session, GameSessionSimulationConfig config) {
+    public GameSessionSimulationImpl(GameSession session, GameSessionSimulationConfig config) {
         this.session = session;
         numberOfRounds = config.getNumberOfRounds();
         changeBetScenario = config.getChangeBetScenario();
