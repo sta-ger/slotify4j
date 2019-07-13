@@ -3,6 +3,7 @@ package slotify4j.session.videogames.reelgames;
 import org.junit.jupiter.api.Test;
 import slotify4j.session.GameSessionConfig;
 import slotify4j.session.GameSessionImplTest;
+import slotify4j.session.UnableToPlayException;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
@@ -22,7 +23,7 @@ class ReelGameSessionImplTest {
         return true;
     }
 
-    public static boolean testPlayUntilWin(ReelGameSession session, ReelGameSessionConfig config) throws Exception {
+    public static boolean testPlayUntilWin(ReelGameSession session, ReelGameSessionConfig config) throws UnableToPlayException {
         long lastBet = 0;
         long lastCredits = 0;
         boolean wasLinesWin = false;
@@ -91,7 +92,7 @@ class ReelGameSessionImplTest {
     }
 
     @Test
-    public void testPlaySeveralTimesUntilAnyWinning() throws Exception {
+    public void testPlaySeveralTimesUntilAnyWinning() throws UnableToPlayException {
         ReelGameSessionConfig conf = DefaultReelGameSessionConfig.builder()
                 .withCreditsAmount(Integer.MAX_VALUE)
                 .build();

@@ -48,7 +48,7 @@ public class GameSessionImplTest {
         return true;
     }
 
-    public static boolean testDefaultSessionPlaysWhileEnoughCredits(GameSession session) throws Exception {
+    public static boolean testDefaultSessionPlaysWhileEnoughCredits(GameSession session) throws UnableToPlayException {
         session.setBet(10);
         session.play();
         assertEquals(session.getCreditsAmount(), 990);
@@ -106,7 +106,7 @@ public class GameSessionImplTest {
     }
 
     @Test
-    public void testPlayWhileEnoughCredits() throws Exception {
+    public void testPlayWhileEnoughCredits() throws UnableToPlayException {
         DefaultGameSessionConfig conf = new DefaultGameSessionConfig();
         GameSessionImpl sess = new GameSessionImpl(conf);
         assertTrue(testDefaultSessionPlaysWhileEnoughCredits(sess));

@@ -3,6 +3,7 @@ package slotify4j.session.videogames.reelgames;
 import org.junit.jupiter.api.Test;
 import slotify4j.session.GameSessionConfig;
 import slotify4j.session.GameSessionImplTest;
+import slotify4j.session.UnableToPlayException;
 import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionReelsControllerImpl;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
@@ -33,7 +34,7 @@ class ReelGameWithFreeGamesSessionImplTest {
         return true;
     }
 
-    public static boolean testPlayUntilWinFreeGames(ReelGameWithFreeGamesSession session) throws Exception {
+    public static boolean testPlayUntilWinFreeGames(ReelGameWithFreeGamesSession session) throws UnableToPlayException {
         while (session.getFreeGameSum() == 0) {
             session.setCreditsAmount(Long.MIN_VALUE);
             session.play();
@@ -43,7 +44,7 @@ class ReelGameWithFreeGamesSessionImplTest {
         return true;
     }
 
-    public static boolean testPlayFreeGames(ReelGameWithFreeGamesSession session, ReelGameWithFreeGamesSessionConfig conf) throws Exception {
+    public static boolean testPlayFreeGames(ReelGameWithFreeGamesSession session, ReelGameWithFreeGamesSessionConfig conf) throws UnableToPlayException {
         //The following situations need to be checked:
         boolean wasNormalFreeGames = false; //played normal 10 free games
         boolean wasAdditionalFreeGames = false; //free games was won again at free games mode
@@ -117,7 +118,7 @@ class ReelGameWithFreeGamesSessionImplTest {
     }
 
     @Test
-    public void passBaseTests() throws Exception {
+    public void passBaseTests() throws UnableToPlayException {
         ReelGameWithFreeGamesSessionConfig conf = new DefaultReelGameWithFreeGamesSessionConfig();
         ReelGameWithFreeGamesSession sess = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         assertTrue(GameSessionImplTest.testDefaultSessionHasProperInitialValues(sess, conf));
@@ -161,14 +162,14 @@ class ReelGameWithFreeGamesSessionImplTest {
     }
 
     @Test
-    public void playUntilWinFreeGamesTest() throws Exception {
+    public void playUntilWinFreeGamesTest() throws UnableToPlayException {
         ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
         ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         assertTrue(testPlayUntilWinFreeGames(session));
     }
 
     @Test
-    public void playFreeGamesTest() throws Exception {
+    public void playFreeGamesTest() throws UnableToPlayException {
         ReelGameWithFreeGamesSessionConfig conf = createConfigForTestPlayFreeGames();
         ReelGameWithFreeGamesSession session = new ReelGameWithFreeGamesSessionImpl(conf, new ReelGameSessionReelsControllerImpl(conf), new ReelGameSessionWinCalculatorImpl(conf));
         assertTrue(testPlayFreeGames(session, conf));

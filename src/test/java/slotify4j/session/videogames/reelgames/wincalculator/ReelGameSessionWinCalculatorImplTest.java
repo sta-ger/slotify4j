@@ -1,6 +1,7 @@
 package slotify4j.session.videogames.reelgames.wincalculator;
 
 import org.junit.jupiter.api.Test;
+import slotify4j.session.UnableToPlayException;
 import slotify4j.session.videogames.reelgames.*;
 
 import java.util.Arrays;
@@ -211,7 +212,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void calculateWinningLinesAfterUpdateStateTest() throws Exception {
+    public void calculateWinningLinesAfterUpdateStateTest() throws UnableToPlayException {
         Arrays.stream(config.getAvailableBets()).forEach(bet -> Arrays.stream(config.getAvailableItems()).forEach(item -> {
             if (!config.isItemWild(item) && !config.isItemScatter(item)) {
                 try {
@@ -250,7 +251,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void calculateWinningLinesWithWildsAfterUpdateStateTest() throws Exception {
+    public void calculateWinningLinesWithWildsAfterUpdateStateTest() throws UnableToPlayException {
         winningCalculator.setGameState(1, ReelGameSessionTools.transposeItemsMatrix(new String[][]{
                 {"A", "W", "A", "K", "Q"},
                 {"A", "K", "Q", "J", "10"},
@@ -345,7 +346,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void calculateWinningScattersAfterUpdateStateTest() throws Exception {
+    public void calculateWinningScattersAfterUpdateStateTest() throws UnableToPlayException {
         winningCalculator.setGameState(1, ReelGameSessionTools.transposeItemsMatrix(new String[][]{
                 {"A", "S", "A", "K", "Q"},
                 {"A", "K", "Q", "J", "10"},
@@ -373,7 +374,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void calculateAllLinesWinAmountAfterUpdateStateTest() throws Exception {
+    public void calculateAllLinesWinAmountAfterUpdateStateTest() throws UnableToPlayException {
         winningCalculator.setGameState(1, ReelGameSessionTools.transposeItemsMatrix(new String[][]{
                 {"A", "A", "A", "A", "A"},
                 {"A", "A", "A", "K", "Q"},
@@ -383,7 +384,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void calculateAllScattersWinAmountAfterUpdateStateTest() throws Exception {
+    public void calculateAllScattersWinAmountAfterUpdateStateTest() throws UnableToPlayException {
         winningCalculator.setGameState(1, ReelGameSessionTools.transposeItemsMatrix(new String[][]{
                 {"A", "A", "A", "A", "A"},
                 {"A", "A", "A", "S", "S"},
@@ -393,7 +394,7 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
-    public void calculateTotalWinAmountAfterUpdateStateTest() throws Exception {
+    public void calculateTotalWinAmountAfterUpdateStateTest() throws UnableToPlayException {
         winningCalculator.setGameState(1, ReelGameSessionTools.transposeItemsMatrix(new String[][]{
                 {"A", "A", "A", "A", "A"},
                 {"A", "A", "A", "S", "S"},
