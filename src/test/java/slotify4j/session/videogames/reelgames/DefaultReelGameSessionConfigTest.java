@@ -40,10 +40,10 @@ class DefaultReelGameSessionConfigTest {
         assertArrayEquals(conf.getLinesDirections().getLinesIds(), new int[]{0, 1, 2});
 
         assertEquals(conf.getReelsItemsSequences().length, conf.getReelsNumber());
-        Stream.of(conf.getReelsItemsSequences()).forEach(seq -> Stream.of(conf.getAvailableItems()).forEach(item -> {
+        Stream.of(conf.getReelsItemsSequences()).forEach(seq -> Stream.of(conf.getAvailableItems()).forEach(item ->
                 //Check if every of available items exists on each sequence
-                assertTrue(Arrays.asList(seq).contains(item));
-        }));
+                assertTrue(Arrays.asList(seq).contains(item))
+        ));
 
         assertTrue(Arrays.asList(conf.getAvailableItems()).contains("A"));
         assertTrue(Arrays.asList(conf.getAvailableItems()).contains("K"));
@@ -54,11 +54,22 @@ class DefaultReelGameSessionConfigTest {
         assertTrue(Arrays.asList(conf.getAvailableItems()).contains("W"));
         assertTrue(Arrays.asList(conf.getAvailableItems()).contains("S"));
 
-        LongStream.of(conf.getAvailableBets()).forEach(bet -> Stream.of(conf.getAvailableItems()).forEach(item -> IntStream.rangeClosed(1, 3).forEach((num) -> {
-            if (!item.equals(conf.getWildItemId())) {
-                testPaytableItem(conf.getPaytable(), item, num + 2, bet, bet * num);
-            }
-        })));
+        LongStream.of(conf.getAvailableBets()).forEach(
+                bet -> Stream.of(conf.getAvailableItems()).forEach(
+                        item -> IntStream.rangeClosed(1, 3).forEach(
+                                num -> {
+                                    if (!item.equals(conf.getWildItemId())) {
+                                        testPaytableItem(
+                                                conf.getPaytable(),
+                                                item, num + 2,
+                                                bet,
+                                                bet * num
+                                        );
+                                    }
+                                }
+                        )
+                )
+        );
     }
 
     @Test

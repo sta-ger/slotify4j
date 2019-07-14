@@ -82,7 +82,7 @@ class ReelGameSessionReelsControllerImplTest {
 
         assertEquals(items.length, 5);
 
-        IntStream.range(0, items.length).forEach((i) -> {
+        IntStream.range(0, items.length).forEach(i -> {
             String[] curItems = items[i];
             if (i == 2) {
                 assertEquals(curItems.length, availableItems.length);
@@ -109,13 +109,13 @@ class ReelGameSessionReelsControllerImplTest {
         });
 
         String[][] itemsForMapOfNumbers = ReelGameSessionTools.createItemsSequences(5, availableItems, itemsNumbersMap);
-        IntStream.range(0, items.length).forEach((i) -> {
+        IntStream.range(0, items.length).forEach(i -> {
             String[] curItems = itemsForMapOfNumbers[i];
-            assertEquals(Optional.of(curItems.length), itemsNumbersMap.get(i).values().stream().reduce((sum, num) -> sum += num));
+            assertEquals(Optional.of(curItems.length), itemsNumbersMap.get(i).values().stream().reduce((sum, num) -> sum + num));
         });
 
         String[][] itemsForNumberOfNumbers = ReelGameSessionTools.createItemsSequences(5, availableItems, 10);
-        IntStream.range(0, items.length).forEach((i) -> {
+        IntStream.range(0, items.length).forEach(i -> {
             String[] curItems = itemsForNumberOfNumbers[i];
             assertEquals(curItems.length, availableItems.length * 10);
         });
