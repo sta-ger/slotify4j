@@ -1,6 +1,7 @@
 package slotify4j.session.videogames.reelgames;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -8,6 +9,33 @@ public final class ReelGameSessionTools {
 
     private ReelGameSessionTools() {
 
+    }
+
+    public static int[] findSectorsWithItemsOnSequence(String[] sequence, String[] items, int reelItemsNumber) {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < sequence.length; i++) {
+            String[] sector = new String[reelItemsNumber];
+            sector[0] = sequence[i];
+            for (int j = 1; j < sector.length; j++) {
+                String nextItem;
+                if (i + j < sequence.length) {
+                    nextItem = sequence[i + j];
+                } else {
+                    nextItem = sequence[(i + j) - sequence.length];
+                }
+                sector[j] = nextItem;
+            }
+            AtomicBoolean flag = new AtomicBoolean(true);
+            Arrays.stream(items).forEach((String item) -> {
+                if (!flag.get() || !Arrays.asList(sector).contains((item))) {
+                    flag.set(false);
+                }
+            });
+            if (flag.get()) {
+                list.add(i);
+            }
+        }
+        return list.stream().mapToInt(i -> i).toArray();
     }
 
     public static String[][] transposeItemsMatrix(String[][] source) {
