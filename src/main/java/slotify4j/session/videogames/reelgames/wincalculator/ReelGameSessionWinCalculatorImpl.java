@@ -50,7 +50,10 @@ public class ReelGameSessionWinCalculatorImpl implements ReelGameSessionWinCalcu
         );
         for (int lineId : winningLinesIds) {
             line = this.generateWinningLine(bet, lineId);
-            if (line.getWinningAmount() > 0) {
+            ReelGameSessionWinningLineModel finalLine = line;
+            if (Arrays.stream(config.getScattersData()).noneMatch(scatter ->
+                    scatter.getItemId().equals(finalLine.getItemId())
+            ) && line.getWinningAmount() > 0) {
                 this.winningLines.put(line.getLineId(), line);
                 this.linesWinning += line.getWinningAmount();
             }

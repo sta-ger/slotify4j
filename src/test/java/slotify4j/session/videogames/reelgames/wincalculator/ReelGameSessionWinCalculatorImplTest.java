@@ -251,6 +251,25 @@ class ReelGameSessionWinCalculatorImplTest {
     }
 
     @Test
+    public void doNotCreateLineOfScatterSymbolsTest() throws UnableToPlayException {
+        ReelGameSessionConfig conf = DefaultReelGameSessionConfig
+                .builder()
+                .withScattersData(
+                        new ReelGameSessionScatterData[] {
+                                new ReelGameSessionScattersDataImpl("A", 3)
+                        })
+                .build();
+        ReelGameSessionWinCalculatorImpl calc = new ReelGameSessionWinCalculatorImpl(conf);
+
+        calc.setGameState(1, ReelGameSessionTools.transposeItemsMatrix(new String[][]{
+                {"A", "A", "A", "K", "Q"},
+                {"A", "K", "Q", "J", "10"},
+                {"K", "Q", "J", "10", "9"},
+        }));
+        assertEquals(calc.getWinningLines().keySet().size(), 0);
+    }
+
+    @Test
     public void calculateWinningLinesWithWildsAfterUpdateStateTest() throws UnableToPlayException {
         winningCalculator.setGameState(1, ReelGameSessionTools.transposeItemsMatrix(new String[][]{
                 {"A", "W", "A", "K", "Q"},
