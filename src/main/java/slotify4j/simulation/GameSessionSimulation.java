@@ -6,6 +6,8 @@ public interface GameSessionSimulation {
 
     void run() throws UnableToPlayException;
 
+    void run(GameSessionSimulationStrategy strategy) throws UnableToPlayException;
+
     double getRtp();
 
     long getTotalBetAmount();

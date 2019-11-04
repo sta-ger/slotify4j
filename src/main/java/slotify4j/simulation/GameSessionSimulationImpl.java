@@ -46,6 +46,11 @@ public class GameSessionSimulationImpl implements GameSessionSimulation {
         this.onFinished();
     }
 
+    @Override
+    public void run(GameSessionSimulationStrategy strategy) throws UnableToPlayException {
+        strategy.run();
+    }
+
     private void setBetOnCantPlayNextBet() {
         long[] bets;
         bets = this.session.getAvailableBets();
