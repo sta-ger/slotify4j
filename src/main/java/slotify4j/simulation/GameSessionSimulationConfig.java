@@ -6,8 +6,12 @@ public interface GameSessionSimulationConfig {
 
     long getNumberOfRounds();
 
-    void setChangeBetScenario(ChangeBetScenario changeBetScenario);
+    void setPlayStrategy(GameSessionSimulationPlayStrategy changeBetScenario);
 
-    ChangeBetScenario getChangeBetScenario();
+    GameSessionSimulationPlayStrategy getPlayStrategy();
+
+    void setChangeBetStrategy(GameSessionSimulationChangeBetStrategy changeBetScenario);
+
+    GameSessionSimulationChangeBetStrategy getChangeBetStrategy();
 
 }

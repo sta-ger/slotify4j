@@ -4,12 +4,12 @@ import slotify4j.session.GameSession;
 import slotify4j.session.UnableToPlayException;
 
 import java.util.Arrays;
-import java.util.Random;
 
 public class GameSessionSimulationImpl implements GameSessionSimulation {
     private final GameSession session;
     private final long numberOfRounds;
-    private final ChangeBetScenario changeBetScenario;
+    private final GameSessionSimulationChangeBetStrategy changeBetStrategy;
+    private final GameSessionSimulationPlayStrategy playStrategy;
 
     private long totalBet;
     private long totalReturn;
@@ -24,7 +24,8 @@ public class GameSessionSimulationImpl implements GameSessionSimulation {
     public GameSessionSimulationImpl(GameSession session, GameSessionSimulationConfig config) {
         this.session = session;
         numberOfRounds = config.getNumberOfRounds();
-        changeBetScenario = config.getChangeBetScenario();
+        changeBetStrategy = config.getChangeBetStrategy();
+        playStrategy = config.getPlayStrategy();
     }
 
     @Override
@@ -46,11 +47,6 @@ public class GameSessionSimulationImpl implements GameSessionSimulation {
         this.onFinished();
     }
 
-    @Override
-    public void run(GameSessionSimulationStrategy strategy) throws UnableToPlayException {
-        strategy.run();
-    }
-
     private void setBetOnCantPlayNextBet() {
         long[] bets;
         bets = this.session.getAvailableBets();
@@ -69,17 +65,7 @@ public class GameSessionSimulationImpl implements GameSessionSimulation {
     }
 
     private void setBetBeforePlay() {
-        if (changeBetScenario == ChangeBetScenario.CHANGE_RANDOMLY) {
-            this.setRandomBet();
-        }
-    }
-
-    private void setRandomBet() {
-        long bet;
-        long[] bets;
-        bets = this.session.getAvailableBets();
-        bet = bets[new Random().nextInt(bets.length)];
-        this.session.setBet(bet);
+        this.changeBetStrategy.setBetForPlay(session);
     }
 
     private void doPlay() throws UnableToPlayException {
