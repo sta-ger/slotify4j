@@ -3,8 +3,6 @@ package slotify4j.simulation;
 import slotify4j.session.GameSession;
 import slotify4j.session.UnableToPlayException;
 
-import java.util.Arrays;
-
 public class GameSessionSimulationImpl implements GameSessionSimulation {
     private final GameSession session;
     private final long numberOfRounds;
@@ -36,22 +34,10 @@ public class GameSessionSimulationImpl implements GameSessionSimulation {
             if (this.canPlayNextGame()) {
                 this.doPlay();
             } else {
-                this.setBetOnCantPlayNextBet();
-                if (this.canPlayNextGame()) {
-                    this.doPlay();
-                } else {
-                    break;
-                }
+                break;
             }
         }
         this.onFinished();
-    }
-
-    private void setBetOnCantPlayNextBet() {
-        long[] bets;
-        bets = this.session.getAvailableBets();
-        Arrays.sort(bets);
-        this.session.setBet(bets[0]);
     }
 
     private void onFinished() {

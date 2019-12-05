@@ -12,8 +12,8 @@ public class DefaultGameSessionSimulationBuilder {
         return this;
     }
 
-    public DefaultGameSessionSimulationBuilder withChangeBetScenario(ChangeBetScenario value) {
-        config.setChangeBetScenario(value);
+    public DefaultGameSessionSimulationBuilder withChangeBetStrategy(GameSessionSimulationChangeBetStrategy value) {
+        config.setChangeBetStrategy(value);
         return this;
     }
 
