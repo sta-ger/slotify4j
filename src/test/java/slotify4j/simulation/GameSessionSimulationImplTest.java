@@ -11,12 +11,11 @@ import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionRee
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculator;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameSessionSimulationImplTest {
 
@@ -133,30 +132,6 @@ public class GameSessionSimulationImplTest {
         });
 
         simulation.run();
-    }
-
-    @Test
-    public void testChangeBetRandomly() throws UnableToPlayException {
-        ReelGameSession session = createDefaultReelGameSessionForTest();
-        GameSessionSimulationConfig simulationConfig = DefaultGameSessionSimulationConfig
-                .builder()
-                .withChangeBetScenario(ChangeBetScenario.CHANGE_RANDOMLY)
-                .build();
-        GameSessionSimulation simulation = new GameSessionSimulationImpl(session, simulationConfig);
-
-        HashSet<Long> playedBets = new HashSet<>();
-        simulation.setBeforePlayCallback(() -> session.setCreditsAmount(1000000));
-        simulation.setAfterPlayCallback(() -> playedBets.add(session.getBet()));
-
-        simulation.run();
-
-        // After simulation playedBets should contain shuffled set of bets
-        assertFalse(
-                Arrays.equals(
-                        session.getAvailableBets(),
-                        playedBets.stream().mapToLong(Number::longValue).toArray()
-                )
-        );
     }
 
 }

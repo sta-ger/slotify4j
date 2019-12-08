@@ -1,6 +1,8 @@
 package slotify4j.simulation;
 
 import org.junit.jupiter.api.Test;
+import slotify4j.session.GameSession;
+import slotify4j.session.UnableToPlayException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -10,16 +12,29 @@ class DefaultGameSessionSimulationConfigTest {
     public void createDefaultSimulationConfig() {
         DefaultGameSessionSimulationConfig conf = new DefaultGameSessionSimulationConfig();
         assertEquals(conf.getNumberOfRounds(), DefaultGameSessionSimulationConfig.DEFAULT_NUMBER_OF_ROUNDS);
-        assertEquals(conf.getChangeBetScenario(), DefaultGameSessionSimulationConfig.DEFAULT_CHANGE_BET_SCENARIO);
+        assertNull(conf.getChangeBetStrategy());
+        assertNull(conf.getPlayStrategy());
     }
 
     @Test
     public void createCustomSimulationConfig() {
         DefaultGameSessionSimulationConfig conf = new DefaultGameSessionSimulationConfig();
         conf.setNumberOfRounds(999);
-        conf.setChangeBetScenario(ChangeBetScenario.CHANGE_RANDOMLY);
+        conf.setChangeBetStrategy(new GameSessionSimulationChangeBetStrategy() {
+            @Override
+            public void setBetForPlay(GameSession session) {
+
+            }
+        });
+        conf.setPlayStrategy(new GameSessionSimulationPlayStrategy() {
+            @Override
+            public void run() throws UnableToPlayException {
+
+            }
+        });
         assertEquals(conf.getNumberOfRounds(), 999);
-        assertEquals(conf.getChangeBetScenario(), ChangeBetScenario.CHANGE_RANDOMLY);
+        assertNotNull(conf.getChangeBetStrategy());
+        assertNotNull(conf.getPlayStrategy());
     }
 
 }

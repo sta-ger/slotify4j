@@ -2,10 +2,10 @@ package slotify4j.simulation;
 
 public class DefaultGameSessionSimulationConfig implements GameSessionSimulationConfig {
     public static final long DEFAULT_NUMBER_OF_ROUNDS = 1000;
-    public static final ChangeBetScenario DEFAULT_CHANGE_BET_SCENARIO = ChangeBetScenario.DONT_CHANGE;
 
     private long numberOfRounds = DEFAULT_NUMBER_OF_ROUNDS;
-    private ChangeBetScenario changeBetScenario = DEFAULT_CHANGE_BET_SCENARIO;
+    private GameSessionSimulationChangeBetStrategy changeBetStrategy;
+    private GameSessionSimulationPlayStrategy playStrategy;
 
     @Override
     public void setNumberOfRounds(long value) {
@@ -18,13 +18,23 @@ public class DefaultGameSessionSimulationConfig implements GameSessionSimulation
     }
 
     @Override
-    public void setChangeBetScenario(ChangeBetScenario changeBetScenario) {
-        this.changeBetScenario = changeBetScenario;
+    public void setPlayStrategy(GameSessionSimulationPlayStrategy playStrategy) {
+        this.playStrategy = playStrategy;
     }
 
     @Override
-    public ChangeBetScenario getChangeBetScenario() {
-        return changeBetScenario;
+    public GameSessionSimulationPlayStrategy getPlayStrategy() {
+        return playStrategy;
+    }
+
+    @Override
+    public void setChangeBetStrategy(GameSessionSimulationChangeBetStrategy changeBetStrategy) {
+        this.changeBetStrategy = changeBetStrategy;
+    }
+
+    @Override
+    public GameSessionSimulationChangeBetStrategy getChangeBetStrategy() {
+        return changeBetStrategy;
     }
 
     public static DefaultGameSessionSimulationBuilder builder() {

@@ -29,55 +29,57 @@ public class GameSessionSimulationImpl implements GameSessionSimulation {
     @Override
     public void run() throws UnableToPlayException {
         long i;
-        for (i = 0; i < this.numberOfRounds; i++) {
-            this.doBeforePlay();
-            if (this.canPlayNextGame()) {
-                this.doPlay();
+        for (i = 0; i < numberOfRounds; i++) {
+            doBeforePlay();
+            if (canPlayNextGame()) {
+                doPlay();
             } else {
                 break;
             }
         }
-        this.onFinished();
+        onFinished();
     }
 
     private void onFinished() {
-        if (this.onFinishedCallback != null) {
-            this.onFinishedCallback.run();
+        if (onFinishedCallback != null) {
+            onFinishedCallback.run();
         }
     }
 
     private boolean canPlayNextGame() {
-        return this.session.canPlayNextGame();
+        return session.canPlayNextGame();
     }
 
     private void setBetBeforePlay() {
-        this.changeBetStrategy.setBetForPlay(session);
+        if (changeBetStrategy != null) {
+            changeBetStrategy.setBetForPlay(session);
+        }
     }
 
     private void doPlay() throws UnableToPlayException {
-        this.currentGameNumber++;
-        this.setBetBeforePlay();
-        this.totalBet += this.session.getBet();
-        this.session.play();
-        this.totalReturn += this.session.getWinningAmount();
-        this.calculateRtp();
-        this.doAfterPlay();
+        currentGameNumber++;
+        setBetBeforePlay();
+        totalBet += session.getBet();
+        session.play();
+        totalReturn += session.getWinningAmount();
+        calculateRtp();
+        doAfterPlay();
     }
 
     private void doBeforePlay() {
-        if (this.beforePlayCallback != null) {
-            this.beforePlayCallback.run();
+        if (beforePlayCallback != null) {
+            beforePlayCallback.run();
         }
     }
 
     private void doAfterPlay() {
-        if (this.afterPlayCallback != null) {
-            this.afterPlayCallback.run();
+        if (afterPlayCallback != null) {
+            afterPlayCallback.run();
         }
     }
 
     private void calculateRtp() {
-        this.rtp = (double) this.totalReturn / this.totalBet;
+        rtp = (double) totalReturn / totalBet;
     }
 
     @Override

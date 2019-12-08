@@ -17,6 +17,11 @@ public class DefaultGameSessionSimulationBuilder {
         return this;
     }
 
+    public DefaultGameSessionSimulationBuilder withPlayStrategy(GameSessionSimulationPlayStrategy value) {
+        config.setPlayStrategy(value);
+        return this;
+    }
+
     public GameSessionSimulationConfig build() {
         return config;
     }

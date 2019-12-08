@@ -10,7 +10,7 @@ public interface GameSessionSimulationConfig {
 
     GameSessionSimulationPlayStrategy getPlayStrategy();
 
-    void setChangeBetStrategy(GameSessionSimulationChangeBetStrategy changeBetScenario);
+    void setChangeBetStrategy(GameSessionSimulationChangeBetStrategy changeBetStrategy);
 
     GameSessionSimulationChangeBetStrategy getChangeBetStrategy();
 

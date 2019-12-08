@@ -1,8 +1,11 @@
 package slotify4j.simulation;
 
 import org.junit.jupiter.api.Test;
+import slotify4j.session.GameSession;
+import slotify4j.session.UnableToPlayException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class DefaultGameSessionSimulationBuilderTest {
 
@@ -11,9 +14,21 @@ class DefaultGameSessionSimulationBuilderTest {
         GameSessionSimulationConfig conf = DefaultGameSessionSimulationConfig
                 .builder()
                 .withNumberOfRounds(100500)
-                .withChangeBetScenario(ChangeBetScenario.CHANGE_RANDOMLY)
+                .withChangeBetStrategy(new GameSessionSimulationChangeBetStrategy() {
+                    @Override
+                    public void setBetForPlay(GameSession session) {
+
+                    }
+                })
+                .withPlayStrategy(new GameSessionSimulationPlayStrategy() {
+                    @Override
+                    public void run() throws UnableToPlayException {
+
+                    }
+                })
                 .build();
-        assertEquals(conf.getChangeBetScenario(), ChangeBetScenario.CHANGE_RANDOMLY);
+        assertNotNull(conf.getChangeBetStrategy());
+        assertNotNull(conf.getPlayStrategy());
         assertEquals(conf.getNumberOfRounds(), 100500);
     }
 
