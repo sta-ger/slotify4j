@@ -19,13 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GameSessionSimulationImplTest {
 
-    public static ReelGameSession createDefaultReelGameSessionForTest() {
-        ReelGameSessionConfig sessionConfig = new DefaultReelGameSessionConfig();
-        ReelGameSessionReelsController reelsController = new ReelGameSessionReelsControllerImpl(sessionConfig);
-        ReelGameSessionWinCalculator winningCalculator = new ReelGameSessionWinCalculatorImpl(sessionConfig);
-        return new ReelGameSessionImpl(sessionConfig, reelsController, winningCalculator);
-    }
-
     @Test
     public void playSpecifiedNumOfRoundsAndCalculateRtpTest() throws UnableToPlayException {
         ReelGameSessionConfig sessionConfig = DefaultReelGameSessionConfig.builder().withReelsItemsSequences(
@@ -72,7 +65,7 @@ public class GameSessionSimulationImplTest {
 
     @Test
     public void testSetAndRemoveCallbacks() throws UnableToPlayException {
-        ReelGameSession session = createDefaultReelGameSessionForTest();
+        GameSession session = new GameSessionImpl(new DefaultGameSessionConfig());
         GameSessionSimulationConfig simulationConfig = DefaultGameSessionSimulationConfig
                 .builder()
                 .withNumberOfRounds(100)
