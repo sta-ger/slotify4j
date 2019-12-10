@@ -47,7 +47,11 @@ public class GameSessionSimulationImpl implements GameSessionSimulation {
     }
 
     private boolean canPlayNextGame() {
-        return session.canPlayNextGame();
+        boolean r = session.canPlayNextGame();
+        if (r && playStrategy != null) {
+            r = playStrategy.canPlayNextGame(session);
+        }
+        return r;
     }
 
     private void setBetBeforePlay() {

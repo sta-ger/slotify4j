@@ -13,6 +13,7 @@ import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCa
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -125,6 +126,49 @@ public class GameSessionSimulationImplTest {
         });
 
         simulation.run();
+    }
+
+    @Test
+    public void testApplyPlayStrategy() throws UnableToPlayException {
+        DefaultReelGameSessionConfig config = new DefaultReelGameSessionConfig();
+        GameSessionSimulationConfig simulationConfig = DefaultGameSessionSimulationConfig
+                .builder()
+                .withPlayStrategy(new StopOnAnyWinPlayStrategy())
+                .withNumberOfRounds(Long.MAX_VALUE)
+                .build();
+
+        AtomicReference<GameSession> session = new AtomicReference<>();
+
+        AtomicBoolean wasNoWinning = new AtomicBoolean(false);
+
+        Runnable beforePlayCallback = () -> {
+            simulationConfig.setNumberOfRounds(Long.MAX_VALUE);
+            session.get().setCreditsAmount(Long.MAX_VALUE);
+        };
+
+        Runnable afterPlayCallback = () -> {
+            if (!wasNoWinning.get() && session.get().getWinningAmount() == 0) {
+                wasNoWinning.set(true);
+            }
+        };
+
+        while (
+                session.get() == null ||
+                        !wasNoWinning.get()
+        ) {
+            session.set(new ReelGameSessionImpl(
+                    config,
+                    new ReelGameSessionReelsControllerImpl(config),
+                    new ReelGameSessionWinCalculatorImpl(config)
+            ));
+            GameSessionSimulation simulation = new GameSessionSimulationImpl(session.get(), simulationConfig);
+            simulation.setBeforePlayCallback(beforePlayCallback);
+            simulation.setAfterPlayCallback(afterPlayCallback);
+            simulation.run();
+        }
+
+        assertTrue(wasNoWinning.get());
+        assertTrue(session.get().getWinningAmount() > 0);
     }
 
 }

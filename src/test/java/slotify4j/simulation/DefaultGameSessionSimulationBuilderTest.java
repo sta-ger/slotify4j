@@ -22,7 +22,7 @@ class DefaultGameSessionSimulationBuilderTest {
                 })
                 .withPlayStrategy(new PlayStrategy() {
                     @Override
-                    public boolean canPlayNextGame() {
+                    public boolean canPlayNextGame(GameSession session) {
                         return false;
                     }
                 })
