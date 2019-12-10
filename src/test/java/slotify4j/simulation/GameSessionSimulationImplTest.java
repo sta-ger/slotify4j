@@ -1,5 +1,6 @@
 package slotify4j.simulation;
 
+import javafx.util.Callback;
 import org.junit.jupiter.api.Test;
 import slotify4j.session.*;
 import slotify4j.session.videogames.reelgames.DefaultReelGameSessionConfig;
@@ -11,9 +12,9 @@ import slotify4j.session.videogames.reelgames.reelscontroller.ReelGameSessionRee
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculator;
 import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCalculatorImpl;
 
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -129,46 +130,34 @@ public class GameSessionSimulationImplTest {
     }
 
     @Test
-    public void testApplyPlayStrategy() throws UnableToPlayException {
-        DefaultReelGameSessionConfig config = new DefaultReelGameSessionConfig();
-        GameSessionSimulationConfig simulationConfig = DefaultGameSessionSimulationConfig
-                .builder()
-                .withPlayStrategy(new StopOnAnyWinPlayStrategy())
-                .withNumberOfRounds(Long.MAX_VALUE)
-                .build();
-
-        AtomicReference<GameSession> session = new AtomicReference<>();
-
-        AtomicBoolean wasNoWinning = new AtomicBoolean(false);
-
-        Runnable beforePlayCallback = () -> {
-            simulationConfig.setNumberOfRounds(Long.MAX_VALUE);
-            session.get().setCreditsAmount(Long.MAX_VALUE);
+    public void testApplyPlayStrategy() throws Exception {
+        AtomicLong playedRoundsNumber = new AtomicLong(0);
+        Callback<Optional<PlayStrategy>, GameSessionSimulationImpl> createSimulation = (
+                Optional<PlayStrategy> playStrategy
+        ) -> {
+            DefaultGameSessionSimulationConfig config = new DefaultGameSessionSimulationConfig();
+            playStrategy.ifPresent(config::setPlayStrategy);
+            GameSessionSimulationImpl simulation = new GameSessionSimulationImpl(
+                    new GameSessionImpl(new DefaultGameSessionConfig()),
+                    config
+            );
+            simulation.setAfterPlayCallback(playedRoundsNumber::getAndIncrement);
+            return simulation;
         };
 
-        Runnable afterPlayCallback = () -> {
-            if (!wasNoWinning.get() && session.get().getWinningAmount() == 0) {
-                wasNoWinning.set(true);
+        GameSessionSimulation simulation = createSimulation.call(Optional.empty());
+        simulation.run();
+        assertEquals(playedRoundsNumber.get(), DefaultGameSessionSimulationConfig.DEFAULT_NUMBER_OF_ROUNDS);
+
+        playedRoundsNumber.set(0);
+        simulation = createSimulation.call(Optional.of(new PlayStrategy() {
+            @Override
+            public boolean canPlayNextGame(GameSession session) {
+                return playedRoundsNumber.get() < 5;
             }
-        };
-
-        while (
-                session.get() == null ||
-                        !wasNoWinning.get()
-        ) {
-            session.set(new ReelGameSessionImpl(
-                    config,
-                    new ReelGameSessionReelsControllerImpl(config),
-                    new ReelGameSessionWinCalculatorImpl(config)
-            ));
-            GameSessionSimulation simulation = new GameSessionSimulationImpl(session.get(), simulationConfig);
-            simulation.setBeforePlayCallback(beforePlayCallback);
-            simulation.setAfterPlayCallback(afterPlayCallback);
-            simulation.run();
-        }
-
-        assertTrue(wasNoWinning.get());
-        assertTrue(session.get().getWinningAmount() > 0);
+        }));
+        simulation.run();
+        assertEquals(playedRoundsNumber.get(), 5);
     }
 
 }
