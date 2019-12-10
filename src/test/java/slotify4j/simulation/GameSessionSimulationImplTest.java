@@ -16,8 +16,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameSessionSimulationImplTest {
 
@@ -130,6 +129,29 @@ public class GameSessionSimulationImplTest {
     }
 
     @Test
+    public void testApplyChangeBetStrategy() throws UnableToPlayException {
+        AtomicBoolean wasBetChanged = new AtomicBoolean(false);
+        Callback<Optional<ChangeBetStrategy>, GameSessionSimulationImpl> createSimulation = (
+                Optional<ChangeBetStrategy> playStrategy
+        ) -> {
+            DefaultGameSessionSimulationConfig config = new DefaultGameSessionSimulationConfig();
+            playStrategy.ifPresent(config::setChangeBetStrategy);
+            return new GameSessionSimulationImpl(
+                    new GameSessionImpl(new DefaultGameSessionConfig()),
+                    config
+            );
+        };
+
+        GameSessionSimulationImpl simulation = createSimulation.call(Optional.empty());
+        simulation.run();
+        assertFalse(wasBetChanged.get());
+
+        simulation = createSimulation.call(Optional.of(session -> wasBetChanged.set(true)));
+        simulation.run();
+        assertTrue(wasBetChanged.get());
+    }
+
+    @Test
     public void testApplyPlayStrategy() throws Exception {
         AtomicLong playedRoundsNumber = new AtomicLong(0);
         Callback<Optional<PlayStrategy>, GameSessionSimulationImpl> createSimulation = (
@@ -150,12 +172,7 @@ public class GameSessionSimulationImplTest {
         assertEquals(playedRoundsNumber.get(), DefaultGameSessionSimulationConfig.DEFAULT_NUMBER_OF_ROUNDS);
 
         playedRoundsNumber.set(0);
-        simulation = createSimulation.call(Optional.of(new PlayStrategy() {
-            @Override
-            public boolean canPlayNextGame(GameSession session) {
-                return playedRoundsNumber.get() < 5;
-            }
-        }));
+        simulation = createSimulation.call(Optional.of(session -> playedRoundsNumber.get() < 5));
         simulation.run();
         assertEquals(playedRoundsNumber.get(), 5);
     }
