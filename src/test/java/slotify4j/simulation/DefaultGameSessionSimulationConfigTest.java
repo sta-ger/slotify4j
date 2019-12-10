@@ -20,16 +20,16 @@ class DefaultGameSessionSimulationConfigTest {
     public void createCustomSimulationConfig() {
         DefaultGameSessionSimulationConfig conf = new DefaultGameSessionSimulationConfig();
         conf.setNumberOfRounds(999);
-        conf.setChangeBetStrategy(new GameSessionSimulationChangeBetStrategy() {
+        conf.setChangeBetStrategy(new ChangeBetStrategy() {
             @Override
             public void setBetForPlay(GameSession session) {
 
             }
         });
-        conf.setPlayStrategy(new GameSessionSimulationPlayStrategy() {
+        conf.setPlayStrategy(new PlayStrategy() {
             @Override
-            public void run() throws UnableToPlayException {
-
+            public boolean canPlayNextGame() {
+                return false;
             }
         });
         assertEquals(conf.getNumberOfRounds(), 999);

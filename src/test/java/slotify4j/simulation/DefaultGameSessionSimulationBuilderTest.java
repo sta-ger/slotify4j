@@ -14,16 +14,16 @@ class DefaultGameSessionSimulationBuilderTest {
         GameSessionSimulationConfig conf = DefaultGameSessionSimulationConfig
                 .builder()
                 .withNumberOfRounds(100500)
-                .withChangeBetStrategy(new GameSessionSimulationChangeBetStrategy() {
+                .withChangeBetStrategy(new ChangeBetStrategy() {
                     @Override
                     public void setBetForPlay(GameSession session) {
 
                     }
                 })
-                .withPlayStrategy(new GameSessionSimulationPlayStrategy() {
+                .withPlayStrategy(new PlayStrategy() {
                     @Override
-                    public void run() throws UnableToPlayException {
-
+                    public boolean canPlayNextGame() {
+                        return false;
                     }
                 })
                 .build();

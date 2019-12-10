@@ -6,8 +6,8 @@ import slotify4j.session.UnableToPlayException;
 public class GameSessionSimulationImpl implements GameSessionSimulation {
     private final GameSession session;
     private final long numberOfRounds;
-    private final GameSessionSimulationChangeBetStrategy changeBetStrategy;
-    private final GameSessionSimulationPlayStrategy playStrategy;
+    private final ChangeBetStrategy changeBetStrategy;
+    private final PlayStrategy playStrategy;
 
     private long totalBet;
     private long totalReturn;

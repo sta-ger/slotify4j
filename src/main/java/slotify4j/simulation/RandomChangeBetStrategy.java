@@ -4,7 +4,7 @@ import slotify4j.session.GameSession;
 
 import java.util.Random;
 
-public class GameSessionSimulationRandomChangeBetStrategy implements GameSessionSimulationChangeBetStrategy {
+public class RandomChangeBetStrategy implements ChangeBetStrategy {
 
     @Override
     public void setBetForPlay(GameSession session) {

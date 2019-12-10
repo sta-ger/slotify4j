@@ -4,8 +4,8 @@ public class DefaultGameSessionSimulationConfig implements GameSessionSimulation
     public static final long DEFAULT_NUMBER_OF_ROUNDS = 1000;
 
     private long numberOfRounds = DEFAULT_NUMBER_OF_ROUNDS;
-    private GameSessionSimulationChangeBetStrategy changeBetStrategy;
-    private GameSessionSimulationPlayStrategy playStrategy;
+    private ChangeBetStrategy changeBetStrategy;
+    private PlayStrategy playStrategy;
 
     @Override
     public void setNumberOfRounds(long value) {
@@ -18,22 +18,22 @@ public class DefaultGameSessionSimulationConfig implements GameSessionSimulation
     }
 
     @Override
-    public void setPlayStrategy(GameSessionSimulationPlayStrategy playStrategy) {
+    public void setPlayStrategy(PlayStrategy playStrategy) {
         this.playStrategy = playStrategy;
     }
 
     @Override
-    public GameSessionSimulationPlayStrategy getPlayStrategy() {
+    public PlayStrategy getPlayStrategy() {
         return playStrategy;
     }
 
     @Override
-    public void setChangeBetStrategy(GameSessionSimulationChangeBetStrategy changeBetStrategy) {
+    public void setChangeBetStrategy(ChangeBetStrategy changeBetStrategy) {
         this.changeBetStrategy = changeBetStrategy;
     }
 
     @Override
-    public GameSessionSimulationChangeBetStrategy getChangeBetStrategy() {
+    public ChangeBetStrategy getChangeBetStrategy() {
         return changeBetStrategy;
     }
 

@@ -15,7 +15,7 @@ import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class GameSessionSimulationRandomChangeBetStrategyTest {
+class RandomChangeBetStrategyTest {
 
     @Test
     public void setBetForPlay() throws UnableToPlayException {
@@ -26,7 +26,7 @@ class GameSessionSimulationRandomChangeBetStrategyTest {
 
         GameSessionSimulationConfig simulationConfig = DefaultGameSessionSimulationConfig
                 .builder()
-                .withChangeBetStrategy(new GameSessionSimulationRandomChangeBetStrategy())
+                .withChangeBetStrategy(new RandomChangeBetStrategy())
                 .build();
         GameSessionSimulation simulation = new GameSessionSimulationImpl(session, simulationConfig);
 
