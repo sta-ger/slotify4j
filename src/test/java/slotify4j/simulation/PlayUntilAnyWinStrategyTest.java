@@ -2,18 +2,17 @@ package slotify4j.simulation;
 
 import org.junit.jupiter.api.Test;
 import slotify4j.session.GameSession;
-import slotify4j.session.UnableToPlayException;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class StopOnAnyWinPlayStrategyTest {
+class PlayUntilAnyWinStrategyTest {
 
     @Test
-    public void canPlayNextGame() throws UnableToPlayException {
-        StopOnAnyWinPlayStrategy strategy = new StopOnAnyWinPlayStrategy();
+    public void canPlayNextGame() {
+        PlayUntilAnyWinStrategy strategy = new PlayUntilAnyWinStrategy();
 
         AtomicLong winAmount = new AtomicLong(0);
 
@@ -59,7 +58,7 @@ class StopOnAnyWinPlayStrategyTest {
             }
 
             @Override
-            public void play() throws UnableToPlayException {
+            public void play() {
                 /* no-op */
             }
         };

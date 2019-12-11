@@ -1,6 +1,5 @@
 package slotify4j.simulation;
 
-import javafx.util.Callback;
 import org.junit.jupiter.api.Test;
 import slotify4j.session.*;
 import slotify4j.session.videogames.reelgames.DefaultReelGameSessionConfig;
@@ -15,6 +14,7 @@ import slotify4j.session.videogames.reelgames.wincalculator.ReelGameSessionWinCa
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -131,7 +131,7 @@ public class GameSessionSimulationImplTest {
     @Test
     public void testApplyChangeBetStrategy() throws UnableToPlayException {
         AtomicBoolean wasBetChanged = new AtomicBoolean(false);
-        Callback<Optional<ChangeBetStrategy>, GameSessionSimulationImpl> createSimulation = (
+        Function<Optional<ChangeBetStrategy>, GameSessionSimulationImpl> createSimulation = (
                 Optional<ChangeBetStrategy> playStrategy
         ) -> {
             DefaultGameSessionSimulationConfig config = new DefaultGameSessionSimulationConfig();
@@ -142,11 +142,11 @@ public class GameSessionSimulationImplTest {
             );
         };
 
-        GameSessionSimulationImpl simulation = createSimulation.call(Optional.empty());
+        GameSessionSimulationImpl simulation = createSimulation.apply(Optional.empty());
         simulation.run();
         assertFalse(wasBetChanged.get());
 
-        simulation = createSimulation.call(Optional.of(session -> wasBetChanged.set(true)));
+        simulation = createSimulation.apply(Optional.of(session -> wasBetChanged.set(true)));
         simulation.run();
         assertTrue(wasBetChanged.get());
     }
@@ -154,7 +154,7 @@ public class GameSessionSimulationImplTest {
     @Test
     public void testApplyPlayStrategy() throws Exception {
         AtomicLong playedRoundsNumber = new AtomicLong(0);
-        Callback<Optional<PlayStrategy>, GameSessionSimulationImpl> createSimulation = (
+        Function<Optional<PlayStrategy>, GameSessionSimulationImpl> createSimulation = (
                 Optional<PlayStrategy> playStrategy
         ) -> {
             DefaultGameSessionSimulationConfig config = new DefaultGameSessionSimulationConfig();
@@ -167,12 +167,12 @@ public class GameSessionSimulationImplTest {
             return simulation;
         };
 
-        GameSessionSimulation simulation = createSimulation.call(Optional.empty());
+        GameSessionSimulation simulation = createSimulation.apply(Optional.empty());
         simulation.run();
         assertEquals(playedRoundsNumber.get(), DefaultGameSessionSimulationConfig.DEFAULT_NUMBER_OF_ROUNDS);
 
         playedRoundsNumber.set(0);
-        simulation = createSimulation.call(Optional.of(session -> playedRoundsNumber.get() < 5));
+        simulation = createSimulation.apply(Optional.of(session -> playedRoundsNumber.get() < 5));
         simulation.run();
         assertEquals(playedRoundsNumber.get(), 5);
     }
