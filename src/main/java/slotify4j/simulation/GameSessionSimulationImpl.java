@@ -2,6 +2,7 @@ package slotify4j.simulation;
 
 import slotify4j.session.GameSession;
 import slotify4j.session.UnableToPlayException;
+import slotify4j.simulation.playstrategy.PlayStrategy;
 
 public class GameSessionSimulationImpl implements GameSessionSimulation {
     private final GameSession session;

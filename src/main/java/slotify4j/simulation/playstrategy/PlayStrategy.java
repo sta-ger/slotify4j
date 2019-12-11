@@ -1,4 +1,4 @@
-package slotify4j.simulation;
+package slotify4j.simulation.playstrategy;
 
 import slotify4j.session.GameSession;
 

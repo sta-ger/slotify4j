@@ -8,13 +8,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class DefaultReelGameWithFreeGamesSessionConfigBuilderTest {
 
     public static boolean testBuilderMethods(ReelGameWithFreeGamesSessionConfigBuilder builder) {
-        assertEquals(builder
-                        .withFreeGamesForScatters("S", 3, 10)
-                        .build()
-                        .getFreeGamesForScatters("S", 3),
-                10
-        );
-        return true;
+        boolean flag = false;
+        try {
+            assertEquals(builder
+                            .withFreeGamesForScatters("S", 3, 10)
+                            .build()
+                            .getFreeGamesForScatters("S", 3),
+                    10
+            );
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
     }
 
     @Test

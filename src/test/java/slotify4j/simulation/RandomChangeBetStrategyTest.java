@@ -18,7 +18,7 @@ class RandomChangeBetStrategyTest {
         ArrayList<Long> betsDuringPlay = new ArrayList<>();
         GameSession sessionMock = new GameSession() {
             @Override
-            public void play() throws UnableToPlayException {
+            public void play() {
                 /* no-op */
             }
 

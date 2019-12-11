@@ -1,5 +1,7 @@
 package slotify4j.simulation;
 
+import slotify4j.simulation.playstrategy.PlayStrategy;
+
 public class DefaultGameSessionSimulationConfig implements GameSessionSimulationConfig {
     public static final long DEFAULT_NUMBER_OF_ROUNDS = 1000;
 

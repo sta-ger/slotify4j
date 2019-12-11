@@ -18,94 +18,119 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class ReelGameWithFreeGamesSessionImplTest {
 
     public static boolean testDefaultReelGameWithFreeGamesSession(ReelGameWithFreeGamesSession session) {
-        assertEquals(session.getFreeGameNum(), 0);
-        assertEquals(session.getFreeGameSum(), 0);
-        assertEquals(session.getFreeGameBank(), 0);
-        return true;
+        boolean flag = false;
+        try {
+            assertEquals(session.getFreeGameNum(), 0);
+            assertEquals(session.getFreeGameSum(), 0);
+            assertEquals(session.getFreeGameBank(), 0);
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
     }
 
     public static boolean testFreeGamesGettersSetters(ReelGameWithFreeGamesSession session) {
-        session.setFreeGameBank(100);
-        session.setFreeGameNum(5);
-        session.setFreeGameSum(10);
-        assertEquals(session.getFreeGameSum(), 10);
-        assertEquals(session.getFreeGameNum(), 5);
-        assertEquals(session.getFreeGameBank(), 100);
-        return true;
+        boolean flag = false;
+        try {
+            session.setFreeGameBank(100);
+            session.setFreeGameNum(5);
+            session.setFreeGameSum(10);
+            assertEquals(session.getFreeGameSum(), 10);
+            assertEquals(session.getFreeGameNum(), 5);
+            assertEquals(session.getFreeGameBank(), 100);
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
     }
 
     public static boolean testPlayUntilWinFreeGames(ReelGameWithFreeGamesSession session) throws UnableToPlayException {
-        while (session.getFreeGameSum() == 0) {
-            session.setCreditsAmount(Long.MIN_VALUE);
-            session.play();
+        boolean flag = false;
+        try {
+            while (session.getFreeGameSum() == 0) {
+                session.setCreditsAmount(Long.MIN_VALUE);
+                session.play();
+            }
+            assertEquals(session.getFreeGameNum(), 0);
+            assertTrue(session.getFreeGameSum() > 0);
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        assertEquals(session.getFreeGameNum(), 0);
-        assertTrue(session.getFreeGameSum() > 0);
-        return true;
+        return flag;
     }
 
     public static boolean testPlayFreeGames(ReelGameWithFreeGamesSession session, ReelGameWithFreeGamesSessionConfig conf) throws UnableToPlayException {
-        //The following situations need to be checked:
-        boolean wasNormalFreeGames = false; //played normal 10 free games
-        boolean wasAdditionalFreeGames = false; //free games was won again at free games mode
-        boolean wasAdditionalFreeGamesWonAtLastFreeGame = false; //additional free games was won at 10 of 10 free games
-        boolean wasFreeBank = false; //was any winning during free games mode
-        boolean wasNoFreeBank = false; //was no winnings during free games mode
-        while (
-                !wasNormalFreeGames ||
-                        !wasAdditionalFreeGames ||
-                        !wasAdditionalFreeGamesWonAtLastFreeGame ||
-                        !wasFreeBank ||
-                        !wasNoFreeBank
-        ) {
-            while (session.getFreeGameSum() == 0 || (session.getFreeGameSum() > 0 && session.getFreeGameNum() == session.getFreeGameSum())) { //Play until won free games
-                session.setCreditsAmount(10000);
-                session.play();
-            }
-            int playedFreeGamesCount = 0;
-            int expectedPlayedFreeGamesCount = session.getFreeGameSum();
-            long lastFreeBank = 0;
-            long lastFreeGamesSum;
-            long creditsBeforeFreeGame = session.getCreditsAmount();
-            while (session.getFreeGameSum() > 0 && session.getFreeGameNum() != session.getFreeGameSum()) { //Play until end of free games
-                lastFreeBank = session.getFreeGameBank();
-                lastFreeGamesSum = session.getFreeGameSum();
-                session.play();
-                if (session.getFreeGameSum() > lastFreeGamesSum && session.getFreeGameNum() == lastFreeGamesSum) {
-                    wasAdditionalFreeGamesWonAtLastFreeGame = true;
-                }
-                assertEquals(session.getFreeGameBank(), lastFreeBank + session.getWinningAmount());
-                if (session.getFreeGameNum() < session.getFreeGameSum() || session.getFreeGameSum() > expectedPlayedFreeGamesCount) {
-                    assertEquals(session.getCreditsAmount(), creditsBeforeFreeGame); //Bet should not be subtracted at free games mode
-                } else {
-                    assertEquals(session.getCreditsAmount(), creditsBeforeFreeGame + session.getFreeGameBank());
-                }
-                playedFreeGamesCount++;
-                if (session.getFreeGameSum() > expectedPlayedFreeGamesCount) {
-                    wasAdditionalFreeGames = true;
-                    expectedPlayedFreeGamesCount = session.getFreeGameSum();
-                    assertTrue(session.getWinningScatters().size() > 0);
-                    Stream.of(conf.getScattersData()).forEach(scatterData -> {
-                        if (conf.getFreeGamesForScatters(scatterData.getItemId(), scatterData.getMinimumItemsNumForScatterWin()) > 0) {
-                            assertTrue(session.getWinningScatters().containsKey(scatterData.getItemId()));
-                            assertTrue(conf.getFreeGamesForScatters(scatterData.getItemId(), session.getWinningScatters().get(scatterData.getItemId()).getItemsPositions().length) > 0);
-                            assertEquals(session.getWonFreeGamesNumber(), conf.getFreeGamesForScatters(scatterData.getItemId(), session.getWinningScatters().get(scatterData.getItemId()).getItemsPositions().length));
-                        }
-                    });
-                } else {
-                    wasNormalFreeGames = true;
-                }
-            }
+        boolean flag = false;
 
-            if (lastFreeBank == 0) {
-                wasNoFreeBank = true;
-            } else {
-                wasFreeBank = true;
-            }
+        try {
+            //The following situations need to be checked:
+            boolean wasNormalFreeGames = false; //played normal 10 free games
+            boolean wasAdditionalFreeGames = false; //free games was won again at free games mode
+            boolean wasAdditionalFreeGamesWonAtLastFreeGame = false; //additional free games was won at 10 of 10 free games
+            boolean wasFreeBank = false; //was any winning during free games mode
+            boolean wasNoFreeBank = false; //was no winnings during free games mode
+            while (
+                    !wasNormalFreeGames ||
+                            !wasAdditionalFreeGames ||
+                            !wasAdditionalFreeGamesWonAtLastFreeGame ||
+                            !wasFreeBank ||
+                            !wasNoFreeBank
+            ) {
+                while (session.getFreeGameSum() == 0 || (session.getFreeGameSum() > 0 && session.getFreeGameNum() == session.getFreeGameSum())) { //Play until won free games
+                    session.setCreditsAmount(10000);
+                    session.play();
+                }
+                int playedFreeGamesCount = 0;
+                int expectedPlayedFreeGamesCount = session.getFreeGameSum();
+                long lastFreeBank = 0;
+                long lastFreeGamesSum;
+                long creditsBeforeFreeGame = session.getCreditsAmount();
+                while (session.getFreeGameSum() > 0 && session.getFreeGameNum() != session.getFreeGameSum()) { //Play until end of free games
+                    lastFreeBank = session.getFreeGameBank();
+                    lastFreeGamesSum = session.getFreeGameSum();
+                    session.play();
+                    if (session.getFreeGameSum() > lastFreeGamesSum && session.getFreeGameNum() == lastFreeGamesSum) {
+                        wasAdditionalFreeGamesWonAtLastFreeGame = true;
+                    }
+                    assertEquals(session.getFreeGameBank(), lastFreeBank + session.getWinningAmount());
+                    if (session.getFreeGameNum() < session.getFreeGameSum() || session.getFreeGameSum() > expectedPlayedFreeGamesCount) {
+                        assertEquals(session.getCreditsAmount(), creditsBeforeFreeGame); //Bet should not be subtracted at free games mode
+                    } else {
+                        assertEquals(session.getCreditsAmount(), creditsBeforeFreeGame + session.getFreeGameBank());
+                    }
+                    playedFreeGamesCount++;
+                    if (session.getFreeGameSum() > expectedPlayedFreeGamesCount) {
+                        wasAdditionalFreeGames = true;
+                        expectedPlayedFreeGamesCount = session.getFreeGameSum();
+                        assertTrue(session.getWinningScatters().size() > 0);
+                        Stream.of(conf.getScattersData()).forEach(scatterData -> {
+                            if (conf.getFreeGamesForScatters(scatterData.getItemId(), scatterData.getMinimumItemsNumForScatterWin()) > 0) {
+                                assertTrue(session.getWinningScatters().containsKey(scatterData.getItemId()));
+                                assertTrue(conf.getFreeGamesForScatters(scatterData.getItemId(), session.getWinningScatters().get(scatterData.getItemId()).getItemsPositions().length) > 0);
+                                assertEquals(session.getWonFreeGamesNumber(), conf.getFreeGamesForScatters(scatterData.getItemId(), session.getWinningScatters().get(scatterData.getItemId()).getItemsPositions().length));
+                            }
+                        });
+                    } else {
+                        wasNormalFreeGames = true;
+                    }
+                }
 
-            assertEquals(playedFreeGamesCount, expectedPlayedFreeGamesCount);
+                if (lastFreeBank == 0) {
+                    wasNoFreeBank = true;
+                } else {
+                    wasFreeBank = true;
+                }
+
+                assertEquals(playedFreeGamesCount, expectedPlayedFreeGamesCount);
+            }
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return true;
+        return flag;
     }
 
     public static ReelGameWithFreeGamesSessionConfig createConfigForTestPlayFreeGames() {

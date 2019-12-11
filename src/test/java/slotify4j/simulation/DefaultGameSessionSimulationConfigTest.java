@@ -2,7 +2,7 @@ package slotify4j.simulation;
 
 import org.junit.jupiter.api.Test;
 import slotify4j.session.GameSession;
-import slotify4j.session.UnableToPlayException;
+import slotify4j.simulation.playstrategy.PlayStrategy;
 
 import static org.junit.jupiter.api.Assertions.*;
 

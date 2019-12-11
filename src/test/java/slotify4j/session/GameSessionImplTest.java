@@ -9,11 +9,17 @@ import static org.junit.jupiter.api.Assertions.*;
 public class GameSessionImplTest {
 
     public static boolean testDefaultSessionHasProperInitialValues(GameSession session, GameSessionConfig config) {
-        assertArrayEquals(session.getAvailableBets(), config.getAvailableBets());
-        assertEquals(session.getBet(), config.getAvailableBets()[0]);
-        assertEquals(session.getCreditsAmount(), 1000);
-        assertEquals(session.getWinningAmount(), 0);
-        return true;
+        boolean flag = false;
+        try {
+            assertArrayEquals(session.getAvailableBets(), config.getAvailableBets());
+            assertEquals(session.getBet(), config.getAvailableBets()[0]);
+            assertEquals(session.getCreditsAmount(), 1000);
+            assertEquals(session.getWinningAmount(), 0);
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
     }
 
     public static GameSessionConfig createCustomConfigForTestProperInitialValues() {
@@ -24,12 +30,18 @@ public class GameSessionImplTest {
     }
 
     public static boolean testDefaultSessionHasProperInitialValuesWithCustomConfig(GameSession session, GameSessionConfig config) {
-        assertFalse(session.isBetAvailable(1));
-        assertTrue(session.isBetAvailable(10));
-        assertArrayEquals(session.getAvailableBets(), config.getAvailableBets());
-        assertEquals(session.getBet(), config.getAvailableBets()[0]);
-        assertEquals(session.getCreditsAmount(), config.getCreditsAmount());
-        return true;
+        boolean flag = false;
+        try {
+            assertFalse(session.isBetAvailable(1));
+            assertTrue(session.isBetAvailable(10));
+            assertArrayEquals(session.getAvailableBets(), config.getAvailableBets());
+            assertEquals(session.getBet(), config.getAvailableBets()[0]);
+            assertEquals(session.getCreditsAmount(), config.getCreditsAmount());
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
     }
 
     public static GameSessionConfig createCustomConfigForWrongBetTest() {
@@ -39,49 +51,61 @@ public class GameSessionImplTest {
     }
 
     public static boolean testDefaultSessionWithWrongInitialBet(GameSession session, GameSessionConfig config) {
-        long bet = config.getAvailableBets()[0];
-        while (session.isBetAvailable(bet)) {
-            bet = new Random().nextInt();
+        boolean flag = false;
+        try {
+            long bet = config.getAvailableBets()[0];
+            while (session.isBetAvailable(bet)) {
+                bet = new Random().nextInt();
+            }
+            session.setBet(bet);
+            assertEquals(session.getBet(), config.getAvailableBets()[0]);
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        session.setBet(bet);
-        assertEquals(session.getBet(), config.getAvailableBets()[0]);
-        return true;
+        return flag;
     }
 
     public static boolean testDefaultSessionPlaysWhileEnoughCredits(GameSession session) throws UnableToPlayException {
-        session.setBet(10);
-        session.play();
-        assertEquals(session.getCreditsAmount(), 990);
-        assertTrue(session.canPlayNextGame());
-
-        //Play with different bet
-        session.setBet(100);
-        session.play();
-        assertEquals(session.getCreditsAmount(), 890);
-        assertTrue(session.canPlayNextGame());
-
-        int playedGamesNum = 0;
-        int expectedGamesToPlay = (int) ((double) session.getCreditsAmount() / session.getBet());
-        while (session.canPlayNextGame()) {
+        boolean flag = false;
+        try {
+            session.setBet(10);
             session.play();
-            playedGamesNum++;
-        }
+            assertEquals(session.getCreditsAmount(), 990);
+            assertTrue(session.canPlayNextGame());
 
-        assertEquals(playedGamesNum, expectedGamesToPlay);
-
-        //Decrease bet to 10 and play remaining 9 games
-        session.setBet(10);
-
-        playedGamesNum = 0;
-        expectedGamesToPlay = (int) ((double) session.getCreditsAmount() / session.getBet());
-        while (session.canPlayNextGame()) {
+            //Play with different bet
+            session.setBet(100);
             session.play();
-            playedGamesNum++;
+            assertEquals(session.getCreditsAmount(), 890);
+            assertTrue(session.canPlayNextGame());
+
+            int playedGamesNum = 0;
+            int expectedGamesToPlay = (int) ((double) session.getCreditsAmount() / session.getBet());
+            while (session.canPlayNextGame()) {
+                session.play();
+                playedGamesNum++;
+            }
+
+            assertEquals(playedGamesNum, expectedGamesToPlay);
+
+            //Decrease bet to 10 and play remaining 9 games
+            session.setBet(10);
+
+            playedGamesNum = 0;
+            expectedGamesToPlay = (int) ((double) session.getCreditsAmount() / session.getBet());
+            while (session.canPlayNextGame()) {
+                session.play();
+                playedGamesNum++;
+            }
+
+            assertEquals(playedGamesNum, expectedGamesToPlay);
+
+            flag = true;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        assertEquals(playedGamesNum, expectedGamesToPlay);
-
-        return true;
+        return flag;
     }
 
     @Test

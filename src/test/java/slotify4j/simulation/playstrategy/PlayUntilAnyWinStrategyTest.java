@@ -1,7 +1,8 @@
-package slotify4j.simulation;
+package slotify4j.simulation.playstrategy;
 
 import org.junit.jupiter.api.Test;
 import slotify4j.session.GameSession;
+import slotify4j.simulation.playstrategy.PlayUntilAnyWinStrategy;
 
 import java.util.concurrent.atomic.AtomicLong;
 

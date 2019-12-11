@@ -1,5 +1,7 @@
 package slotify4j.simulation;
 
+import slotify4j.simulation.playstrategy.PlayStrategy;
+
 public class DefaultGameSessionSimulationBuilder {
     private final DefaultGameSessionSimulationConfig config;
 
