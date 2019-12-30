@@ -5,14 +5,13 @@ import slotify4j.session.GameSession;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-class PlayUntilAnyWinStrategyTest {
+class PlayUntilAnyLosingCombinationStrategyTest {
 
     @Test
     public void canPlayNextGame() {
-        PlayUntilAnyWinStrategy strategy = new PlayUntilAnyWinStrategy();
+        PlayUntilAnyLosingCombinationStrategy strategy = new PlayUntilAnyLosingCombinationStrategy();
 
         AtomicLong winAmount = new AtomicLong(0);
 
@@ -63,9 +62,9 @@ class PlayUntilAnyWinStrategyTest {
             }
         };
 
-        assertTrue(strategy.canPlayNextGame(sessionMock));
-        winAmount.set(100);
         assertFalse(strategy.canPlayNextGame(sessionMock));
+        winAmount.set(100);
+        assertTrue(strategy.canPlayNextGame(sessionMock));
     }
 
 }
