@@ -1,17 +1,21 @@
 package slotify4j.session.videogames.reelgames.wincalculator;
 
+import slotify4j.session.videogames.reelgames.ReelGameSessionTools;
+import slotify4j.session.videogames.reelgames.ReelGameSessionWinningLineModel;
+
+import java.util.ArrayList;
+
 public class ReelGameWinCalculatorTools {
 
-    public static isAllLinesHasSameItemId(lines: {}): boolean {
-        let id: string;
-        let r: boolean = true;
-        for (let lineId in lines) {
-            let line: WinningLineModel = lines[lineId];
-            if (!id) {
-                id = line.itemId;
+    public static boolean isAllLinesHasSameItemId(ReelGameSessionWinningLineModel[] lines) {
+        String id = null;
+        boolean r = true;
+        for (ReelGameSessionWinningLineModel line : lines) {
+            if (id == null) {
+                id = line.getItemId();
                 continue;
             }
-            if (Object.keys(line).length > 1 && id !== line.itemId) {
+            if (lines.length > 1 && !id.equals(line.getItemId())) {
                 r = false;
                 break;
             }
@@ -19,43 +23,47 @@ public class ReelGameWinCalculatorTools {
         return r;
     }
 
-    public static getLinesContainingItem(lines: {}, items: string[][], itemId: string): WinningLineModel[] {
-        let r: WinningLineModel[] = [];
-        for (let lineId in lines) {
-            let line: WinningLineModel = lines[lineId];
-            let lineItems: string[] = ReelGameSessionWinCalculator.getItemsForDirection(items, line.direction);
-            for (let i: number = 0; i < lineItems.length; i++) {
-                if (lineItems[i] === itemId) {
-                    r.push(line);
+    public static ReelGameSessionWinningLineModel[] getLinesContainingItem(
+            ReelGameSessionWinningLineModel[] lines,
+            String[][] items,
+            String itemId
+    ) {
+        ArrayList<ReelGameSessionWinningLineModel> r = new ArrayList<>();
+        for (ReelGameSessionWinningLineModel line : lines) {
+            String[] lineItems = ReelGameSessionTools.getItemsForDirection(items, line.getDirection());
+            for (String lineItem : lineItems) {
+                if (lineItem.equals(itemId)) {
+                    r.add(line);
                     break;
                 }
             }
         }
-        return r;
+        return r.toArray(new ReelGameSessionWinningLineModel[0]);
     }
 
-    public static getLinesWithSymbol(lines: {}, symbolId: string): WinningLineModel[] {
-        let r: WinningLineModel[] = [];
-        for (let lineId in lines) {
-            let line: WinningLineModel = lines[lineId];
-            if (line.itemId === symbolId) {
-                r.push(line);
+    public static ReelGameSessionWinningLineModel[] getLinesWithItem(
+            ReelGameSessionWinningLineModel[] lines,
+            String itemId
+    ) {
+        ArrayList<ReelGameSessionWinningLineModel> r = new ArrayList<>();
+        for (ReelGameSessionWinningLineModel line : lines) {
+            if (line.getItemId().equals(itemId)) {
+                r.add(line);
             }
         }
-        return r;
+        return r.toArray(new ReelGameSessionWinningLineModel[0]);
     }
 
-    public static getLinesWithDifferentSymbols(lines: {}): WinningLineModel[] {
-        let symbols: string[] = [];
-        let r: WinningLineModel[] = [];
-        for (let lineId in lines) {
-            let line: WinningLineModel = lines[lineId];
-            if (symbols.indexOf(line.itemId) < 0) {
-                symbols.push(line.itemId);
-                r.push(line);
+    public static ReelGameSessionWinningLineModel[] getLinesWithDifferentItems(ReelGameSessionWinningLineModel[] lines) {
+        ArrayList<String> items = new ArrayList<>();
+        ArrayList<ReelGameSessionWinningLineModel> r = new ArrayList<>();
+        for (ReelGameSessionWinningLineModel line : lines) {
+            if (items.indexOf(line.getItemId()) < 0) {
+                items.add(line.getItemId());
+                r.add(line);
             }
         }
-        return r;
+        return r.toArray(new ReelGameSessionWinningLineModel[0]);
     }
 
 }
