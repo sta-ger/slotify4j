@@ -54,7 +54,9 @@ public class ReelGameWinCalculatorTools {
         return r.toArray(new ReelGameSessionWinningLineModel[0]);
     }
 
-    public static ReelGameSessionWinningLineModel[] getLinesWithDifferentItems(ReelGameSessionWinningLineModel[] lines) {
+    public static ReelGameSessionWinningLineModel[] getLinesWithDifferentItems(
+            ReelGameSessionWinningLineModel[] lines
+    ) {
         ArrayList<String> items = new ArrayList<>();
         ArrayList<ReelGameSessionWinningLineModel> r = new ArrayList<>();
         for (ReelGameSessionWinningLineModel line : lines) {
