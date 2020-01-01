@@ -23,7 +23,7 @@ public class ReelGameWinCalculatorTools {
         return r;
     }
 
-    public static ReelGameSessionWinningLineModel[] getLinesContainingItem(
+    public static ReelGameSessionWinningLineModel[] getLinesWithItem(
             ReelGameSessionWinningLineModel[] lines,
             String[][] items,
             String itemId
@@ -41,7 +41,7 @@ public class ReelGameWinCalculatorTools {
         return r.toArray(new ReelGameSessionWinningLineModel[0]);
     }
 
-    public static ReelGameSessionWinningLineModel[] getLinesWithItem(
+    public static ReelGameSessionWinningLineModel[] getLinesWithWinningItem(
             ReelGameSessionWinningLineModel[] lines,
             String itemId
     ) {
