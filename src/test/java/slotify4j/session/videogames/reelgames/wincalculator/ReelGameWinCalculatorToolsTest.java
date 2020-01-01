@@ -157,6 +157,36 @@ class ReelGameWinCalculatorToolsTest {
     }
 
     @Test
-    public void getLinesWithDifferentItems() {
+    public void getLinesWithDifferentWinningItems() throws UnableToPlayException {
+        ReelGameSessionWinCalculatorImpl calc = new ReelGameSessionWinCalculatorImpl(
+                new DefaultReelGameSessionConfig()
+        );
+
+        ReelGameSessionWinningLineModel[] linesWithDifferentItems;
+
+        calc.setGameState(1, ReelGameSessionTools.transposeItemsMatrix(new String[][]{
+                        {"A", "A", "A", "K", "Q"},
+                        {"K", "K", "K", "Q", "J"},
+                        {"Q", "Q", "Q", "J", "10"},
+                }
+        ));
+        linesWithDifferentItems = ReelGameWinCalculatorTools.getLinesWithDifferentWinningItems(
+                calc.getWinningLines().values().toArray(new ReelGameSessionWinningLineModel[0])
+        );
+        assertEquals(linesWithDifferentItems.length, 3);
+        assertTrue(Arrays.stream(linesWithDifferentItems).anyMatch(line -> line.getLineId() == 0));
+        assertTrue(Arrays.stream(linesWithDifferentItems).anyMatch(line -> line.getLineId() == 1));
+        assertTrue(Arrays.stream(linesWithDifferentItems).anyMatch(line -> line.getLineId() == 2));
+
+        calc.setGameState(1, ReelGameSessionTools.transposeItemsMatrix(new String[][]{
+                        {"A", "A", "A", "K", "Q"},
+                        {"A", "A", "A", "Q", "J"},
+                        {"A", "A", "A", "J", "10"},
+                }
+        ));
+        linesWithDifferentItems = ReelGameWinCalculatorTools.getLinesWithDifferentWinningItems(
+                calc.getWinningLines().values().toArray(new ReelGameSessionWinningLineModel[0])
+        );
+        assertEquals(linesWithDifferentItems.length, 0);
     }
 }
