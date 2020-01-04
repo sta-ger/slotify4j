@@ -28,18 +28,22 @@ public class PlayUntilItemWinStrategy implements PlayStrategy {
                 new ReelGameSessionWinningLineModel[0]
         );
         Map<String, ReelGameSessionWinningScatterModel> winningScatters = rgSession.getWinningScatters();
-        return winningLines.size() < minLinesNumber ||
+        return winningLines.size() < getMinLinesNumber() ||
                 winningScatters.size() > 0 ||
                 ReelGameWinCalculatorTools.getLinesWithWinningItem(
                         winningLinesArray,
-                        itemId
+                        getItemId()
                 ).length == 0 ||
-                onlySameItemId && !ReelGameWinCalculatorTools.isAllLinesHasSameItemId(winningLinesArray) ||
-                !allowWilds && ReelGameWinCalculatorTools.getLinesWithItem(
+                isOnlySameItemId() && !ReelGameWinCalculatorTools.isAllLinesHasSameItemId(winningLinesArray) ||
+                !isAllowWilds() && ReelGameWinCalculatorTools.getLinesWithItem(
                         winningLinesArray,
                         reelsItems,
-                        wildItemId
+                        getWildItemId()
                 ).length > 0;
+    }
+
+    public String getItemId() {
+        return itemId;
     }
 
     public int getMinLinesNumber() {
@@ -62,16 +66,13 @@ public class PlayUntilItemWinStrategy implements PlayStrategy {
         return allowWilds;
     }
 
-    public void setAllowWilds(boolean allowWilds) {
+    public void setAllowWilds(boolean allowWilds, String wildItemId) {
         this.allowWilds = allowWilds;
+        this.wildItemId = wildItemId;
     }
 
     public String getWildItemId() {
         return wildItemId;
-    }
-
-    public void setWildItemId(String wildItemId) {
-        this.wildItemId = wildItemId;
     }
 
 }
