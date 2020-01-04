@@ -25,12 +25,12 @@ public class ReelGameWinCalculatorTools {
 
     public static ReelGameSessionWinningLineModel[] getLinesWithItem(
             ReelGameSessionWinningLineModel[] lines,
-            String[][] items,
+            String[][] reelsItems,
             String itemId
     ) {
         ArrayList<ReelGameSessionWinningLineModel> r = new ArrayList<>();
         for (ReelGameSessionWinningLineModel line : lines) {
-            String[] lineItems = ReelGameSessionTools.getItemsForDirection(items, line.getDirection());
+            String[] lineItems = ReelGameSessionTools.getItemsForDirection(reelsItems, line.getDirection());
             for (String lineItem : lineItems) {
                 if (lineItem.equals(itemId)) {
                     r.add(line);
