@@ -153,7 +153,7 @@ public class GameSessionSimulationImplTest {
     }
 
     @Test
-    public void testApplyPlayStrategy() throws Exception {
+    public void testApplyPlayStrategy() throws UnableToPlayException {
         AtomicLong playedRoundsNumber = new AtomicLong(0);
         Function<Optional<PlayStrategy>, GameSessionSimulationImpl> createSimulation = (
                 Optional<PlayStrategy> playStrategy

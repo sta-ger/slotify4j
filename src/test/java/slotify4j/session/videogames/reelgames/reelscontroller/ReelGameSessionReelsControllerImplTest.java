@@ -21,15 +21,15 @@ class ReelGameSessionReelsControllerImplTest {
             "9",
     };
 
-    private final int reelsNumber = 5;
-    private final int reelsItemsNumber = 3;
+    private static final int REELS_NUMBER = 5;
+    private static final int REELS_ITEMS_NUMBER = 3;
 
     ReelGameSessionReelsControllerImplTest() {
         String[][] sequences = ReelGameSessionTools.createItemsSequences(5, availableItems, 10);
         sequences[2] = Arrays.stream(sequences[2]).filter(item -> !"A".equals(item)).toArray(String[]::new);
         DefaultReelGameSessionConfig conf = new DefaultReelGameSessionConfig();
-        conf.setReelsNumber(reelsNumber);
-        conf.setReelsItemsNumber(reelsItemsNumber);
+        conf.setReelsNumber(REELS_NUMBER);
+        conf.setReelsItemsNumber(REELS_ITEMS_NUMBER);
         conf.setAvailableItems(availableItems);
         conf.setReelsItemsSequences(sequences);
         reelsController = new ReelGameSessionReelsControllerImpl(conf);
@@ -123,7 +123,7 @@ class ReelGameSessionReelsControllerImplTest {
 
     @Test
     public void getRandomItemTest() {
-        for (int i = 0; i < reelsNumber; i++) {
+        for (int i = 0; i < REELS_NUMBER; i++) {
             //For each reel
             for (int j = 0; j < 1000; j++) {
                 //Check is returned item one of available items
@@ -139,11 +139,11 @@ class ReelGameSessionReelsControllerImplTest {
 
     @Test
     public void getRandomReelItemsTest() {
-        for (int i = 0; i < reelsNumber; i++) {
+        for (int i = 0; i < REELS_NUMBER; i++) {
             //For each reel
             for (int j = 0; j < 1000; j++) {
                 String[] items = reelsController.getRandomReelItems(i);
-                assertEquals(items.length, reelsItemsNumber);
+                assertEquals(items.length, REELS_ITEMS_NUMBER);
                 int finalI = i;
                 Arrays.stream(items).forEach(item -> {
                     //Check is returned item one of available items
@@ -160,11 +160,11 @@ class ReelGameSessionReelsControllerImplTest {
     @Test
     public void getRandomItemsCombinationTest() {
         String[][] items = reelsController.getRandomItemsCombination();
-        assertEquals(items.length, reelsNumber);
-        for (int i = 0; i < reelsNumber; i++) {
+        assertEquals(items.length, REELS_NUMBER);
+        for (int i = 0; i < REELS_NUMBER; i++) {
             //For each reel
             for (int j = 0; j < 1000; j++) {
-                assertEquals(items[i].length, reelsItemsNumber);
+                assertEquals(items[i].length, REELS_ITEMS_NUMBER);
                 int finalI = i;
                 Arrays.stream(items[i]).forEach(item -> {
                     //Check is returned item one of available items

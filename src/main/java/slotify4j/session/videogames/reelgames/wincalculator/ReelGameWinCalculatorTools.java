@@ -7,15 +7,17 @@ import java.util.ArrayList;
 
 public class ReelGameWinCalculatorTools {
 
+    private ReelGameWinCalculatorTools() {
+        /* no-op */
+    }
+
     public static boolean isAllLinesHasSameItemId(ReelGameSessionWinningLineModel[] lines) {
         String id = null;
         boolean r = true;
         for (ReelGameSessionWinningLineModel line : lines) {
             if (id == null) {
                 id = line.getItemId();
-                continue;
-            }
-            if (lines.length > 1 && !id.equals(line.getItemId())) {
+            } else if (lines.length > 1 && !id.equals(line.getItemId())) {
                 r = false;
                 break;
             }

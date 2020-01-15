@@ -23,7 +23,7 @@ class DefaultGameSessionSimulationConfigTest {
         conf.setChangeBetStrategy(new ChangeBetStrategy() {
             @Override
             public void setBetForPlay(GameSession session) {
-
+                /* no-op */
             }
         });
         conf.setPlayStrategy(new PlayStrategy() {

@@ -17,7 +17,7 @@ class DefaultGameSessionSimulationBuilderTest {
                 .withChangeBetStrategy(new ChangeBetStrategy() {
                     @Override
                     public void setBetForPlay(GameSession session) {
-
+                        /* no-op */
                     }
                 })
                 .withPlayStrategy(new PlayStrategy() {

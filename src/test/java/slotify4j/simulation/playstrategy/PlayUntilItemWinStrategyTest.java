@@ -118,7 +118,7 @@ class PlayUntilItemWinStrategyTest {
 
             @Override
             public void setCreditsAmount(long creditsAmount) {
-
+                /* no-op */
             }
 
             @Override
@@ -143,7 +143,7 @@ class PlayUntilItemWinStrategyTest {
 
             @Override
             public void setBet(long bet) {
-
+                /* no-op */
             }
 
             @Override
@@ -153,7 +153,7 @@ class PlayUntilItemWinStrategyTest {
 
             @Override
             public void play() throws UnableToPlayException {
-
+                /* no-op */
             }
         };
 

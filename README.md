@@ -131,7 +131,7 @@ public class Game {
 
 ### Simulation
 
-Simple way to run a lot game rounds and calculate Return To Player percentage.
+Simple way to run a lot of game rounds and calculate Return To Player percentage.
 
 ```java
 import slotify4j.session.UnableToPlayException;
