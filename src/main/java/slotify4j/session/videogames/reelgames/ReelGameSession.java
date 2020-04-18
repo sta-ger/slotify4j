@@ -20,4 +20,6 @@ public interface ReelGameSession extends GameSession {
 
     int getReelsNumber();
 
+    String[] getAvailableItems();
+
 }

@@ -19,6 +19,7 @@ class ReelGameSessionImplTest {
             assertEquals(session.getReelsItemsSequences().length, config.getReelsItemsSequences().length);
             assertEquals(session.getReelsItemsNumber(), config.getReelsItemsNumber());
             assertEquals(session.getReelsNumber(), config.getReelsNumber());
+            assertArrayEquals(session.getAvailableItems(), config.getAvailableItems());
             assertEquals(session.getReelsItems().length, 0);
             assertEquals(session.getWinningLines().size(), 0);
             assertEquals(session.getWinningScatters().size(), 0);

@@ -107,6 +107,11 @@ public class ReelGameWithFreeGamesSessionImpl implements ReelGameWithFreeGamesSe
     }
 
     @Override
+    public String[] getAvailableItems() {
+        return this.adaptee.getAvailableItems();
+    }
+
+    @Override
     public long getCreditsAmount() {
         return adaptee.getCreditsAmount();
     }

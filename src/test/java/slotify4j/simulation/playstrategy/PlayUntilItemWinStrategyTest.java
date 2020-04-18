@@ -112,6 +112,11 @@ class PlayUntilItemWinStrategyTest {
             }
 
             @Override
+            public String[] getAvailableItems() {
+                return new String[0];
+            }
+
+            @Override
             public long getCreditsAmount() {
                 return 0;
             }

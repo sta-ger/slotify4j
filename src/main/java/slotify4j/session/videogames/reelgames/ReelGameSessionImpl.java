@@ -62,6 +62,11 @@ public class ReelGameSessionImpl implements ReelGameSession {
     }
 
     @Override
+    public String[] getAvailableItems() {
+        return config.getAvailableItems().clone();
+    }
+
+    @Override
     public long getCreditsAmount() {
         return adaptee.getCreditsAmount();
     }
